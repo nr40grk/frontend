@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ink Temple Tattoo Studio — Αθήνα. Επαγγελματικά τατουάζ από έμπειρους καλλιτέχνες.">
+  <title>Ink Temple — Tattoo Studio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(8,8,8,0.25) 0%, rgba(8,8,8,0.55) 50%, rgba(8,8,8,1) 100%),
+        url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1800&q=80') center/cover no-repeat;
+      transform: scale(1.04);
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom { to { transform: scale(1); } }
+    .hero-content {
+      position: relative;
+      text-align: center;
+      max-width: 960px;
+      padding: 0 24px;
+    }
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.38em;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 28px;
+      animation: fadeUp 1s ease 0.2s both;
+    }
+    .hero-title {
+      font-family: 'Unbounded', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3.2rem, 10vw, 9rem);
+      line-height: 0.88;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+    .hero-title .gold-word {
+      font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold);
+      font-weight: 300;
+      font-size: 1.12em;
+      display: block;
+      letter-spacing: 0;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--gray-light);
+      max-width: 460px;
+      margin: 0 auto 44px;
+      font-style: italic;
+      animation: fadeUp 1s ease 0.6s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 1s ease 0.8s both;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: var(--gray);
+      text-transform: uppercase;
+      animation: fadeUp 1s ease 1.2s both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)} }
+
+    /* ─── ABOUT ─── */
+    .about-section { padding: 100px 0; background: var(--dark); border-bottom: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .about-image-wrap { position: relative; }
+    .about-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: grayscale(25%);
+      transition: filter 0.5s;
+      display: block;
+    }
+    .about-image-wrap:hover .about-img { filter: grayscale(0%); }
+    .about-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--gold);
+      transform: translate(14px, 14px);
+      pointer-events: none;
+      transition: transform 0.4s;
+    }
+    .about-image-wrap:hover::after { transform: translate(8px, 8px); }
+    .about-body p {
+      color: var(--gray-light);
+      font-style: italic;
+      margin-bottom: 22px;
+      font-size: 1.05rem;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 44px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--gray);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials-section { padding: 100px 0; overflow: hidden; }
+    .section-header-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+    .carousel-controls { display: flex; gap: 12px; }
+    .carousel-btn {
+      width: 50px; height: 50px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--white);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .carousel-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .carousel-overflow { overflow: hidden; }
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+    }
+    .testimonial-card {
+      flex: 0 0 calc(33.333% - 16px);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 40px;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8rem;
+      color: var(--gold);
+      opacity: 0.15;
+      position: absolute;
+      top: 0; left: 24px;
+      line-height: 1.1;
+    }
+    .t-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 14px; }
+    .t-text { font-style: italic; color: var(--gray-light); font-size: 1rem; margin-bottom: 28px; position: relative; z-index: 1; }
+    .t-author { display: flex; align-items: center; gap: 14px; }
+    .t-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--border);
+      border: 1px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+    .t-name { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--white); }
+    .t-service { font-size: 0.9rem; color: var(--gold); font-style: italic; margin-top: 3px; }
+
+    /* ─── FAQ ─── */
+    .faq-section { padding: 100px 0; background: var(--dark); border-top: 1px solid var(--border); }
+    .faq-layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: start; }
+    .faq-list { border-top: 1px solid var(--border); }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-trigger {
+      width: 100%; background: none; border: none;
+      padding: 22px 0; text-align: left;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem; color: var(--white);
+      cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; transition: color 0.2s;
+    }
+    .faq-trigger:hover, .faq-trigger.open { color: var(--gold); }
+    .faq-icon {
+      width: 26px; height: 26px;
+      border: 1px solid currentColor;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 1.1rem;
+      transition: transform 0.3s;
+    }
+    .faq-trigger.open .faq-icon { transform: rotate(45deg); }
+    .faq-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.38s ease, padding 0.3s;
+      font-style: italic; color: var(--gray-light); font-size: 1rem;
+    }
+    .faq-body.open { max-height: 220px; padding-bottom: 22px; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; gap: 44px; }
+      .stats-row { grid-template-columns: repeat(3, 1fr); }
+      .testimonial-card { flex: 0 0 85%; }
+      .faq-layout { grid-template-columns: 1fr; gap: 48px; }
+      .section-header-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">INK<span class="dot">●</span>TEMPLE</a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+    <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+    <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+    <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="langBtn">EN</button>
+    <a href="booking.html" class="nav-cta-btn" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a>
+  <a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a>
+  <a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a>
+  <a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a>
+  <button class="mobile-lang" id="mobileLangBtn">EN</button>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow" data-gr="Tattoo Studio · Αθήνα, Ελλάδα" data-en="Tattoo Studio · Athens, Greece">Tattoo Studio · Αθήνα, Ελλάδα</span>
+    <h1 class="hero-title">
+      INK
+      <span class="gold-word" data-gr="Είναι τέχνη." data-en="Is art.">Είναι τέχνη.</span>
+      TEMPLE
+    </h1>
+    <p class="hero-sub" data-gr="Κάθε σχέδιο είναι μια ιστορία. Εμπιστευτείτε τους καλλιτέχνες μας να τη χαράξουν πάνω σας για πάντα." data-en="Every design is a story. Trust our artists to engrave it on you forever.">Κάθε σχέδιο είναι μια ιστορία. Εμπιστευτείτε τους καλλιτέχνες μας να τη χαράξουν πάνω σας για πάντα.</p>
+    <div class="hero-actions">
+      <a href="booking.html" class="btn btn-gold" data-gr="Κλείσε Ραντεβού" data-en="Book Appointment">Κλείσε Ραντεβού</a>
+      <a href="team.html" class="btn btn-ghost" data-gr="Δες τους Καλλιτέχνες" data-en="Meet the Artists">Δες τους Καλλιτέχνες</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span data-gr="Scroll" data-en="Scroll">Scroll</span>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section class="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-body">
+        <span class="label" data-gr="Ποιοι είμαστε" data-en="Who We Are">Ποιοι είμαστε</span>
+        <h2 class="heading" style="font-size:clamp(2rem,4vw,3.2rem);margin-bottom:20px;" data-gr="Τέχνη που <em>μένει</em> για πάντα." data-en="Art that <em>lasts</em> forever.">Τέχνη που <em>μένει</em> για πάντα.</h2>
+        <div class="gold-rule"></div>
+        <p data-gr="Στο Ink Temple, πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism." data-en="At Ink Temple, we believe every tattoo is a unique expression of your soul. Our team consists of experienced artists with different specializations — from fine line to traditional and realism.">Στο Ink Temple, πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism.</p>
+        <p data-gr="Χρησιμοποιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα." data-en="We use exclusively professional materials in a space designed for your comfort and safety. Hygiene is always our top priority.">Χρησιμοποιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα.</p>
+        <div class="stats-row">
+          <div><div class="stat-num">10+</div><div class="stat-lbl" data-gr="Χρόνια" data-en="Years">Χρόνια</div></div>
+          <div><div class="stat-num">2K+</div><div class="stat-lbl" data-gr="Σχέδια" data-en="Designs">Σχέδια</div></div>
+          <div><div class="stat-num">12</div><div class="stat-lbl" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</div></div>
+        </div>
+        <div style="margin-top:40px;">
+          <a href="booking.html" class="btn btn-gold" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
+        </div>
+      </div>
+      <div class="about-image-wrap">
+        <img class="about-img" src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=800&q=80" alt="Studio">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header-row">
+      <div>
+        <span class="label" data-gr="Τι λένε οι πελάτες" data-en="What clients say">Τι λένε οι πελάτες</span>
+        <h2 class="heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);" data-gr="Αληθινές <em>εμπειρίες</em>" data-en="Real <em>experiences</em>">Αληθινές <em>εμπειρίες</em></h2>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+        <button class="carousel-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+      </div>
+    </div>
+    <div class="carousel-overflow">
+      <div class="carousel-track" id="carouselTrack">
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text" data-gr="Απίστευτη δουλειά! Ο Tass έκανε ένα fine line tattoo που ξεπέρασε κάθε μου προσδοκία. Ο χώρος ήταν άψογα καθαρός." data-en="Incredible work! Tass did a fine line tattoo that exceeded all my expectations. The space was impeccably clean.">Απίστευτη δουλειά! Ο Tass έκανε ένα fine line tattoo που ξεπέρασε κάθε μου προσδοκία.</p>
+          <div class="t-author"><div class="t-avatar">ΑΜ</div><div><div class="t-name">Αλεξάνδρα Μ.</div><div class="t-service">Fine Line · Tass</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text" data-gr="Το realism sleeve μου από τον Frank είναι αριστούργημα. Κάθε λεπτομέρεια είναι τέλεια." data-en="My realism sleeve by Frank is a masterpiece. Every detail is perfect.">Το realism sleeve μου από τον Frank είναι αριστούργημα. Κάθε λεπτομέρεια είναι τέλεια.</p>
+          <div class="t-author"><div class="t-avatar">ΔΚ</div><div><div class="t-name">Δημήτρης Κ.</div><div class="t-service">Realism Sleeve · Frank</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text" data-gr="Πρώτο μου τατουάζ και ήμουν πολύ αγχωμένη. Η Maria με έκανε να νιώθω απόλυτα άνετα." data-en="My first tattoo and I was very anxious. Maria made me feel completely comfortable.">Πρώτο μου τατουάζ και ήμουν πολύ αγχωμένη. Η Maria με έκανε να νιώθω απόλυτα άνετα.</p>
+          <div class="t-author"><div class="t-avatar">ΝΠ</div><div><div class="t-name">Νίκη Π.</div><div class="t-service">Watercolor · Maria Kokkas</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text" data-gr="Ο Doctor Pepper είναι απλά genius. Έφερα μια ιδέα και εκείνος δημιούργησε κάτι εντελώς πέρα από αυτό που φανταζόμουν." data-en="Doctor Pepper is simply a genius. I brought an idea and he created something beyond what I imagined.">Ο Doctor Pepper είναι απλά genius. Έφερα μια ιδέα και δημιούργησε κάτι εντελώς πέρα από αυτό που φανταζόμουν.</p>
+          <div class="t-author"><div class="t-avatar">ΓΛ</div><div><div class="t-name">Γιώργης Λ.</div><div class="t-service">Neo-Traditional · Doctor Pepper</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text" data-gr="Ο Mr. Droze έκανε ένα geometric τατουάζ με ακρίβεια laser. Άψογη εξυπηρέτηση από την αρχή ως το τέλος." data-en="Mr. Droze did a geometric tattoo with laser precision. Flawless service from start to finish.">Ο Mr. Droze έκανε ένα geometric τατουάζ με ακρίβεια laser. Άψογη εξυπηρέτηση.</p>
+          <div class="t-author"><div class="t-avatar">ΕΧ</div><div><div class="t-name">Ελένη Χ.</div><div class="t-service">Geometric · Mr. Droze</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-layout">
+      <div>
+        <span class="label" data-gr="Συχνές Ερωτήσεις" data-en="FAQ">Συχνές Ερωτήσεις</span>
+        <h2 class="heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);" data-gr="Έχεις <em>απορίες;</em>" data-en="Got <em>questions?</em>">Έχεις <em>απορίες;</em></h2>
+        <div class="gold-rule"></div>
+        <p style="color:var(--gray-light);font-style:italic;" data-gr="Βρες απαντήσεις στις πιο συχνές ερωτήσεις ή επικοινώνησε μαζί μας απευθείας." data-en="Find answers to common questions or contact us directly.">Βρες απαντήσεις στις πιο συχνές ερωτήσεις ή επικοινώνησε μαζί μας απευθείας.</p>
+        <div style="margin-top:32px;"><a href="contact.html" class="btn btn-ghost" data-gr="Επικοινωνία" data-en="Contact Us">Επικοινωνία</a></div>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-trigger"><span data-gr="Πώς κλείνω ραντεβού;" data-en="How do I book an appointment?">Πώς κλείνω ραντεβού;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body"><p data-gr="Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης στον ιστότοπό μας. Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών." data-en="You can book through our booking form. We will contact you within 24 hours to confirm.">Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης. Θα επικοινωνήσουμε εντός 24 ωρών.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger"><span data-gr="Πόσο κοστίζει ένα τατουάζ;" data-en="How much does a tattoo cost?">Πόσο κοστίζει ένα τατουάζ;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body"><p data-gr="Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€. Επικοινώνησε μαζί μας για δωρεάν εκτίμηση." data-en="Price depends on size, style, complexity and artist. Minimum starts from €50. Contact us for a free estimate.">Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger"><span data-gr="Πόσο καιρό διαρκεί η επούλωση;" data-en="How long does healing take?">Πόσο καιρό διαρκεί η επούλωση;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body"><p data-gr="Η επιφανειακή επούλωση διαρκεί 2-3 εβδομάδες. Η πλήρης επούλωση 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες φροντίδας." data-en="Surface healing takes 2-3 weeks. Full healing 3-6 months. You will receive detailed aftercare instructions.">Επιφανειακή επούλωση: 2-3 εβδομάδες. Πλήρης: 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger"><span data-gr="Κάνετε cover-up τατουάζ;" data-en="Do you do cover-up tattoos?">Κάνετε cover-up τατουάζ;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body"><p data-gr="Ναι! Διαθέτουμε εξειδικευμένους καλλιτέχνες σε cover-up. Στείλε φωτογραφία του υπάρχοντος τατουάζ και θα σου προτείνουμε λύσεις." data-en="Yes! We have specialized cover-up artists. Send a photo of the existing tattoo and we will suggest solutions.">Ναι! Στείλε φωτογραφία και θα σου προτείνουμε λύσεις.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger"><span data-gr="Χρειάζεται προκαταβολή;" data-en="Is a deposit required?">Χρειάζεται προκαταβολή;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body"><p data-gr="Ναι, απαιτείται προκαταβολή 30% για να κρατηθεί το ραντεβού σου. Αφαιρείται από το συνολικό κόστος." data-en="Yes, a 30% deposit is required. It is deducted from the total cost.">Ναι, 30% προκαταβολή για κράτηση. Αφαιρείται από το συνολικό κόστος.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger"><span data-gr="Από ποια ηλικία γίνονται τατουάζ;" data-en="Minimum age for tattoos?">Από ποια ηλικία γίνονται τατουάζ;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body"><p data-gr="Τατουάζ γίνονται μόνο σε άτομα 18 ετών και άνω. Απαιτείται έγκυρη ταυτότητα ή διαβατήριο." data-en="Tattoos for ages 18+. Valid ID or passport required.">Μόνο 18+. Απαιτείται έγκυρη ταυτότητα.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger"><span data-gr="Ποια είναι τα μέτρα υγιεινής σας;" data-en="What are your hygiene standards?">Ποια είναι τα μέτρα υγιεινής σας;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body"><p data-gr="Χρησιμοποιούμε αποκλειστικά μίας χρήσης βελόνες και γάντια. Όλος ο εξοπλισμός στειρώνεται με κλίβανο." data-en="We use exclusively single-use needles and gloves. All equipment is sterilized in an autoclave.">Μίας χρήσης βελόνες και γάντια. Στείρωση με κλίβανο. Πλήρη πρωτόκολλα υγιεινής.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">INK<span>●</span>TEMPLE</div>
+        <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
+      </div>
+      <div>
+        <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
+        <ul class="footer-links">
+          <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+          <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+          <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+          <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
+        <ul class="footer-links">
+          <li><a href="tel:+302100000000">+30 210 XXX XXXX</a></li>
+          <li><a href="mailto:info@inktemple.gr">info@inktemple.gr</a></li>
+          <li><span data-gr="Αθήνα, Ελλάδα" data-en="Athens, Greece">Αθήνα, Ελλάδα</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Ink Temple. <span data-gr="Όλα τα δικαιώματα διατηρούνται." data-en="All rights reserved.">Όλα τα δικαιώματα διατηρούνται.</span></span>
+      <span data-gr="Αθήνα, Ελλάδα" data-en="Athens, Greece">Αθήνα, Ελλάδα</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  // ─── CAROUSEL ───
+  let cIdx = 0;
+  const track = document.getElementById('carouselTrack');
+
+  function getVis() {
+    if (window.innerWidth <= 520) return 1;
+    if (window.innerWidth <= 900) return 1.2;
+    return 3;
+  }
+
+  function updateCarousel() {
+    const cards = track.querySelectorAll('.testimonial-card');
+    if (!cards.length) return;
+    const cardW = cards[0].offsetWidth + 24;
+    const vis = Math.floor(getVis());
+    const max = cards.length - vis;
+    cIdx = Math.max(0, Math.min(cIdx, max));
+    track.style.transform = `translateX(-${cIdx * cardW}px)`;
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => { cIdx++; updateCarousel(); });
+  document.getElementById('prevBtn').addEventListener('click', () => { cIdx--; updateCarousel(); });
+  window.addEventListener('resize', () => { cIdx = 0; updateCarousel(); });
+
+  // ─── FAQ ───
+  document.querySelectorAll('.faq-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = btn.nextElementSibling;
+      const isOpen = body.classList.contains('open');
+      document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.faq-trigger').forEach(b => b.classList.remove('open'));
+      if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
+    });
+  });
+</script>
+</body>
+</html>

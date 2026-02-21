@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Ink Temple Admin</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ─── ADMIN NAV ─── */
+    .admin-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px; flex-shrink: 0;
+    }
+    .admin-logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.85rem; font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+    .admin-logo span { color: var(--gold); }
+    .admin-logo small {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem; color: var(--gray);
+      letter-spacing: 0.2em; margin-left: 10px;
+      text-transform: uppercase;
+    }
+    .admin-nav-right { display: flex; align-items: center; gap: 12px; }
+    .admin-logout {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; letter-spacing: 0.1em;
+      background: none; border: 1px solid var(--border);
+      color: var(--gray); padding: 7px 14px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .admin-logout:hover { border-color: var(--red); color: var(--red); }
+
+    /* ─── LAYOUT ─── */
+    .admin-body { display: flex; flex: 1; }
+    .admin-sidebar {
+      width: 220px; flex-shrink: 0;
+      background: var(--dark);
+      border-right: 1px solid var(--border);
+      padding: 32px 0;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 24px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gray);
+      cursor: pointer; border: none; background: none;
+      width: 100%; text-align: left;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    .sidebar-link:hover { color: var(--white); background: rgba(255,255,255,0.03); }
+    .sidebar-link.active { color: var(--gold); border-left-color: var(--gold); background: var(--gold-dim); }
+    .sidebar-badge {
+      margin-left: auto;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.55rem;
+      padding: 2px 7px;
+      font-weight: 700;
+    }
+    .admin-main { flex: 1; overflow-y: auto; padding: 40px; }
+
+    /* ─── TABS ─── */
+    .admin-tab { display: none; }
+    .admin-tab.active { display: block; }
+
+    /* ─── STATS ─── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-bottom: 40px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+    .stat-card-num {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 2.2rem; font-weight: 900;
+      color: var(--gold); line-height: 1;
+    }
+    .stat-card-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; color: var(--gray);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-top: 8px;
+    }
+
+    /* ─── SECTION HEADERS ─── */
+    .section-head {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-head h2 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── TABLES ─── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold);
+      padding: 12px 16px; text-align: left;
+      border-bottom: 1px solid var(--border);
+      background: var(--dark);
+    }
+    .data-table td {
+      padding: 14px 16px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(30,30,30,0.6);
+      vertical-align: middle;
+    }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .status-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 10px;
+      border: 1px solid;
+    }
+    .status-pending { color: #f39c12; border-color: #f39c12; }
+    .status-confirmed { color: var(--green); border-color: var(--green); }
+    .status-completed { color: var(--gray); border-color: var(--gray); }
+    .status-cancelled { color: var(--red); border-color: var(--red); }
+    .unread-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%; background: var(--gold);
+      display: inline-block; margin-right: 8px;
+    }
+    .table-wrap { overflow-x: auto; }
+
+    /* ─── ARTIST CARDS (admin) ─── */
+    .artist-admin-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .artist-admin-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .artist-admin-photo {
+      width: 100%; aspect-ratio: 3/2;
+      object-fit: cover; display: block;
+      filter: grayscale(40%);
+    }
+    .artist-admin-body { padding: 16px; }
+    .artist-admin-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.8rem; font-weight: 700; margin-bottom: 4px;
+    }
+    .artist-admin-role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .artist-admin-bio {
+      font-size: 0.85rem; color: var(--gray-light);
+      font-style: italic; margin-bottom: 14px;
+      display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .artist-admin-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* ─── PHOTO GRID ─── */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px; margin-top: 14px;
+    }
+    .photo-thumb {
+      position: relative;
+      aspect-ratio: 1; overflow: hidden;
+      background: var(--dark);
+    }
+    .photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-thumb-del {
+      position: absolute; top: 4px; right: 4px;
+      width: 22px; height: 22px;
+      background: rgba(192,57,43,0.9);
+      border: none; color: white;
+      cursor: pointer; font-size: 0.75rem;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .photo-thumb:hover .photo-thumb-del { opacity: 1; }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88); z-index: 3000;
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 40px; width: 100%;
+      max-width: 580px; max-height: 90vh;
+      overflow-y: auto; position: relative;
+    }
+    .modal-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.9rem; font-weight: 700;
+      margin-bottom: 28px;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      background: none; border: 1px solid var(--border);
+      color: var(--white); width: 36px; height: 36px;
+      cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+    .modal-actions { display: flex; gap: 12px; margin-top: 24px; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .admin-sidebar { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .artist-admin-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .admin-main { padding: 24px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .artist-admin-grid { grid-template-columns: 1fr; }
+      .photos-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ADMIN NAV -->
+<nav class="admin-nav">
+  <div class="admin-logo">INK<span>●</span>TEMPLE<small>Admin</small></div>
+  <div class="admin-nav-right">
+    <a href="../index.html" style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--gray);text-decoration:none;letter-spacing:0.1em;" target="_blank">↗ View Site</a>
+    <button class="admin-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- BODY -->
+<div class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <button class="sidebar-link active" onclick="switchTab('overview')">📊 Overview</button>
+    <button class="sidebar-link" onclick="switchTab('artists')">🎨 Artists</button>
+    <button class="sidebar-link" onclick="switchTab('bookings')">📅 Bookings <span class="sidebar-badge" id="pendingBadge" style="display:none;"></span></button>
+    <button class="sidebar-link" onclick="switchTab('contacts')">✉️ Messages <span class="sidebar-badge" id="unreadBadge" style="display:none;"></span></button>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+
+    <!-- OVERVIEW TAB -->
+    <div class="admin-tab active" id="tab-overview">
+      <div class="section-head"><h2>Overview</h2></div>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="stat-card-num" id="stat-total-bookings">—</div><div class="stat-card-lbl">Total Bookings</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-pending">—</div><div class="stat-card-lbl">Pending</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-unread-bookings">—</div><div class="stat-card-lbl">Unread Bookings</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-unread-contacts">—</div><div class="stat-card-lbl">Unread Messages</div></div>
+      </div>
+      <p style="color:var(--gray);font-style:italic;font-size:0.95rem;">Use the sidebar to manage artists, view bookings, and read messages.</p>
+    </div>
+
+    <!-- ARTISTS TAB -->
+    <div class="admin-tab" id="tab-artists">
+      <div class="section-head">
+        <h2>Artists</h2>
+        <button class="btn btn-gold btn-sm" onclick="openArtistModal()">+ Add Artist</button>
+      </div>
+      <div class="artist-admin-grid" id="artistsAdminGrid">
+        <div style="color:var(--gray);font-style:italic;padding:40px;">Loading...</div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS TAB -->
+    <div class="admin-tab" id="tab-bookings">
+      <div class="section-head">
+        <h2>Bookings</h2>
+        <select id="statusFilter" class="form-select" style="width:auto;padding:8px 32px 8px 12px;font-size:0.8rem;" onchange="loadBookings()">
+          <option value="">All</option>
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Artist</th>
+              <th>Service</th>
+              <th>Phone</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsBody">
+            <tr><td colspan="8" style="color:var(--gray);font-style:italic;text-align:center;padding:40px;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CONTACTS TAB -->
+    <div class="admin-tab" id="tab-contacts">
+      <div class="section-head"><h2>Messages</h2></div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Message</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="contactsBody">
+            <tr><td colspan="7" style="color:var(--gray);font-style:italic;text-align:center;padding:40px;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ─── ARTIST MODAL ─── -->
+<div class="modal-overlay" id="artistModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeArtistModal()">✕</button>
+    <div class="modal-title" id="artistModalTitle">Add Artist</div>
+    <form id="artistForm" novalidate>
+      <input type="hidden" id="artistId">
+      <div class="form-group">
+        <label class="form-label">Name *</label>
+        <input class="form-input" id="aName" required placeholder="Artist name">
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label">Style (Greek) *</label>
+          <input class="form-input" id="aRoleGr" required placeholder="π.χ. Realism">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Style (English) *</label>
+          <input class="form-input" id="aRoleEn" required placeholder="e.g. Realism">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bio (Greek) *</label>
+        <textarea class="form-textarea" id="aBioGr" required style="min-height:80px;" placeholder="Περιγραφή..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bio (English) *</label>
+        <textarea class="form-textarea" id="aBioEn" required style="min-height:80px;" placeholder="Description..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Display Order</label>
+        <input class="form-input" id="aOrder" type="number" placeholder="0" value="0">
+      </div>
+      <div class="form-group" style="display:flex;align-items:center;gap:12px;">
+        <input type="checkbox" id="aActive" checked style="width:16px;height:16px;accent-color:var(--gold);">
+        <label style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);">Active (visible on site)</label>
+      </div>
+
+      <!-- PHOTOS (shown in edit mode) -->
+      <div id="photoSection" style="display:none;">
+        <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
+          <label class="form-label">Portfolio Photos</label>
+          <div class="photos-grid" id="photosGrid"></div>
+          <div style="margin-top:12px;">
+            <label class="file-upload" style="display:block;">
+              <input type="file" id="photoUploadInput" accept=".jpg,.jpeg,.png,.webp" multiple onchange="uploadPhotos(this)">
+              <span class="file-upload-icon">+</span>
+              <span class="file-upload-text">Upload Photos (JPG, PNG, WEBP)</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="submit-btn" id="artistSaveBtn" style="margin-top:0;flex:1;">
+          <span class="btn-text">Save Artist</span>
+          <span class="btn-spinner"></span>
+        </button>
+        <button type="button" class="btn btn-ghost" onclick="closeArtistModal()">Cancel</button>
+      </div>
+      <div class="alert" id="artistAlert"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ─── BOOKING DETAIL MODAL ─── -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
+    <div class="modal-title">Booking Details</div>
+    <div id="bookingDetail"></div>
+    <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;" id="bookingActions"></div>
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script>
+  // ─── AUTH GUARD ───
+  if (!isLoggedIn()) window.location.href = 'login.html';
+
+  function logout() {
+    clearToken();
+    window.location.href = 'login.html';
+  }
+
+  // ─── TABS ───
+  function switchTab(tab) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+    document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+
+    if (tab === 'overview') loadStats();
+    if (tab === 'artists') loadArtists();
+    if (tab === 'bookings') loadBookings();
+    if (tab === 'contacts') loadContacts();
+  }
+
+  // ─── STATS ───
+  async function loadStats() {
+    try {
+      const s = await apiAuthGet('/api/admin/stats');
+      document.getElementById('stat-total-bookings').textContent = s.totalBookings;
+      document.getElementById('stat-pending').textContent = s.pendingBookings;
+      document.getElementById('stat-unread-bookings').textContent = s.unreadBookings;
+      document.getElementById('stat-unread-contacts').textContent = s.unreadContacts;
+
+      // Sidebar badges
+      if (s.pendingBookings > 0) {
+        const b = document.getElementById('pendingBadge');
+        b.textContent = s.pendingBookings; b.style.display = '';
+      }
+      if (s.unreadContacts > 0) {
+        const b = document.getElementById('unreadBadge');
+        b.textContent = s.unreadContacts; b.style.display = '';
+      }
+    } catch (err) { console.error(err); }
+  }
+
+  // ─── ARTISTS ───
+  let editingArtist = null;
+
+  async function loadArtists() {
+    const grid = document.getElementById('artistsAdminGrid');
+    try {
+      const artists = await apiAuthGet('/api/artists/all');
+      if (!artists.length) {
+        grid.innerHTML = `<div style="color:var(--gray);font-style:italic;padding:40px;grid-column:1/-1;">No artists yet. Add one above.</div>`;
+        return;
+      }
+      grid.innerHTML = '';
+      artists.forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'artist-admin-card';
+        const cover = a.photos?.[0]?.url || '';
+        card.innerHTML = `
+          ${cover ? `<img class="artist-admin-photo" src="${cover}" alt="${a.name}" loading="lazy">` : `<div style="width:100%;aspect-ratio:3/2;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-size:2rem;">📷</div>`}
+          <div class="artist-admin-body">
+            <div class="artist-admin-name">${a.name} ${!a.active ? '<span style="color:var(--red);font-size:0.65rem;">(Hidden)</span>' : ''}</div>
+            <div class="artist-admin-role">${a.role.en}</div>
+            <div class="artist-admin-bio">${a.bio.en}</div>
+            <div class="artist-admin-actions">
+              <button class="btn btn-ghost btn-sm" onclick='editArtist(${JSON.stringify(a)})'>✏️ Edit</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteArtist('${a._id}','${a.name}')">Delete</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    } catch (err) {
+      grid.innerHTML = `<div style="color:var(--red);padding:40px;">${err.message}</div>`;
+    }
+  }
+
+  function openArtistModal(artist = null) {
+    editingArtist = artist;
+    document.getElementById('artistModalTitle').textContent = artist ? 'Edit Artist' : 'Add Artist';
+    document.getElementById('artistId').value = artist?._id || '';
+    document.getElementById('aName').value = artist?.name || '';
+    document.getElementById('aRoleGr').value = artist?.role?.gr || '';
+    document.getElementById('aRoleEn').value = artist?.role?.en || '';
+    document.getElementById('aBioGr').value = artist?.bio?.gr || '';
+    document.getElementById('aBioEn').value = artist?.bio?.en || '';
+    document.getElementById('aOrder').value = artist?.order ?? 0;
+    document.getElementById('aActive').checked = artist?.active !== false;
+
+    const photoSection = document.getElementById('photoSection');
+    if (artist) {
+      photoSection.style.display = 'block';
+      renderPhotos(artist.photos || [], artist._id);
+    } else {
+      photoSection.style.display = 'none';
+    }
+
+    document.getElementById('artistModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeArtistModal() {
+    document.getElementById('artistModal').classList.remove('open');
+    document.body.style.overflow = '';
+    editingArtist = null;
+  }
+
+  function editArtist(artist) { openArtistModal(artist); }
+
+  document.getElementById('artistForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('artistSaveBtn');
+    btn.classList.add('loading'); btn.disabled = true;
+
+    const payload = {
+      name: document.getElementById('aName').value.trim(),
+      role: { gr: document.getElementById('aRoleGr').value.trim(), en: document.getElementById('aRoleEn').value.trim() },
+      bio: { gr: document.getElementById('aBioGr').value.trim(), en: document.getElementById('aBioEn').value.trim() },
+      order: parseInt(document.getElementById('aOrder').value) || 0,
+      active: document.getElementById('aActive').checked,
+    };
+
+    try {
+      const id = document.getElementById('artistId').value;
+      if (id) {
+        await apiAuthPost(`/api/artists/${id}`, payload, 'PUT');
+      } else {
+        await apiAuthPost('/api/artists', payload);
+      }
+      closeArtistModal();
+      loadArtists();
+    } catch (err) {
+      showAlert('artistAlert', 'error', err.message, err.message);
+    } finally {
+      btn.classList.remove('loading'); btn.disabled = false;
+    }
+  });
+
+  async function deleteArtist(id, name) {
+    if (!confirm(`Delete "${name}"? This will also delete all their photos from Cloudinary.`)) return;
+    try {
+      await apiAuthDelete(`/api/artists/${id}`);
+      loadArtists();
+    } catch (err) { alert(err.message); }
+  }
+
+  // ─── PHOTOS ───
+  function renderPhotos(photos, artistId) {
+    const grid = document.getElementById('photosGrid');
+    grid.innerHTML = '';
+    photos.forEach(p => {
+      const wrap = document.createElement('div');
+      wrap.className = 'photo-thumb';
+      wrap.innerHTML = `
+        <img src="${p.url}" alt="" loading="lazy">
+        <button class="photo-thumb-del" onclick="deletePhoto('${artistId}','${p._id}')" title="Delete">✕</button>
+      `;
+      grid.appendChild(wrap);
+    });
+  }
+
+  async function uploadPhotos(input) {
+    if (!editingArtist) return;
+    const files = Array.from(input.files);
+    for (const file of files) {
+      const fd = new FormData();
+      fd.append('photo', file);
+      try {
+        const updated = await apiAuthFormPost(`/api/artists/${editingArtist._id}/photos`, fd);
+        editingArtist = updated;
+        renderPhotos(updated.photos, updated._id);
+      } catch (err) { alert(`Failed to upload ${file.name}: ${err.message}`); }
+    }
+    input.value = '';
+    loadArtists();
+  }
+
+  async function deletePhoto(artistId, photoId) {
+    if (!confirm('Delete this photo?')) return;
+    try {
+      const updated = await apiAuthDelete(`/api/artists/${artistId}/photos/${photoId}`);
+      editingArtist = updated;
+      renderPhotos(updated.photos, updated._id);
+      loadArtists();
+    } catch (err) { alert(err.message); }
+  }
+
+  // ─── BOOKINGS ───
+  async function loadBookings() {
+    const body = document.getElementById('bookingsBody');
+    const status = document.getElementById('statusFilter').value;
+    body.innerHTML = `<tr><td colspan="8" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">Loading...</td></tr>`;
+    try {
+      const { bookings } = await apiAuthGet(`/api/booking?status=${status}&limit=50`);
+      if (!bookings.length) {
+        body.innerHTML = `<tr><td colspan="8" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">No bookings found.</td></tr>`;
+        return;
+      }
+      body.innerHTML = '';
+      bookings.forEach(b => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${!b.read ? '<span class="unread-dot"></span>' : ''}</td>
+          <td><strong>${b.fullName}</strong><br><span style="color:var(--gray);font-size:0.82rem;">${b.email}</span></td>
+          <td>${b.artist}</td>
+          <td style="font-size:0.88rem;">${b.service}</td>
+          <td style="font-size:0.88rem;">${b.phone}</td>
+          <td style="font-size:0.82rem;color:var(--gray);">${new Date(b.createdAt).toLocaleDateString('el-GR')}</td>
+          <td><span class="status-badge status-${b.status}">${b.status}</span></td>
+          <td>
+            <button class="btn btn-ghost btn-sm" onclick='viewBooking(${JSON.stringify(b).replace(/'/g,"&apos;")})'>View</button>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    } catch (err) {
+      body.innerHTML = `<tr><td colspan="8" style="color:var(--red);text-align:center;padding:32px;">${err.message}</td></tr>`;
+    }
+  }
+
+  function viewBooking(b) {
+    // Mark as read
+    if (!b.read) {
+      apiAuthPatch(`/api/booking/${b._id}`, { read: true }).catch(() => {});
+    }
+
+    const detail = document.getElementById('bookingDetail');
+    detail.innerHTML = `
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Name', b.fullName)}
+        ${row('Email', `<a href="mailto:${b.email}" style="color:var(--gold);">${b.email}</a>`)}
+        ${row('Phone', `<a href="tel:${b.phone}" style="color:var(--gold);">${b.phone}</a>`)}
+        ${row('Artist', b.artist)}
+        ${row('Service', b.service)}
+        ${row('Date', new Date(b.createdAt).toLocaleString('el-GR'))}
+        ${row('Status', `<span class="status-badge status-${b.status}">${b.status}</span>`)}
+        ${b.message ? row('Message', `<em style="color:var(--gray-light);">${b.message}</em>`) : ''}
+        ${b.attachments?.length ? row('Attachments', b.attachments.map(a => `<a href="${a.url}" target="_blank" style="color:var(--gold);display:block;">${a.originalName}</a>`).join('')) : ''}
+        ${b.notes ? row('Admin Notes', `<em style="color:var(--gray-light);">${b.notes}</em>`) : ''}
+      </table>
+    `;
+
+    const actions = document.getElementById('bookingActions');
+    actions.innerHTML = `
+      <select id="statusSelect" class="form-select" style="width:auto;padding:8px 36px 8px 12px;font-size:0.8rem;">
+        ${['pending','confirmed','completed','cancelled'].map(s => `<option value="${s}" ${b.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+      <button class="btn btn-gold btn-sm" onclick="updateBookingStatus('${b._id}')">Update Status</button>
+      <button class="btn btn-danger btn-sm" onclick="deleteBookingConfirm('${b._id}')">Delete</button>
+    `;
+
+    document.getElementById('bookingModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function row(label, val) {
+    return `<tr><td style="padding:10px 0;border-bottom:1px solid var(--border);color:var(--gray);width:35%;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;vertical-align:top;">${label}</td><td style="padding:10px 0;border-bottom:1px solid var(--border);vertical-align:top;">${val}</td></tr>`;
+  }
+
+  async function updateBookingStatus(id) {
+    const status = document.getElementById('statusSelect').value;
+    try {
+      await apiAuthPatch(`/api/booking/${id}`, { status });
+      closeModal('bookingModal');
+      loadBookings();
+    } catch (err) { alert(err.message); }
+  }
+
+  async function deleteBookingConfirm(id) {
+    if (!confirm('Delete this booking?')) return;
+    try {
+      await apiAuthDelete(`/api/booking/${id}`);
+      closeModal('bookingModal');
+      loadBookings();
+    } catch (err) { alert(err.message); }
+  }
+
+  // ─── CONTACTS ───
+  async function loadContacts() {
+    const body = document.getElementById('contactsBody');
+    body.innerHTML = `<tr><td colspan="7" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">Loading...</td></tr>`;
+    try {
+      const { contacts } = await apiAuthGet('/api/contact?limit=50');
+      if (!contacts.length) {
+        body.innerHTML = `<tr><td colspan="7" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">No messages.</td></tr>`;
+        return;
+      }
+      body.innerHTML = '';
+      contacts.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${!c.read ? '<span class="unread-dot"></span>' : ''}</td>
+          <td><strong>${c.name}</strong></td>
+          <td><a href="mailto:${c.email}" style="color:var(--gold);">${c.email}</a></td>
+          <td style="font-size:0.85rem;">${c.phone || '—'}</td>
+          <td style="font-size:0.88rem;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic;color:var(--gray-light);">${c.message}</td>
+          <td style="font-size:0.82rem;color:var(--gray);">${new Date(c.createdAt).toLocaleDateString('el-GR')}</td>
+          <td>
+            <button class="btn btn-ghost btn-sm" onclick='viewContact(${JSON.stringify(c).replace(/'/g,"&apos;")})'>View</button>
+          </td>
+        `;
+        body.appendChild(tr);
+      });
+    } catch (err) {
+      body.innerHTML = `<tr><td colspan="7" style="color:var(--red);text-align:center;padding:32px;">${err.message}</td></tr>`;
+    }
+  }
+
+  function viewContact(c) {
+    if (!c.read) {
+      apiAuthPatch(`/api/contact/${c._id}`, { read: true }).catch(() => {});
+    }
+    const detail = document.getElementById('bookingDetail');
+    detail.innerHTML = `
+      <table style="width:100%;border-collapse:collapse;">
+        ${row('Name', c.name)}
+        ${row('Email', `<a href="mailto:${c.email}" style="color:var(--gold);">${c.email}</a>`)}
+        ${c.phone ? row('Phone', `<a href="tel:${c.phone}" style="color:var(--gold);">${c.phone}</a>`) : ''}
+        ${row('Date', new Date(c.createdAt).toLocaleString('el-GR'))}
+        ${row('Message', `<em style="color:var(--gray-light);white-space:pre-wrap;">${c.message}</em>`)}
+      </table>
+    `;
+    const actions = document.getElementById('bookingActions');
+    actions.innerHTML = `
+      <a href="mailto:${c.email}" class="btn btn-gold btn-sm">Reply via Email</a>
+      <button class="btn btn-danger btn-sm" onclick="deleteContactConfirm('${c._id}')">Delete</button>
+    `;
+    document.getElementById('bookingModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  async function deleteContactConfirm(id) {
+    if (!confirm('Delete this message?')) return;
+    try {
+      await apiAuthDelete(`/api/contact/${id}`);
+      closeModal('bookingModal');
+      loadContacts();
+    } catch (err) { alert(err.message); }
+  }
+
+  // ─── UTILS ───
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', function(e) {
+      if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.open').forEach(m => {
+        m.classList.remove('open'); document.body.style.overflow = '';
+      });
+    }
+  });
+
+  // ─── INIT ───
+  loadStats();
+</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Επικοινωνία — Ink Temple</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">INK<span class="dot">●</span>TEMPLE</a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+    <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+    <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+    <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="langBtn">EN</button>
+    <a href="booking.html" class="nav-cta-btn" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a>
+  <a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a>
+  <a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a>
+  <a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a>
+  <button class="mobile-lang" id="mobileLangBtn">EN</button>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header" data-title="CONTACT">
+  <div class="container">
+    <span class="label" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</span>
+    <h1 class="heading" style="font-size:clamp(2.2rem,5vw,4rem);margin-bottom:20px;" data-gr="Μίλα <em>μαζί μας</em>" data-en="Talk <em>to us</em>">Μίλα <em>μαζί μας</em></h1>
+    <div class="gold-rule"></div>
+    <p style="color:var(--gray-light);font-style:italic;max-width:480px;" data-gr="Έχεις ερώτηση ή θέλεις να μάθεις περισσότερα; Είμαστε εδώ." data-en="Have a question or want to learn more? We are here.">Έχεις ερώτηση ή θέλεις να μάθεις περισσότερα; Είμαστε εδώ.</p>
+  </div>
+</header>
+
+<!-- FORM + SIDEBAR -->
+<div class="container">
+  <div class="split-layout">
+
+    <!-- FORM -->
+    <div class="form-wrap">
+      <form id="contactForm" novalidate>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="name" data-gr="Όνομα *" data-en="Name *">Όνομα *</label>
+            <input class="form-input" type="text" id="name" required
+              data-ph-gr="Το όνομά σου" data-ph-en="Your name"
+              placeholder="Το όνομά σου">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email" data-gr="Email *" data-en="Email *">Email *</label>
+            <input class="form-input" type="email" id="email" required placeholder="your@email.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="phone" data-gr="Τηλέφωνο" data-en="Phone">Τηλέφωνο</label>
+          <input class="form-input" type="tel" id="phone"
+            data-ph-gr="69XXXXXXXX (προαιρετικό)" data-ph-en="+30 69XXXXXXXX (optional)"
+            placeholder="69XXXXXXXX (προαιρετικό)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message" data-gr="Μήνυμα *" data-en="Message *">Μήνυμα *</label>
+          <textarea class="form-textarea" id="message" required style="min-height:160px;"
+            data-ph-gr="Πες μας τι σκέφτεσαι..." data-ph-en="Tell us what's on your mind..."
+            placeholder="Πες μας τι σκέφτεσαι..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text" data-gr="Αποστολή" data-en="Send Message">Αποστολή</span>
+          <span class="btn-spinner"></span>
+        </button>
+
+        <div class="alert" id="formAlert"></div>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="info-card">
+        <div class="info-card-title" data-gr="Στοιχεία Επικοινωνίας" data-en="Contact Details">Στοιχεία Επικοινωνίας</div>
+        <div class="info-row">
+          <span class="info-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          <a href="tel:+302100000000" style="color:inherit;text-decoration:none;">+30 210 XXX XXXX</a>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </span>
+          <a href="mailto:info@inktemple.gr" style="color:inherit;text-decoration:none;">info@inktemple.gr</a>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <span data-gr="Διεύθυνση Studio, Αθήνα 10000" data-en="Studio Address, Athens 10000">Διεύθυνση Studio, Αθήνα 10000</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="info-card-title" data-gr="Social Media" data-en="Social Media">Social Media</div>
+        <div class="social-row">
+          <a class="social-btn" href="https://instagram.com/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="social-btn" href="https://facebook.com/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a class="social-btn" href="https://tiktok.com/" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="map-wrap">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=23.72,37.97,23.74,37.99&layer=mapnik"
+          title="Map location"
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo">INK<span>●</span>TEMPLE</div><p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p></div>
+      <div>
+        <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
+        <ul class="footer-links">
+          <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+          <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+          <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+          <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
+        <ul class="footer-links">
+          <li><a href="tel:+302100000000">+30 210 XXX XXXX</a></li>
+          <li><a href="mailto:info@inktemple.gr">info@inktemple.gr</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Ink Temple.</span>
+      <span data-gr="Αθήνα, Ελλάδα" data-en="Athens, Greece">Αθήνα, Ελλάδα</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+      await apiPost('/api/contact', {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        message: document.getElementById('message').value.trim(),
+      });
+
+      showAlert('formAlert', 'success',
+        '✓ Το μήνυμά σου εστάλη! Θα επικοινωνήσουμε σύντομα.',
+        '✓ Message sent! We will be in touch soon.'
+      );
+      this.reset();
+    } catch (err) {
+      showAlert('formAlert', 'error',
+        '✕ Σφάλμα κατά την αποστολή. Παρακαλώ δοκίμασε ξανά.',
+        '✕ Submission failed. Please try again.'
+      );
+    } finally {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

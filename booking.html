@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Κράτηση Ραντεβού — Ink Temple</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">INK<span class="dot">●</span>TEMPLE</a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+    <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+    <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+    <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="langBtn">EN</button>
+    <a href="booking.html" class="nav-cta-btn" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a>
+  <a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a>
+  <a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a>
+  <a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a>
+  <button class="mobile-lang" id="mobileLangBtn">EN</button>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header" data-title="BOOKING">
+  <div class="container">
+    <span class="label" data-gr="Κράτηση Ραντεβού" data-en="Book an Appointment">Κράτηση Ραντεβού</span>
+    <h1 class="heading" style="font-size:clamp(2.2rem,5vw,4rem);margin-bottom:20px;" data-gr="Κλείσε <em>Ραντεβού</em>" data-en="Book <em>Now</em>">Κλείσε <em>Ραντεβού</em></h1>
+    <div class="gold-rule"></div>
+    <p style="color:var(--gray-light);font-style:italic;max-width:480px;" data-gr="Συμπλήρωσε τη φόρμα και θα επικοινωνήσουμε μαζί σου εντός 24 ωρών για επιβεβαίωση." data-en="Fill in the form and we will contact you within 24 hours to confirm.">Συμπλήρωσε τη φόρμα και θα επικοινωνήσουμε εντός 24 ωρών.</p>
+  </div>
+</header>
+
+<!-- FORM + SIDEBAR -->
+<div class="container">
+  <div class="split-layout">
+
+    <!-- FORM -->
+    <div class="form-wrap">
+      <form id="bookingForm" novalidate>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="fullName" data-gr="Ονοματεπώνυμο *" data-en="Full Name *">Ονοματεπώνυμο *</label>
+            <input class="form-input" type="text" id="fullName" name="fullName" required
+              data-ph-gr="π.χ. Νίκος Παπαδόπουλος" data-ph-en="e.g. Nikos Papadopoulos"
+              placeholder="π.χ. Νίκος Παπαδόπουλος">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone" data-gr="Τηλέφωνο *" data-en="Phone *">Τηλέφωνο *</label>
+            <input class="form-input" type="tel" id="phone" name="phone" required
+              data-ph-gr="π.χ. 6912345678" data-ph-en="e.g. +30 6912345678"
+              placeholder="π.χ. 6912345678">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email" data-gr="Email *" data-en="Email *">Email *</label>
+          <input class="form-input" type="email" id="email" name="email" required
+            placeholder="your@email.com">
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label" for="artist" data-gr="Καλλιτέχνης *" data-en="Artist *">Καλλιτέχνης *</label>
+            <select class="form-select" id="artist" name="artist" required>
+              <option value="" disabled selected data-gr="Επέλεξε καλλιτέχνη" data-en="Select artist">Επέλεξε καλλιτέχνη</option>
+              <option>Doctor Pepper</option>
+              <option>Tass</option>
+              <option>Ome</option>
+              <option>Frank</option>
+              <option>Jerry</option>
+              <option>Maria Kokkas</option>
+              <option>Manu Fodas</option>
+              <option>Mr. Droze</option>
+              <option>Manager</option>
+              <option>Aeneas</option>
+              <option>Artdicted</option>
+              <option data-gr="Όποιον θέλετε" data-en="Any available">Όποιον θέλετε</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="service" data-gr="Υπηρεσία *" data-en="Service *">Υπηρεσία *</label>
+            <select class="form-select" id="service" name="service" required>
+              <option value="" disabled selected data-gr="Επέλεξε υπηρεσία" data-en="Select service">Επέλεξε υπηρεσία</option>
+              <option data-gr="Νέο Τατουάζ" data-en="New Tattoo">Νέο Τατουάζ</option>
+              <option data-gr="Cover-Up" data-en="Cover-Up">Cover-Up</option>
+              <option data-gr="Touch-Up / Retouching" data-en="Touch-Up / Retouching">Touch-Up / Retouching</option>
+              <option data-gr="Fine Line" data-en="Fine Line">Fine Line</option>
+              <option data-gr="Traditional" data-en="Traditional">Traditional</option>
+              <option data-gr="Realism" data-en="Realism">Realism</option>
+              <option data-gr="Neo-Traditional" data-en="Neo-Traditional">Neo-Traditional</option>
+              <option data-gr="Geometric / Mandala" data-en="Geometric / Mandala">Geometric / Mandala</option>
+              <option data-gr="Watercolor" data-en="Watercolor">Watercolor</option>
+              <option data-gr="Blackwork" data-en="Blackwork">Blackwork</option>
+              <option data-gr="Japanese / Irezumi" data-en="Japanese / Irezumi">Japanese / Irezumi</option>
+              <option data-gr="Portrait" data-en="Portrait">Portrait</option>
+              <option data-gr="Sleeve" data-en="Sleeve">Sleeve</option>
+              <option data-gr="Lettering / Calligraphy" data-en="Lettering / Calligraphy">Lettering / Calligraphy</option>
+              <option data-gr="Piercing" data-en="Piercing">Piercing</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" data-gr="Φωτογραφίες / Σχέδια" data-en="Photos / Designs">
+            Φωτογραφίες / Σχέδια
+            <span style="color:var(--gray);font-size:0.85em;" data-gr="(έως 5 αρχεία · JPG, PNG, PDF)" data-en="(max 5 files · JPG, PNG, PDF)">(έως 5 αρχεία · JPG, PNG, PDF)</span>
+          </label>
+          <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+            <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.pdf" multiple>
+            <span class="file-upload-icon">⊕</span>
+            <span class="file-upload-text" data-gr="Κλικ για επιλογή αρχείων" data-en="Click to select files">Κλικ για επιλογή αρχείων</span>
+          </div>
+          <div class="file-list" id="fileList"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="message" data-gr="Μήνυμα" data-en="Message">Μήνυμα</label>
+          <textarea class="form-textarea" id="message" name="message"
+            data-ph-gr="Περιέγραψε την ιδέα σου, μέγεθος, τοποθεσία στο σώμα κ.λπ."
+            data-ph-en="Describe your idea, size, body placement, etc."
+            placeholder="Περιέγραψε την ιδέα σου, μέγεθος, τοποθεσία στο σώμα κ.λπ."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span class="btn-text" data-gr="Αποστολή" data-en="Send Request">Αποστολή</span>
+          <span class="btn-spinner"></span>
+        </button>
+
+        <div class="alert" id="formAlert"></div>
+      </form>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="info-card">
+        <div class="info-card-title" data-gr="Ωράριο Λειτουργίας" data-en="Opening Hours">Ωράριο Λειτουργίας</div>
+        <div class="info-row"><span class="info-icon">◷</span><span data-gr="Δευτέρα – Παρασκευή: 10:00–20:00" data-en="Monday – Friday: 10:00–20:00">Δευτέρα – Παρασκευή: 10:00–20:00</span></div>
+        <div class="info-row"><span class="info-icon">◷</span><span data-gr="Σάββατο: 10:00–18:00" data-en="Saturday: 10:00–18:00">Σάββατο: 10:00–18:00</span></div>
+        <div class="info-row"><span class="info-icon">◷</span><span data-gr="Κυριακή: Κλειστά" data-en="Sunday: Closed">Κυριακή: Κλειστά</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title" data-gr="Σημαντικές Πληροφορίες" data-en="Important Info">Σημαντικές Πληροφορίες</div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Απαιτείται προκαταβολή 30%" data-en="30% deposit required">Απαιτείται προκαταβολή 30%</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Ελάχιστη ηλικία: 18 ετών" data-en="Minimum age: 18 years">Ελάχιστη ηλικία: 18 ετών</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Φέρε έγκυρη ταυτότητα" data-en="Bring valid ID">Φέρε έγκυρη ταυτότητα</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Απάντηση εντός 24 ωρών" data-en="Response within 24 hours">Απάντηση εντός 24 ωρών</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Ελεύθερη δωρεάν εκτίμηση" data-en="Free consultation available">Ελεύθερη δωρεάν εκτίμηση</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo">INK<span>●</span>TEMPLE</div><p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p></div>
+      <div>
+        <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
+        <ul class="footer-links">
+          <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+          <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+          <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+          <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
+        <ul class="footer-links">
+          <li><a href="tel:+302100000000">+30 210 XXX XXXX</a></li>
+          <li><a href="mailto:info@inktemple.gr">info@inktemple.gr</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Ink Temple.</span>
+      <span data-gr="Αθήνα, Ελλάδα" data-en="Athens, Greece">Αθήνα, Ελλάδα</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  let selectedFiles = [];
+
+  // File input handler
+  document.getElementById('fileInput').addEventListener('change', function() {
+    const newFiles = Array.from(this.files);
+    newFiles.forEach(f => {
+      if (selectedFiles.length < 5) selectedFiles.push(f);
+    });
+    renderFiles();
+    this.value = '';
+  });
+
+  function renderFiles() {
+    const list = document.getElementById('fileList');
+    list.innerHTML = '';
+    selectedFiles.forEach((f, i) => {
+      const chip = document.createElement('div');
+      chip.className = 'file-chip';
+      chip.innerHTML = `<span>${f.name} <span style="color:var(--gray);font-size:0.8em;">(${(f.size/1024).toFixed(0)}kb)</span></span><button onclick="removeFile(${i})" title="Remove">✕</button>`;
+      list.appendChild(chip);
+    });
+  }
+
+  function removeFile(i) { selectedFiles.splice(i, 1); renderFiles(); }
+
+  // Form submit
+  document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    try {
+      const formData = new FormData();
+      formData.append('fullName', document.getElementById('fullName').value.trim());
+      formData.append('phone', document.getElementById('phone').value.trim());
+      formData.append('email', document.getElementById('email').value.trim());
+      formData.append('artist', document.getElementById('artist').value);
+      formData.append('service', document.getElementById('service').value);
+      formData.append('message', document.getElementById('message').value.trim());
+      selectedFiles.forEach(f => formData.append('attachments', f));
+
+      await apiPostForm('/api/booking', formData);
+
+      showAlert('formAlert', 'success',
+        '✓ Η κράτησή σου ελήφθη! Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών.',
+        '✓ Your booking was received! We will contact you within 24 hours.'
+      );
+      this.reset();
+      selectedFiles = [];
+      renderFiles();
+    } catch (err) {
+      showAlert('formAlert', 'error',
+        '✕ Σφάλμα κατά την αποστολή. Παρακαλώ δοκίμασε ξανά.',
+        '✕ Submission failed. Please try again.'
+      );
+    } finally {
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

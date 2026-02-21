@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Καλλιτέχνες — Ink Temple</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ─── ARTISTS GRID ─── */
+    .artists-section { padding: 80px 0 100px; }
+    .artists-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .artist-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--card);
+    }
+    .artist-photo {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      position: relative;
+    }
+    .artist-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(55%) contrast(1.1);
+      transition: transform 0.7s ease, filter 0.4s;
+    }
+    .artist-card:hover .artist-photo img {
+      transform: scale(1.08);
+      filter: grayscale(0%) contrast(1);
+    }
+    .artist-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 24px 24px;
+      background: linear-gradient(to top, rgba(8,8,8,0.97) 0%, rgba(8,8,8,0.7) 60%, transparent 100%);
+    }
+    .artist-name-tag {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .artist-role-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .artist-bio-tag {
+      font-size: 0.88rem;
+      color: var(--gray-light);
+      font-style: italic;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.5;
+    }
+    .portfolio-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: none;
+      padding: 9px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .portfolio-btn:hover { background: var(--gold); color: var(--black); }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      z-index: 2000;
+      flex-direction: column;
+    }
+    .lightbox.open { display: flex; }
+    .lb-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 36px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .lb-artist-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+    .lb-artist-role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      margin-top: 3px;
+    }
+    .lb-close {
+      width: 44px; height: 44px;
+      border: 1px solid var(--border);
+      background: none; color: var(--white);
+      cursor: pointer; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .lb-close:hover { border-color: var(--gold); color: var(--gold); }
+    .lb-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 36px;
+    }
+    .lb-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .lb-grid-img {
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .lb-grid-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: filter 0.25s, transform 0.3s;
+    }
+    .lb-grid-img:hover img { filter: grayscale(0%); transform: scale(1.04); }
+
+    /* Big image viewer */
+    .lb-zoom {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+    }
+    .lb-zoom.open { display: flex; }
+    .lb-zoom img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+    .lb-zoom-close {
+      position: absolute;
+      top: 22px; right: 28px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--white);
+      width: 46px; height: 46px;
+      cursor: pointer; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .lb-zoom-close:hover { border-color: var(--gold); color: var(--gold); }
+    .lb-zoom-prev, .lb-zoom-next {
+      position: absolute;
+      top: 50%; transform: translateY(-50%);
+      background: none; border: 1px solid var(--border);
+      color: var(--white); width: 50px; height: 50px;
+      cursor: pointer; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .lb-zoom-prev { left: 28px; }
+    .lb-zoom-next { right: 28px; }
+    .lb-zoom-prev:hover, .lb-zoom-next:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* No artists state */
+    .no-artists {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 100px 24px;
+      color: var(--gray);
+      font-style: italic;
+    }
+
+    @media (max-width: 1024px) { .artists-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 700px) {
+      .artists-grid { grid-template-columns: repeat(2, 1fr); }
+      .lb-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 420px) {
+      .artists-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">INK<span class="dot">●</span>TEMPLE</a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+    <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+    <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+    <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="langBtn">EN</button>
+    <a href="booking.html" class="nav-cta-btn" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a>
+  <a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a>
+  <a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a>
+  <a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a>
+  <button class="mobile-lang" id="mobileLangBtn">EN</button>
+</div>
+
+<!-- PAGE HEADER -->
+<header class="page-header" data-title="ARTISTS">
+  <div class="container">
+    <span class="label" data-gr="Η ομάδα μας" data-en="Our Team">Η ομάδα μας</span>
+    <h1 class="heading" style="font-size:clamp(2.2rem,5vw,4rem);margin-bottom:20px;" data-gr="Γνώρισε τους <em>καλλιτέχνες</em>" data-en="Meet the <em>artists</em>">Γνώρισε τους <em>καλλιτέχνες</em></h1>
+    <div class="gold-rule"></div>
+    <p style="color:var(--gray-light);font-style:italic;max-width:520px;" data-gr="Κάθε καλλιτέχνης φέρνει το δικό του μοναδικό στυλ. Εξερεύνησε τα portfolio τους και βρες ποιος ταιριάζει με τη δική σου ιδέα." data-en="Each artist brings their own unique style. Explore their portfolios and find who matches your idea.">Κάθε καλλιτέχνης φέρνει το δικό του μοναδικό στυλ.</p>
+  </div>
+</header>
+
+<!-- ARTISTS GRID -->
+<section class="artists-section">
+  <div class="artists-grid" id="artistsGrid">
+    <div class="no-artists">
+      <div class="spinner"></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-header">
+    <div>
+      <div class="lb-artist-name" id="lbName"></div>
+      <div class="lb-artist-role" id="lbRole"></div>
+    </div>
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+  </div>
+  <div class="lb-body">
+    <div class="lb-grid" id="lbGrid"></div>
+  </div>
+</div>
+
+<!-- ZOOM -->
+<div class="lb-zoom" id="lbZoom">
+  <button class="lb-zoom-close" onclick="closeZoom()">✕</button>
+  <button class="lb-zoom-prev" onclick="zoomNav(-1)">&#8592;</button>
+  <img id="lbZoomImg" src="" alt="">
+  <button class="lb-zoom-next" onclick="zoomNav(1)">&#8594;</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo">INK<span>●</span>TEMPLE</div><p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p></div>
+      <div>
+        <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
+        <ul class="footer-links">
+          <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+          <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+          <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+          <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
+        <ul class="footer-links">
+          <li><a href="tel:+302100000000">+30 210 XXX XXXX</a></li>
+          <li><a href="mailto:info@inktemple.gr">info@inktemple.gr</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Ink Temple.</span>
+      <span data-gr="Αθήνα, Ελλάδα" data-en="Athens, Greece">Αθήνα, Ελλάδα</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  let currentPhotos = [];
+  let zoomIdx = 0;
+
+  // ─── FETCH ARTISTS ───
+  async function loadArtists() {
+    const grid = document.getElementById('artistsGrid');
+    try {
+      const artists = await apiGet('/api/artists');
+      if (!artists.length) {
+        grid.innerHTML = `<div class="no-artists" data-gr="Δεν υπάρχουν καλλιτέχνες ακόμα." data-en="No artists yet.">Δεν υπάρχουν καλλιτέχνες ακόμα.</div>`;
+        applyLang();
+        return;
+      }
+      grid.innerHTML = '';
+      artists.forEach(a => {
+        const card = document.createElement('div');
+        card.className = 'artist-card';
+        const coverUrl = a.photos?.[0]?.url || 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=600&q=80';
+        card.innerHTML = `
+          <div class="artist-photo">
+            <img src="${coverUrl}" alt="${a.name}" loading="lazy">
+          </div>
+          <div class="artist-overlay">
+            <div class="artist-name-tag">${a.name}</div>
+            <div class="artist-role-tag">${a.role[lang] || a.role.gr}</div>
+            <div class="artist-bio-tag">${a.bio[lang] || a.bio.gr}</div>
+            ${a.photos?.length ? `<button class="portfolio-btn" onclick="openLightbox(event)" data-artist='${JSON.stringify({name:a.name,role:a.role,photos:a.photos})}' data-gr="Δες τη δουλειά του/της" data-en="View Portfolio">Δες τη δουλειά του/της</button>` : ''}
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      applyLang();
+    } catch (err) {
+      grid.innerHTML = `<div class="no-artists" style="color:var(--red);">${err.message}</div>`;
+    }
+  }
+
+  // ─── LIGHTBOX ───
+  function openLightbox(e) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    const data = JSON.parse(btn.dataset.artist);
+    document.getElementById('lbName').textContent = data.name;
+    document.getElementById('lbRole').textContent = data.role[lang] || data.role.gr;
+
+    currentPhotos = data.photos;
+    const grid = document.getElementById('lbGrid');
+    grid.innerHTML = '';
+    data.photos.forEach((p, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'lb-grid-img';
+      wrap.innerHTML = `<img src="${p.url}" alt="${data.name} portfolio" loading="lazy">`;
+      wrap.addEventListener('click', () => openZoom(i));
+      grid.appendChild(wrap);
+    });
+
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ─── ZOOM ───
+  function openZoom(idx) {
+    zoomIdx = idx;
+    renderZoom();
+    document.getElementById('lbZoom').classList.add('open');
+  }
+  function closeZoom() { document.getElementById('lbZoom').classList.remove('open'); }
+  function renderZoom() { document.getElementById('lbZoomImg').src = currentPhotos[zoomIdx].url; }
+  function zoomNav(dir) {
+    zoomIdx = (zoomIdx + dir + currentPhotos.length) % currentPhotos.length;
+    renderZoom();
+  }
+
+  // ESC to close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeZoom(); closeLightbox(); }
+    if (e.key === 'ArrowLeft') zoomNav(-1);
+    if (e.key === 'ArrowRight') zoomNav(1);
+  });
+
+  // Click outside lightbox grid to close
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+
+  // ─── LANG CHANGE: reload bio/role ───
+  function onLangChange() { loadArtists(); }
+
+  loadArtists();
+</script>
+</body>
+</html>
