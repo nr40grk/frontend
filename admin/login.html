@@ -119,7 +119,7 @@
                 if (response.ok) {
                     const data = await response.json();
                     localStorage.setItem('admin_token', data.token);
-window.location.href = '/admin/dashboard.html';
+window.location.href = 'dashboard.html';
                 } else {
                     error.style.display = 'block';
                 }
