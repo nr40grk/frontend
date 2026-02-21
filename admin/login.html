@@ -1,105 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Login — Ink Temple</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <style>
-    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-    .login-wrap {
-      width: 100%;
-      max-width: 420px;
-      padding: 24px;
-    }
-    .login-logo {
-      font-family: 'Unbounded', sans-serif;
-      font-weight: 900;
-      font-size: 1.2rem;
-      letter-spacing: 0.16em;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-    .login-logo span { color: var(--gold); }
-    .login-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .login-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 44px 40px;
-    }
-    .login-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 28px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - InkTemple</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .login-container {
+            background: #2a2a2a;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #666;
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .error {
+            color: #ff4444;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-wrap">
-    <div class="login-logo">INK<span>●</span>TEMPLE</div>
-    <div class="login-sub">Admin Panel</div>
-
-    <div class="login-card">
-      <div class="login-title">Enter Password</div>
-      <form id="loginForm" novalidate>
-        <div class="form-group">
-          <label class="form-label">Password</label>
-          <input class="form-input" type="password" id="password" required placeholder="••••••••••••" autofocus>
-        </div>
-        <button type="submit" class="submit-btn" id="loginBtn">
-          <span class="btn-text">Login</span>
-          <span class="btn-spinner"></span>
-        </button>
-        <div class="alert" id="loginAlert"></div>
-      </form>
+    <div class="login-container">
+        <h1>Admin Login</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">Login</button>
+            <div class="error" id="error">Invalid password</div>
+        </form>
     </div>
-  </div>
 
-  <script src="../js/main.js"></script>
-  <script>
-    // Redirect if already logged in
-    if (isLoggedIn()) {
-      // Verify token still valid
-      fetch(API_URL + '/api/admin/verify', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${getToken()}` }
-      }).then(r => {
-        if (r.ok) window.location.href = 'dashboard.html';
-      });
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('loginBtn');
-      btn.classList.add('loading');
-      btn.disabled = true;
-
-      try {
-        const data = await apiPost('/api/admin/login', {
-          password: document.getElementById('password').value
+    <script>
+        const API_URL = 'https://backend-63o7.onrender.com';
+        
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('error');
+            
+            try {
+                const response = await fetch(`${API_URL}/api/admin/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ password })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('adminToken', data.token);
+                    window.location.href = '/admin.html';
+                } else {
+                    error.style.display = 'block';
+                }
+            } catch (err) {
+                error.textContent = 'Connection error';
+                error.style.display = 'block';
+            }
         });
-        setToken(data.token);
-        window.location.href = 'dashboard.html';
-      } catch (err) {
-        showAlert('loginAlert', 'error', 'Invalid password', 'Invalid password');
-        document.getElementById('password').value = '';
-        document.getElementById('password').focus();
-      } finally {
-        btn.classList.remove('loading');
-        btn.disabled = false;
-      }
-    });
-  </script>
+    </script>
 </body>
 </html>

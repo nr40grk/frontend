@@ -1,6 +1,6 @@
 // ─── CONFIG ───
 // Replace with your actual Render backend URL
-const API_URL = 'https://backend-63o7.onrender.com/api';
+const API_URL = 'https://backend-63o7.onrender.com';
 
 // ─── LANGUAGE ───
 let lang = localStorage.getItem('lang') || 'gr';
