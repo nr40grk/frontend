@@ -335,6 +335,9 @@
         `;
         grid.appendChild(card);
       });
+      card.addEventListener('click', () => {
+  window.location.href = `artist.html?id=${a._id}`;
+});
       applyLang();
     } catch (err) {
       grid.innerHTML = `<div class="no-artists" style="color:var(--red);">${err.message}</div>`;

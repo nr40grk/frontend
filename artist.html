@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artist — Ink Temple</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .artist-hero {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 60px;
+      padding: 80px 0;
+      align-items: start;
+    }
+    .artist-hero-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: grayscale(40%);
+    }
+    .artist-hero-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    .artist-hero-info { padding-top: 12px; }
+    .artist-hero-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .artist-hero-role {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .gold-rule { width: 48px; height: 2px; background: var(--gold); margin-bottom: 28px; }
+    .artist-hero-bio {
+      font-size: 1.05rem;
+      color: var(--gray-light);
+      font-style: italic;
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .portfolio-section { padding: 0 0 100px; }
+    .portfolio-section-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .portfolio-item {
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: zoom-in;
+      background: var(--card);
+    }
+    .portfolio-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: grayscale(30%);
+      transition: transform 0.4s, filter 0.3s;
+    }
+    .portfolio-item:hover img { transform: scale(1.06); filter: grayscale(0%); }
+    .no-photos {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px;
+      color: var(--gray);
+      font-style: italic;
+    }
+
+    /* Zoom */
+    .zoom-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.97);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    .zoom-overlay.open { display: flex; }
+    .zoom-overlay img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+    .zoom-close {
+      position: absolute; top: 22px; right: 28px;
+      background: none; border: 1px solid var(--border);
+      color: var(--white); width: 46px; height: 46px;
+      cursor: pointer; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .zoom-close:hover { border-color: var(--gold); color: var(--gold); }
+    .zoom-prev, .zoom-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: none; border: 1px solid var(--border);
+      color: var(--white); width: 50px; height: 50px;
+      cursor: pointer; font-size: 1.3rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .zoom-prev { left: 28px; }
+    .zoom-next { right: 28px; }
+    .zoom-prev:hover, .zoom-next:hover { border-color: var(--gold); color: var(--gold); }
+
+    .error-state {
+      text-align: center;
+      padding: 120px 24px;
+      color: var(--gray);
+    }
+
+    @media (max-width: 900px) {
+      .artist-hero { grid-template-columns: 1fr; gap: 32px; }
+      .artist-hero-img { max-height: 480px; width: 100%; }
+    }
+    @media (max-width: 600px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">INK<span class="dot">●</span>TEMPLE</a>
+  <ul class="nav-links">
+    <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+    <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+    <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+    <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" id="langBtn">EN</button>
+    <a href="booking.html" class="nav-cta-btn" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
+  </div>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a>
+  <a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a>
+  <a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a>
+  <a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a>
+  <button class="mobile-lang" id="mobileLangBtn">EN</button>
+</div>
+
+<!-- CONTENT -->
+<div class="container" id="pageContent">
+  <div class="error-state"><div class="spinner"></div></div>
+</div>
+
+<!-- ZOOM -->
+<div class="zoom-overlay" id="zoomOverlay">
+  <button class="zoom-close" onclick="closeZoom()">✕</button>
+  <button class="zoom-prev" onclick="zoomNav(-1)">&#8592;</button>
+  <img id="zoomImg" src="" alt="">
+  <button class="zoom-next" onclick="zoomNav(1)">&#8594;</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div><div class="footer-logo">INK<span>●</span>TEMPLE</div><p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p></div>
+      <div>
+        <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
+        <ul class="footer-links">
+          <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
+          <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
+          <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
+          <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
+        <ul class="footer-links">
+          <li><a href="tel:+302100000000">+30 210 XXX XXXX</a></li>
+          <li><a href="mailto:info@inktemple.gr">info@inktemple.gr</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Ink Temple.</span>
+      <span data-gr="Αθήνα, Ελλάδα" data-en="Athens, Greece">Αθήνα, Ελλάδα</span>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+  let photos = [];
+  let zoomIdx = 0;
+
+  async function loadArtist() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    const content = document.getElementById('pageContent');
+
+    if (!id) {
+      content.innerHTML = `<div class="error-state"><p style="color:var(--red);">No artist specified.</p><a href="team.html" class="btn btn-gold" style="margin-top:20px;">← Back to Artists</a></div>`;
+      return;
+    }
+
+    try {
+      const a = await apiGet(`/api/artists/${id}`);
+      photos = a.photos || [];
+      document.title = `${a.name} — Ink Temple`;
+
+      const coverUrl = photos[0]?.url || '';
+
+      content.innerHTML = `
+        <div class="artist-hero">
+          ${coverUrl
+            ? `<img class="artist-hero-img" src="${coverUrl}" alt="${a.name}">`
+            : `<div class="artist-hero-placeholder">📷</div>`}
+          <div class="artist-hero-info">
+            <div class="artist-hero-name">${a.name}</div>
+            <div class="artist-hero-role">${a.role[lang] || a.role.gr}</div>
+            <div class="gold-rule"></div>
+            <div class="artist-hero-bio">${a.bio[lang] || a.bio.gr}</div>
+            <a href="booking.html" class="submit-btn" style="display:inline-block;text-decoration:none;padding:14px 32px;" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
+          </div>
+        </div>
+
+        <div class="portfolio-section">
+          <div class="portfolio-section-title" data-gr="Portfolio" data-en="Portfolio">Portfolio</div>
+          <div class="portfolio-grid" id="portfolioGrid"></div>
+        </div>
+      `;
+
+      const grid = document.getElementById('portfolioGrid');
+      if (!photos.length) {
+        grid.innerHTML = `<div class="no-photos" data-gr="Δεν υπάρχουν φωτογραφίες ακόμα." data-en="No photos yet.">Δεν υπάρχουν φωτογραφίες ακόμα.</div>`;
+      } else {
+        photos.forEach((p, i) => {
+          const item = document.createElement('div');
+          item.className = 'portfolio-item';
+          item.innerHTML = `<img src="${p.url}" alt="${a.name} work ${i+1}" loading="lazy">`;
+          item.addEventListener('click', () => openZoom(i));
+          grid.appendChild(item);
+        });
+      }
+
+      applyLang();
+    } catch (err) {
+      content.innerHTML = `<div class="error-state"><p style="color:var(--red);">${err.message}</p><a href="team.html" style="color:var(--gold);margin-top:20px;display:block;">← Back to Artists</a></div>`;
+    }
+  }
+
+  function openZoom(idx) {
+    zoomIdx = idx;
+    document.getElementById('zoomImg').src = photos[zoomIdx].url;
+    document.getElementById('zoomOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeZoom() {
+    document.getElementById('zoomOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function zoomNav(dir) {
+    zoomIdx = (zoomIdx + dir + photos.length) % photos.length;
+    document.getElementById('zoomImg').src = photos[zoomIdx].url;
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeZoom();
+    if (e.key === 'ArrowLeft') zoomNav(-1);
+    if (e.key === 'ArrowRight') zoomNav(1);
+  });
+
+  function onLangChange() { loadArtist(); }
+
+  loadArtist();
+</script>
+</body>
+</html>
