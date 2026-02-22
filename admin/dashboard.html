@@ -392,18 +392,28 @@
 
       <!-- PHOTOS (shown in edit mode) -->
       <div id="photoSection" style="display:none;">
-        <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
-          <label class="form-label">Portfolio Photos</label>
-          <div class="photos-grid" id="photosGrid"></div>
-          <div style="margin-top:12px;">
-            <label class="file-upload" style="display:block;">
-              <input type="file" id="photoUploadInput" accept=".jpg,.jpeg,.png,.webp" multiple onchange="uploadPhotos(this)">
-              <span class="file-upload-icon">+</span>
-              <span class="file-upload-text">Upload Photos (JPG, PNG, WEBP)</span>
-            </label>
-          </div>
-        </div>
-      </div>
+  <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
+    
+    <!-- PROFILE PHOTO -->
+    <label class="form-label">Profile Photo</label>
+    <div id="profilePhotoPreview" style="margin-bottom:12px;"></div>
+    <label class="file-upload" style="display:block;margin-bottom:24px;">
+      <input type="file" id="profilePhotoInput" accept=".jpg,.jpeg,.png,.webp" onchange="uploadProfilePhoto(this)">
+      <span class="file-upload-icon">+</span>
+      <span class="file-upload-text">Upload Profile Photo</span>
+    </label>
+
+    <!-- PORTFOLIO PHOTOS -->
+    <label class="form-label">Portfolio / Project Photos</label>
+    <div class="photos-grid" id="photosGrid"></div>
+    <label class="file-upload" style="display:block;margin-top:12px;">
+      <input type="file" id="photoUploadInput" accept=".jpg,.jpeg,.png,.webp" multiple onchange="uploadPhotos(this)">
+      <span class="file-upload-icon">+</span>
+      <span class="file-upload-text">Upload Portfolio Photos</span>
+    </label>
+
+  </div>
+</div>
 
       <div class="modal-actions">
         <button type="submit" class="submit-btn" id="artistSaveBtn" style="margin-top:0;flex:1;">
@@ -521,6 +531,7 @@
     const photoSection = document.getElementById('photoSection');
     if (artist) {
       photoSection.style.display = 'block';
+      renderProfilePhoto(artist);  
       renderPhotos(artist.photos || [], artist._id);
     } else {
       photoSection.style.display = 'none';
@@ -788,6 +799,27 @@
       });
     }
   });
+  function renderProfilePhoto(artist) {
+  const preview = document.getElementById('profilePhotoPreview');
+  if (artist.profilePhoto?.url) {
+    preview.innerHTML = `<img src="${artist.profilePhoto.url}" style="width:120px;height:160px;object-fit:cover;border:1px solid var(--border);">`;
+  } else {
+    preview.innerHTML = `<div style="color:var(--gray);font-style:italic;font-size:0.8rem;">No profile photo yet.</div>`;
+  }
+}
+
+async function uploadProfilePhoto(input) {
+  if (!editingArtist || !input.files[0]) return;
+  const fd = new FormData();
+  fd.append('photo', input.files[0]);
+  try {
+    const updated = await apiAuthFormPost(`/api/artists/${editingArtist._id}/profile-photo`, fd);
+    editingArtist = updated;
+    renderProfilePhoto(updated);
+    loadArtists();
+  } catch (err) { alert(`Failed: ${err.message}`); }
+  input.value = '';
+}
 
   // ─── INIT ───
   loadStats();
