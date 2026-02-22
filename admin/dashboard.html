@@ -496,7 +496,7 @@
       artists.forEach(a => {
         const card = document.createElement('div');
         card.className = 'artist-admin-card';
-        const cover = a.photos?.[0]?.url || '';
+        const cover = a.profilePhoto?.url || a.photos?.[0]?.url || '';
         card.innerHTML = `
           ${cover ? `<img class="artist-admin-photo" src="${cover}" alt="${a.name}" loading="lazy">` : `<div style="width:100%;aspect-ratio:3/2;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-size:2rem;">📷</div>`}
           <div class="artist-admin-body">

@@ -321,7 +321,7 @@
       artists.forEach(a => {
         const card = document.createElement('div');
         card.className = 'artist-card';
-        const coverUrl = a.photos?.[0]?.url || 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=600&q=80';
+        const coverUrl = a.profilePhoto?.url || a.photos?.[0]?.url || 'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=600&q=80';
         card.innerHTML = `
           <div class="artist-photo">
             <img src="${coverUrl}" alt="${a.name}" loading="lazy">

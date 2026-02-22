@@ -221,7 +221,7 @@
       photos = a.photos || [];
       document.title = `${a.name} — Ink Temple`;
 
-      const coverUrl = photos[0]?.url || '';
+      const coverUrl = a.profilePhoto?.url || photos[0]?.url || '';
 
       content.innerHTML = `
         <div class="artist-hero">
