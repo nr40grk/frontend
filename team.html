@@ -333,11 +333,11 @@
             ${a.photos?.length ? `<button class="portfolio-btn" onclick="openLightbox(event, this)" data-artist='${JSON.stringify({name:a.name,role:a.role,photos:a.photos})}' data-gr="Δες τη δουλειά του/της" data-en="View Portfolio">Δες τη δουλειά του/της</button>` : ''}
           </div>
         `;
+        card.addEventListener('click', () => {
+          window.location.href = `artist.html?id=${a._id}`;
+        });
         grid.appendChild(card);
       });
-      card.addEventListener('click', () => {
-  window.location.href = `artist.html?id=${a._id}`;
-});
       applyLang();
     } catch (err) {
       grid.innerHTML = `<div class="no-artists" style="color:var(--red);">${err.message}</div>`;
