@@ -71,6 +71,49 @@
     }
     .admin-main { flex: 1; overflow-y: auto; padding: 40px; }
 
+    /* ─── MOBILE BOTTOM NAV ─── */
+    .mobile-bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      z-index: 200;
+      height: 64px;
+    }
+    .mobile-bottom-nav-inner {
+      display: flex;
+      height: 100%;
+    }
+    .mobile-nav-btn {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px;
+      background: none; border: none;
+      color: var(--gray);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.48rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s;
+      position: relative;
+      border-top: 2px solid transparent;
+    }
+    .mobile-nav-btn.active { color: var(--gold); border-top-color: var(--gold); }
+    .mobile-nav-btn .nav-icon { font-size: 1.1rem; line-height: 1; }
+    .mobile-nav-badge {
+      position: absolute;
+      top: 6px; right: calc(50% - 18px);
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.45rem;
+      padding: 1px 5px;
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+      display: none;
+    }
+
     /* ─── TABS ─── */
     .admin-tab { display: none; }
     .admin-tab.active { display: block; }
@@ -145,6 +188,42 @@
     }
     .table-wrap { overflow-x: auto; }
 
+    /* ─── MOBILE CARDS (replace table rows on mobile) ─── */
+    .mobile-card-list { display: none; flex-direction: column; gap: 12px; }
+    .mobile-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+    .mobile-card-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 12px;
+      margin-bottom: 10px;
+    }
+    .mobile-card-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.78rem; font-weight: 700;
+    }
+    .mobile-card-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem; color: var(--gray);
+      letter-spacing: 0.06em; margin-top: 4px;
+    }
+    .mobile-card-row {
+      display: flex; justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(30,30,30,0.5);
+      font-size: 0.85rem;
+    }
+    .mobile-card-row:last-child { border-bottom: none; }
+    .mobile-card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .mobile-card-actions { display: flex; gap: 8px; margin-top: 14px; }
+
     /* ─── ARTIST CARDS (admin) ─── */
     .artist-admin-grid {
       display: grid;
@@ -206,7 +285,7 @@
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.88); z-index: 3000;
       align-items: center; justify-content: center;
-      padding: 24px;
+      padding: 16px;
     }
     .modal-overlay.open { display: flex; }
     .modal {
@@ -229,19 +308,43 @@
       display: flex; align-items: center; justify-content: center;
     }
     .modal-close:hover { border-color: var(--gold); color: var(--gold); }
-    .modal-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .modal-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
       .admin-sidebar { display: none; }
+      .mobile-bottom-nav { display: block; }
+      .admin-main { padding-bottom: 80px; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .artist-admin-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    @media (max-width: 600px) {
-      .admin-main { padding: 24px; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .artist-admin-grid { grid-template-columns: 1fr; }
+    @media (max-width: 700px) {
+      .admin-nav { padding: 0 16px; }
+      .admin-logo small { display: none; }
+      .admin-main { padding: 16px 16px 80px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+      .stat-card { padding: 16px; }
+      .stat-card-num { font-size: 1.6rem; }
+      .stat-card-lbl { font-size: 0.52rem; }
+      .section-head { margin-bottom: 16px; }
+      .section-head h2 { font-size: 0.8rem; }
+
+      /* Hide desktop tables, show mobile cards */
+      .table-wrap { display: none; }
+      .mobile-card-list { display: flex; }
+
+      .artist-admin-grid { grid-template-columns: 1fr; gap: 12px; }
+      .artist-admin-photo { aspect-ratio: 16/9; }
+
       .photos-grid { grid-template-columns: repeat(3, 1fr); }
+
+      /* Touch-friendly photo delete */
+      .photo-thumb-del { opacity: 1; }
+
+      .modal { padding: 24px 20px; max-height: 95vh; }
+      .modal-actions { flex-direction: column; }
+      .modal-actions .submit-btn, .modal-actions .btn { width: 100%; text-align: center; }
+      .form-grid-2 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -251,7 +354,7 @@
 <nav class="admin-nav">
   <div class="admin-logo">Nr 40<small>Admin</small></div>
   <div class="admin-nav-right">
-    <a href="../index.html" style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--gray);text-decoration:none;letter-spacing:0.1em;" target="_blank">↗ View Site</a>
+    <a href="../index.html" style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--gray);text-decoration:none;letter-spacing:0.1em;" target="_blank">↗ Site</a>
     <button class="admin-logout" onclick="logout()">Logout</button>
   </div>
 </nav>
@@ -259,7 +362,7 @@
 <!-- BODY -->
 <div class="admin-body">
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (desktop) -->
   <aside class="admin-sidebar">
     <button class="sidebar-link active" onclick="switchTab('overview')">📊 Overview</button>
     <button class="sidebar-link" onclick="switchTab('artists')">🎨 Artists</button>
@@ -267,33 +370,33 @@
     <button class="sidebar-link" onclick="switchTab('contacts')">✉️ Messages <span class="sidebar-badge" id="unreadBadge" style="display:none;"></span></button>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- MAIN -->
   <main class="admin-main">
 
-    <!-- OVERVIEW TAB -->
+    <!-- OVERVIEW -->
     <div class="admin-tab active" id="tab-overview">
       <div class="section-head"><h2>Overview</h2></div>
       <div class="stats-grid" id="statsGrid">
         <div class="stat-card"><div class="stat-card-num" id="stat-total-bookings">—</div><div class="stat-card-lbl">Total Bookings</div></div>
         <div class="stat-card"><div class="stat-card-num" id="stat-pending">—</div><div class="stat-card-lbl">Pending</div></div>
-        <div class="stat-card"><div class="stat-card-num" id="stat-unread-bookings">—</div><div class="stat-card-lbl">Unread Bookings</div></div>
-        <div class="stat-card"><div class="stat-card-num" id="stat-unread-contacts">—</div><div class="stat-card-lbl">Unread Messages</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-unread-bookings">—</div><div class="stat-card-lbl">Unread</div></div>
+        <div class="stat-card"><div class="stat-card-num" id="stat-unread-contacts">—</div><div class="stat-card-lbl">Messages</div></div>
       </div>
-      <p style="color:var(--gray);font-style:italic;font-size:0.95rem;">Use the sidebar to manage artists, view bookings, and read messages.</p>
+      <p style="color:var(--gray);font-style:italic;font-size:0.95rem;">Use the navigation to manage artists, bookings, and messages.</p>
     </div>
 
-    <!-- ARTISTS TAB -->
+    <!-- ARTISTS -->
     <div class="admin-tab" id="tab-artists">
       <div class="section-head">
         <h2>Artists</h2>
-        <button class="btn btn-gold btn-sm" onclick="openArtistModal()">+ Add Artist</button>
+        <button class="btn btn-gold btn-sm" onclick="openArtistModal()">+ Add</button>
       </div>
       <div class="artist-admin-grid" id="artistsAdminGrid">
         <div style="color:var(--gray);font-style:italic;padding:40px;">Loading...</div>
       </div>
     </div>
 
-    <!-- BOOKINGS TAB -->
+    <!-- BOOKINGS -->
     <div class="admin-tab" id="tab-bookings">
       <div class="section-head">
         <h2>Bookings</h2>
@@ -305,18 +408,14 @@
           <option value="cancelled">Cancelled</option>
         </select>
       </div>
+
+      <!-- Desktop table -->
       <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Artist</th>
-              <th>Service</th>
-              <th>Phone</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th></th><th>Name</th><th>Artist</th><th>Service</th>
+              <th>Phone</th><th>Date</th><th>Status</th><th>Actions</th>
             </tr>
           </thead>
           <tbody id="bookingsBody">
@@ -324,22 +423,22 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Mobile cards -->
+      <div class="mobile-card-list" id="bookingsMobileList"></div>
     </div>
 
-    <!-- CONTACTS TAB -->
+    <!-- CONTACTS -->
     <div class="admin-tab" id="tab-contacts">
       <div class="section-head"><h2>Messages</h2></div>
+
+      <!-- Desktop table -->
       <div class="table-wrap">
         <table class="data-table">
           <thead>
             <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Message</th>
-              <th>Date</th>
-              <th>Actions</th>
+              <th></th><th>Name</th><th>Email</th><th>Phone</th>
+              <th>Message</th><th>Date</th><th>Actions</th>
             </tr>
           </thead>
           <tbody id="contactsBody">
@@ -347,12 +446,35 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Mobile cards -->
+      <div class="mobile-card-list" id="contactsMobileList"></div>
     </div>
 
   </main>
 </div>
 
-<!-- ─── ARTIST MODAL ─── -->
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav">
+  <div class="mobile-bottom-nav-inner">
+    <button class="mobile-nav-btn active" id="mbn-overview" onclick="switchTab('overview')">
+      <span class="nav-icon">📊</span>Overview
+    </button>
+    <button class="mobile-nav-btn" id="mbn-artists" onclick="switchTab('artists')">
+      <span class="nav-icon">🎨</span>Artists
+    </button>
+    <button class="mobile-nav-btn" id="mbn-bookings" onclick="switchTab('bookings')">
+      <span class="nav-icon">📅</span>Bookings
+      <span class="mobile-nav-badge" id="mobilePendingBadge"></span>
+    </button>
+    <button class="mobile-nav-btn" id="mbn-contacts" onclick="switchTab('contacts')">
+      <span class="nav-icon">✉️</span>Messages
+      <span class="mobile-nav-badge" id="mobileUnreadBadge"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ARTIST MODAL -->
 <div class="modal-overlay" id="artistModal">
   <div class="modal">
     <button class="modal-close" onclick="closeArtistModal()">✕</button>
@@ -389,32 +511,24 @@
         <input type="checkbox" id="aActive" checked style="width:16px;height:16px;accent-color:var(--gold);">
         <label style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray-light);">Active (visible on site)</label>
       </div>
-
-      <!-- PHOTOS (shown in edit mode) -->
       <div id="photoSection" style="display:none;">
-  <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
-    
-    <!-- PROFILE PHOTO -->
-    <label class="form-label">Profile Photo</label>
-    <div id="profilePhotoPreview" style="margin-bottom:12px;"></div>
-    <label class="file-upload" style="display:block;margin-bottom:24px;">
-      <input type="file" id="profilePhotoInput" accept=".jpg,.jpeg,.png,.webp" onchange="uploadProfilePhoto(this)">
-      <span class="file-upload-icon">+</span>
-      <span class="file-upload-text">Upload Profile Photo</span>
-    </label>
-
-    <!-- PORTFOLIO PHOTOS -->
-    <label class="form-label">Portfolio / Project Photos</label>
-    <div class="photos-grid" id="photosGrid"></div>
-    <label class="file-upload" style="display:block;margin-top:12px;">
-      <input type="file" id="photoUploadInput" accept=".jpg,.jpeg,.png,.webp" multiple onchange="uploadPhotos(this)">
-      <span class="file-upload-icon">+</span>
-      <span class="file-upload-text">Upload Portfolio Photos</span>
-    </label>
-
-  </div>
-</div>
-
+        <div style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px;">
+          <label class="form-label">Profile Photo</label>
+          <div id="profilePhotoPreview" style="margin-bottom:12px;"></div>
+          <label class="file-upload" style="display:block;margin-bottom:24px;">
+            <input type="file" id="profilePhotoInput" accept=".jpg,.jpeg,.png,.webp" onchange="uploadProfilePhoto(this)">
+            <span class="file-upload-icon">+</span>
+            <span class="file-upload-text">Upload Profile Photo</span>
+          </label>
+          <label class="form-label">Portfolio Photos</label>
+          <div class="photos-grid" id="photosGrid"></div>
+          <label class="file-upload" style="display:block;margin-top:12px;">
+            <input type="file" id="photoUploadInput" accept=".jpg,.jpeg,.png,.webp" multiple onchange="uploadPhotos(this)">
+            <span class="file-upload-icon">+</span>
+            <span class="file-upload-text">Upload Portfolio Photos</span>
+          </label>
+        </div>
+      </div>
       <div class="modal-actions">
         <button type="submit" class="submit-btn" id="artistSaveBtn" style="margin-top:0;flex:1;">
           <span class="btn-text">Save Artist</span>
@@ -427,11 +541,11 @@
   </div>
 </div>
 
-<!-- ─── BOOKING DETAIL MODAL ─── -->
+<!-- BOOKING / CONTACT DETAIL MODAL -->
 <div class="modal-overlay" id="bookingModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
-    <div class="modal-title">Booking Details</div>
+    <div class="modal-title" id="detailModalTitle">Details</div>
     <div id="bookingDetail"></div>
     <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;" id="bookingActions"></div>
   </div>
@@ -439,20 +553,22 @@
 
 <script src="../js/main.js"></script>
 <script>
-  // ─── AUTH GUARD ───
   if (!isLoggedIn()) window.location.href = 'login.html';
 
-  function logout() {
-    clearToken();
-    window.location.href = 'login.html';
-  }
+  function logout() { clearToken(); window.location.href = 'login.html'; }
 
   // ─── TABS ───
   function switchTab(tab) {
     document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(`tab-${tab}`).classList.add('active');
-    document.querySelector(`[onclick="switchTab('${tab}')"]`).classList.add('active');
+    document.querySelector(`[onclick="switchTab('${tab}')"]`)?.classList.add('active');
+    // Also activate sidebar link
+    const sidebarBtn = document.querySelector(`.admin-sidebar [onclick="switchTab('${tab}')"]`);
+    if (sidebarBtn) sidebarBtn.classList.add('active');
+    const mobileBtn = document.getElementById(`mbn-${tab}`);
+    if (mobileBtn) mobileBtn.classList.add('active');
 
     if (tab === 'overview') loadStats();
     if (tab === 'artists') loadArtists();
@@ -468,15 +584,17 @@
       document.getElementById('stat-pending').textContent = s.pendingBookings;
       document.getElementById('stat-unread-bookings').textContent = s.unreadBookings;
       document.getElementById('stat-unread-contacts').textContent = s.unreadContacts;
-
-      // Sidebar badges
       if (s.pendingBookings > 0) {
-        const b = document.getElementById('pendingBadge');
-        b.textContent = s.pendingBookings; b.style.display = '';
+        ['pendingBadge','mobilePendingBadge'].forEach(id => {
+          const b = document.getElementById(id);
+          if (b) { b.textContent = s.pendingBookings; b.style.display = ''; }
+        });
       }
       if (s.unreadContacts > 0) {
-        const b = document.getElementById('unreadBadge');
-        b.textContent = s.unreadContacts; b.style.display = '';
+        ['unreadBadge','mobileUnreadBadge'].forEach(id => {
+          const b = document.getElementById(id);
+          if (b) { b.textContent = s.unreadContacts; b.style.display = ''; }
+        });
       }
     } catch (err) { console.error(err); }
   }
@@ -489,7 +607,7 @@
     try {
       const artists = await apiAuthGet('/api/artists/all');
       if (!artists.length) {
-        grid.innerHTML = `<div style="color:var(--gray);font-style:italic;padding:40px;grid-column:1/-1;">No artists yet. Add one above.</div>`;
+        grid.innerHTML = `<div style="color:var(--gray);font-style:italic;padding:40px;grid-column:1/-1;">No artists yet.</div>`;
         return;
       }
       grid.innerHTML = '';
@@ -527,16 +645,14 @@
     document.getElementById('aBioEn').value = artist?.bio?.en || '';
     document.getElementById('aOrder').value = artist?.order ?? 0;
     document.getElementById('aActive').checked = artist?.active !== false;
-
     const photoSection = document.getElementById('photoSection');
     if (artist) {
       photoSection.style.display = 'block';
-      renderProfilePhoto(artist);  
+      renderProfilePhoto(artist);
       renderPhotos(artist.photos || [], artist._id);
     } else {
       photoSection.style.display = 'none';
     }
-
     document.getElementById('artistModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -553,7 +669,6 @@
     e.preventDefault();
     const btn = document.getElementById('artistSaveBtn');
     btn.classList.add('loading'); btn.disabled = true;
-
     const payload = {
       name: document.getElementById('aName').value.trim(),
       role: { gr: document.getElementById('aRoleGr').value.trim(), en: document.getElementById('aRoleEn').value.trim() },
@@ -561,32 +676,40 @@
       order: parseInt(document.getElementById('aOrder').value) || 0,
       active: document.getElementById('aActive').checked,
     };
-
     try {
       const id = document.getElementById('artistId').value;
-      if (id) {
-        await apiAuthPost(`/api/artists/${id}`, payload, 'PUT');
-      } else {
-        await apiAuthPost('/api/artists', payload);
-      }
-      closeArtistModal();
-      loadArtists();
+      if (id) { await apiAuthPost(`/api/artists/${id}`, payload, 'PUT'); }
+      else { await apiAuthPost('/api/artists', payload); }
+      closeArtistModal(); loadArtists();
     } catch (err) {
       showAlert('artistAlert', 'error', err.message, err.message);
-    } finally {
-      btn.classList.remove('loading'); btn.disabled = false;
-    }
+    } finally { btn.classList.remove('loading'); btn.disabled = false; }
   });
 
   async function deleteArtist(id, name) {
-    if (!confirm(`Delete "${name}"? This will also delete all their photos from Cloudinary.`)) return;
-    try {
-      await apiAuthDelete(`/api/artists/${id}`);
-      loadArtists();
-    } catch (err) { alert(err.message); }
+    if (!confirm(`Delete "${name}"?`)) return;
+    try { await apiAuthDelete(`/api/artists/${id}`); loadArtists(); }
+    catch (err) { alert(err.message); }
   }
 
-  // ─── PHOTOS ───
+  function renderProfilePhoto(artist) {
+    const preview = document.getElementById('profilePhotoPreview');
+    preview.innerHTML = artist.profilePhoto?.url
+      ? `<img src="${artist.profilePhoto.url}" style="width:120px;height:160px;object-fit:cover;border:1px solid var(--border);">`
+      : `<div style="color:var(--gray);font-style:italic;font-size:0.8rem;">No profile photo yet.</div>`;
+  }
+
+  async function uploadProfilePhoto(input) {
+    if (!editingArtist || !input.files[0]) return;
+    const fd = new FormData();
+    fd.append('photo', input.files[0]);
+    try {
+      const updated = await apiAuthFormPost(`/api/artists/${editingArtist._id}/profile-photo`, fd);
+      editingArtist = updated; renderProfilePhoto(updated); loadArtists();
+    } catch (err) { alert(`Failed: ${err.message}`); }
+    input.value = '';
+  }
+
   function renderPhotos(photos, artistId) {
     const grid = document.getElementById('photosGrid');
     grid.innerHTML = '';
@@ -603,43 +726,42 @@
 
   async function uploadPhotos(input) {
     if (!editingArtist) return;
-    const files = Array.from(input.files);
-    for (const file of files) {
+    for (const file of Array.from(input.files)) {
       const fd = new FormData();
       fd.append('photo', file);
       try {
         const updated = await apiAuthFormPost(`/api/artists/${editingArtist._id}/photos`, fd);
-        editingArtist = updated;
-        renderPhotos(updated.photos, updated._id);
+        editingArtist = updated; renderPhotos(updated.photos, updated._id);
       } catch (err) { alert(`Failed to upload ${file.name}: ${err.message}`); }
     }
-    input.value = '';
-    loadArtists();
+    input.value = ''; loadArtists();
   }
 
   async function deletePhoto(artistId, photoId) {
     if (!confirm('Delete this photo?')) return;
     try {
       const updated = await apiAuthDelete(`/api/artists/${artistId}/photos/${photoId}`);
-      editingArtist = updated;
-      renderPhotos(updated.photos, updated._id);
-      loadArtists();
+      editingArtist = updated; renderPhotos(updated.photos, updated._id); loadArtists();
     } catch (err) { alert(err.message); }
   }
 
   // ─── BOOKINGS ───
   async function loadBookings() {
     const body = document.getElementById('bookingsBody');
+    const mobileList = document.getElementById('bookingsMobileList');
     const status = document.getElementById('statusFilter').value;
     body.innerHTML = `<tr><td colspan="8" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">Loading...</td></tr>`;
+    mobileList.innerHTML = '';
     try {
       const { bookings } = await apiAuthGet(`/api/booking?status=${status}&limit=50`);
       if (!bookings.length) {
         body.innerHTML = `<tr><td colspan="8" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">No bookings found.</td></tr>`;
+        mobileList.innerHTML = `<div style="color:var(--gray);font-style:italic;padding:20px;text-align:center;">No bookings found.</div>`;
         return;
       }
       body.innerHTML = '';
       bookings.forEach(b => {
+        // Desktop row
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${!b.read ? '<span class="unread-dot"></span>' : ''}</td>
@@ -649,11 +771,41 @@
           <td style="font-size:0.88rem;">${b.phone}</td>
           <td style="font-size:0.82rem;color:var(--gray);">${new Date(b.createdAt).toLocaleDateString('el-GR')}</td>
           <td><span class="status-badge status-${b.status}">${b.status}</span></td>
-          <td>
-            <button class="btn btn-ghost btn-sm" onclick='viewBooking(${JSON.stringify(b).replace(/'/g,"&apos;")})'>View</button>
-          </td>
+          <td><button class="btn btn-ghost btn-sm" onclick='viewBooking(${JSON.stringify(b).replace(/'/g,"&apos;")})'>View</button></td>
         `;
         body.appendChild(tr);
+        // Mobile card
+        const card = document.createElement('div');
+        card.className = 'mobile-card';
+        card.innerHTML = `
+          <div class="mobile-card-header">
+            <div>
+              <div class="mobile-card-name">${!b.read ? '<span class="unread-dot"></span>' : ''}${b.fullName}</div>
+              <div class="mobile-card-meta">${b.email}</div>
+            </div>
+            <span class="status-badge status-${b.status}">${b.status}</span>
+          </div>
+          <div class="mobile-card-row">
+            <span class="mobile-card-label">Artist</span>
+            <span>${b.artist}</span>
+          </div>
+          <div class="mobile-card-row">
+            <span class="mobile-card-label">Service</span>
+            <span style="font-size:0.85rem;">${b.service}</span>
+          </div>
+          <div class="mobile-card-row">
+            <span class="mobile-card-label">Phone</span>
+            <a href="tel:${b.phone}" style="color:var(--gold);font-size:0.85rem;">${b.phone}</a>
+          </div>
+          <div class="mobile-card-row">
+            <span class="mobile-card-label">Date</span>
+            <span style="color:var(--gray);font-size:0.82rem;">${new Date(b.createdAt).toLocaleDateString('el-GR')}</span>
+          </div>
+          <div class="mobile-card-actions">
+            <button class="btn btn-gold btn-sm" style="flex:1;" onclick='viewBooking(${JSON.stringify(b).replace(/'/g,"&apos;")})'>View Details</button>
+          </div>
+        `;
+        mobileList.appendChild(card);
       });
     } catch (err) {
       body.innerHTML = `<tr><td colspan="8" style="color:var(--red);text-align:center;padding:32px;">${err.message}</td></tr>`;
@@ -661,13 +813,9 @@
   }
 
   function viewBooking(b) {
-    // Mark as read
-    if (!b.read) {
-      apiAuthPatch(`/api/booking/${b._id}`, { read: true }).catch(() => {});
-    }
-
-    const detail = document.getElementById('bookingDetail');
-    detail.innerHTML = `
+    if (!b.read) apiAuthPatch(`/api/booking/${b._id}`, { read: true }).catch(() => {});
+    document.getElementById('detailModalTitle').textContent = 'Booking Details';
+    document.getElementById('bookingDetail').innerHTML = `
       <table style="width:100%;border-collapse:collapse;">
         ${row('Name', b.fullName)}
         ${row('Email', `<a href="mailto:${b.email}" style="color:var(--gold);">${b.email}</a>`)}
@@ -678,57 +826,51 @@
         ${row('Status', `<span class="status-badge status-${b.status}">${b.status}</span>`)}
         ${b.message ? row('Message', `<em style="color:var(--gray-light);">${b.message}</em>`) : ''}
         ${b.attachments?.length ? row('Attachments', b.attachments.map(a => `<a href="${a.url}" target="_blank" style="color:var(--gold);display:block;">${a.originalName}</a>`).join('')) : ''}
-        ${b.notes ? row('Admin Notes', `<em style="color:var(--gray-light);">${b.notes}</em>`) : ''}
       </table>
     `;
-
-    const actions = document.getElementById('bookingActions');
-    actions.innerHTML = `
-      <select id="statusSelect" class="form-select" style="width:auto;padding:8px 36px 8px 12px;font-size:0.8rem;">
+    document.getElementById('bookingActions').innerHTML = `
+      <select id="statusSelect" class="form-select" style="flex:1;padding:8px 36px 8px 12px;font-size:0.8rem;">
         ${['pending','confirmed','completed','cancelled'].map(s => `<option value="${s}" ${b.status===s?'selected':''}>${s}</option>`).join('')}
       </select>
-      <button class="btn btn-gold btn-sm" onclick="updateBookingStatus('${b._id}')">Update Status</button>
+      <button class="btn btn-gold btn-sm" onclick="updateBookingStatus('${b._id}')">Update</button>
       <button class="btn btn-danger btn-sm" onclick="deleteBookingConfirm('${b._id}')">Delete</button>
     `;
-
     document.getElementById('bookingModal').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
 
   function row(label, val) {
-    return `<tr><td style="padding:10px 0;border-bottom:1px solid var(--border);color:var(--gray);width:35%;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;vertical-align:top;">${label}</td><td style="padding:10px 0;border-bottom:1px solid var(--border);vertical-align:top;">${val}</td></tr>`;
+    return `<tr><td style="padding:10px 0;border-bottom:1px solid var(--border);color:var(--gray);width:35%;font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;vertical-align:top;">${label}</td><td style="padding:10px 0;border-bottom:1px solid var(--border);vertical-align:top;word-break:break-word;">${val}</td></tr>`;
   }
 
   async function updateBookingStatus(id) {
     const status = document.getElementById('statusSelect').value;
-    try {
-      await apiAuthPatch(`/api/booking/${id}`, { status });
-      closeModal('bookingModal');
-      loadBookings();
-    } catch (err) { alert(err.message); }
+    try { await apiAuthPatch(`/api/booking/${id}`, { status }); closeModal('bookingModal'); loadBookings(); }
+    catch (err) { alert(err.message); }
   }
 
   async function deleteBookingConfirm(id) {
     if (!confirm('Delete this booking?')) return;
-    try {
-      await apiAuthDelete(`/api/booking/${id}`);
-      closeModal('bookingModal');
-      loadBookings();
-    } catch (err) { alert(err.message); }
+    try { await apiAuthDelete(`/api/booking/${id}`); closeModal('bookingModal'); loadBookings(); }
+    catch (err) { alert(err.message); }
   }
 
   // ─── CONTACTS ───
   async function loadContacts() {
     const body = document.getElementById('contactsBody');
+    const mobileList = document.getElementById('contactsMobileList');
     body.innerHTML = `<tr><td colspan="7" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">Loading...</td></tr>`;
+    mobileList.innerHTML = '';
     try {
       const { contacts } = await apiAuthGet('/api/contact?limit=50');
       if (!contacts.length) {
         body.innerHTML = `<tr><td colspan="7" style="color:var(--gray);text-align:center;padding:32px;font-style:italic;">No messages.</td></tr>`;
+        mobileList.innerHTML = `<div style="color:var(--gray);font-style:italic;padding:20px;text-align:center;">No messages.</div>`;
         return;
       }
       body.innerHTML = '';
       contacts.forEach(c => {
+        // Desktop row
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${!c.read ? '<span class="unread-dot"></span>' : ''}</td>
@@ -737,11 +879,27 @@
           <td style="font-size:0.85rem;">${c.phone || '—'}</td>
           <td style="font-size:0.88rem;max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-style:italic;color:var(--gray-light);">${c.message}</td>
           <td style="font-size:0.82rem;color:var(--gray);">${new Date(c.createdAt).toLocaleDateString('el-GR')}</td>
-          <td>
-            <button class="btn btn-ghost btn-sm" onclick='viewContact(${JSON.stringify(c).replace(/'/g,"&apos;")})'>View</button>
-          </td>
+          <td><button class="btn btn-ghost btn-sm" onclick='viewContact(${JSON.stringify(c).replace(/'/g,"&apos;")})'>View</button></td>
         `;
         body.appendChild(tr);
+        // Mobile card
+        const card = document.createElement('div');
+        card.className = 'mobile-card';
+        card.innerHTML = `
+          <div class="mobile-card-header">
+            <div>
+              <div class="mobile-card-name">${!c.read ? '<span class="unread-dot"></span>' : ''}${c.name}</div>
+              <div class="mobile-card-meta">${c.email}</div>
+            </div>
+            <span style="color:var(--gray);font-family:'Space Mono',monospace;font-size:0.55rem;">${new Date(c.createdAt).toLocaleDateString('el-GR')}</span>
+          </div>
+          <div style="font-size:0.88rem;color:var(--gray-light);font-style:italic;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-bottom:12px;">${c.message}</div>
+          <div class="mobile-card-actions">
+            <a href="mailto:${c.email}" class="btn btn-gold btn-sm" style="flex:1;text-align:center;">Reply</a>
+            <button class="btn btn-ghost btn-sm" style="flex:1;" onclick='viewContact(${JSON.stringify(c).replace(/'/g,"&apos;")})'>View</button>
+          </div>
+        `;
+        mobileList.appendChild(card);
       });
     } catch (err) {
       body.innerHTML = `<tr><td colspan="7" style="color:var(--red);text-align:center;padding:32px;">${err.message}</td></tr>`;
@@ -749,11 +907,9 @@
   }
 
   function viewContact(c) {
-    if (!c.read) {
-      apiAuthPatch(`/api/contact/${c._id}`, { read: true }).catch(() => {});
-    }
-    const detail = document.getElementById('bookingDetail');
-    detail.innerHTML = `
+    if (!c.read) apiAuthPatch(`/api/contact/${c._id}`, { read: true }).catch(() => {});
+    document.getElementById('detailModalTitle').textContent = 'Message';
+    document.getElementById('bookingDetail').innerHTML = `
       <table style="width:100%;border-collapse:collapse;">
         ${row('Name', c.name)}
         ${row('Email', `<a href="mailto:${c.email}" style="color:var(--gold);">${c.email}</a>`)}
@@ -762,8 +918,7 @@
         ${row('Message', `<em style="color:var(--gray-light);white-space:pre-wrap;">${c.message}</em>`)}
       </table>
     `;
-    const actions = document.getElementById('bookingActions');
-    actions.innerHTML = `
+    document.getElementById('bookingActions').innerHTML = `
       <a href="mailto:${c.email}" class="btn btn-gold btn-sm">Reply via Email</a>
       <button class="btn btn-danger btn-sm" onclick="deleteContactConfirm('${c._id}')">Delete</button>
     `;
@@ -773,11 +928,8 @@
 
   async function deleteContactConfirm(id) {
     if (!confirm('Delete this message?')) return;
-    try {
-      await apiAuthDelete(`/api/contact/${id}`);
-      closeModal('bookingModal');
-      loadContacts();
-    } catch (err) { alert(err.message); }
+    try { await apiAuthDelete(`/api/contact/${id}`); closeModal('bookingModal'); loadContacts(); }
+    catch (err) { alert(err.message); }
   }
 
   // ─── UTILS ───
@@ -799,29 +951,7 @@
       });
     }
   });
-  function renderProfilePhoto(artist) {
-  const preview = document.getElementById('profilePhotoPreview');
-  if (artist.profilePhoto?.url) {
-    preview.innerHTML = `<img src="${artist.profilePhoto.url}" style="width:120px;height:160px;object-fit:cover;border:1px solid var(--border);">`;
-  } else {
-    preview.innerHTML = `<div style="color:var(--gray);font-style:italic;font-size:0.8rem;">No profile photo yet.</div>`;
-  }
-}
 
-async function uploadProfilePhoto(input) {
-  if (!editingArtist || !input.files[0]) return;
-  const fd = new FormData();
-  fd.append('photo', input.files[0]);
-  try {
-    const updated = await apiAuthFormPost(`/api/artists/${editingArtist._id}/profile-photo`, fd);
-    editingArtist = updated;
-    renderProfilePhoto(updated);
-    loadArtists();
-  } catch (err) { alert(`Failed: ${err.message}`); }
-  input.value = '';
-}
-
-  // ─── INIT ───
   loadStats();
 </script>
 </body>
