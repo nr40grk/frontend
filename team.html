@@ -330,7 +330,7 @@
             <div class="artist-name-tag">${a.name}</div>
             <div class="artist-role-tag">${a.role[lang] || a.role.gr}</div>
             <div class="artist-bio-tag">${a.bio[lang] || a.bio.gr}</div>
-            ${a.photos?.length ? `<button class="portfolio-btn" onclick="openLightbox(event)" data-artist='${JSON.stringify({name:a.name,role:a.role,photos:a.photos})}' data-gr="Δες τη δουλειά του/της" data-en="View Portfolio">Δες τη δουλειά του/της</button>` : ''}
+            ${a.photos?.length ? `<button class="portfolio-btn" onclick="openLightbox(event, this)" data-artist='${JSON.stringify({name:a.name,role:a.role,photos:a.photos})}' data-gr="Δες τη δουλειά του/της" data-en="View Portfolio">Δες τη δουλειά του/της</button>` : ''}
           </div>
         `;
         grid.appendChild(card);
@@ -342,10 +342,9 @@
   }
 
   // ─── LIGHTBOX ───
-  function openLightbox(e) {
-    e.stopPropagation();
-    const btn = e.currentTarget;
-    const data = JSON.parse(btn.dataset.artist);
+  function openLightbox(e, btn) {
+  e.stopPropagation();
+  const data = JSON.parse(btn.dataset.artist);
     document.getElementById('lbName').textContent = data.name;
     document.getElementById('lbRole').textContent = data.role[lang] || data.role.gr;
 
