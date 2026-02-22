@@ -3,7 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="NR40 Tattoo Studio — Κανιγγός 27, Αθήνα. Τατουάζ, Piercing & Tooth Gems από έμπειρους καλλιτέχνες. Walk-ins welcome.">  <title>NR40 — Tattoo Studio</title>
+
+  <!-- ─── PRIMARY SEO ─── -->
+  <title>NR40 Athens | Tattoo Studio — Κανιγγός 27, Αθήνα</title>
+  <meta name="description" content="NR40 Athens Tattoo Studio. Επαγγελματικά τατουάζ, piercing & tooth gems στο κέντρο της Αθήνας. Walk-ins welcome. Δευτέρα–Σάββατο 11:00–20:00. Κανιγγός 27, Αθήνα 106 82.">
+  <meta name="keywords" content="tattoo athens, τατουάζ αθήνα, tattoo studio athens, nr40, nr40 athens, piercing αθήνα, tooth gems αθήνα, fine line tattoo athens, realism tattoo athens, κανιγγός τατουάζ">
+  <meta name="author" content="NR40 Athens">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#080808">
+  <link rel="canonical" href="https://nr40athens.com/">
+
+  <!-- ─── OPEN GRAPH (Facebook, WhatsApp, etc.) ─── -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nr40athens.com/">
+  <meta property="og:title" content="NR40 Athens | Tattoo Studio">
+  <meta property="og:description" content="Επαγγελματικά τατουάζ, piercing & tooth gems στο κέντρο της Αθήνας. Walk-ins welcome. Κανιγγός 27.">
+  <meta property="og:image" content="https://nr40athens.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="NR40 Athens">
+  <meta property="og:locale" content="el_GR">
+
+  <!-- ─── TWITTER CARD ─── -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="NR40 Athens | Tattoo Studio">
+  <meta name="twitter:description" content="Επαγγελματικά τατουάζ, piercing & tooth gems στο κέντρο της Αθήνας. Walk-ins welcome.">
+  <meta name="twitter:image" content="https://nr40athens.com/og-image.jpg">
+
+  <!-- ─── GEO ─── -->
+  <meta name="geo.region" content="GR-I">
+  <meta name="geo.placename" content="Athens">
+  <meta name="geo.position" content="37.9839;23.7301">
+  <meta name="ICBM" content="37.9839, 23.7301">
+
+  <!-- ─── SCHEMA.ORG STRUCTURED DATA ─── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TattooParlor",
+    "name": "NR40 Athens",
+    "image": "https://nr40athens.com/og-image.jpg",
+    "url": "https://nr40athens.com",
+    "telephone": "+302103806408",
+    "email": "info@nr40athens.com",
+    "description": "Επαγγελματικό tattoo studio στο κέντρο της Αθήνας. Τατουάζ, piercing & tooth gems. Walk-ins welcome.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Κανιγγός 27",
+      "addressLocality": "Αθήνα",
+      "postalCode": "106 82",
+      "addressCountry": "GR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 37.9839,
+      "longitude": 23.7301
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "11:00",
+        "closes": "20:00"
+      }
+    ],
+    "sameAs": [
+      "https://www.instagram.com/nr40_ath/",
+      "https://www.facebook.com/p/NR40-ATH-100067196989146/",
+      "https://www.tiktok.com/@nr40.ath"
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "128"
+    },
+    "priceRange": "€€"
+  }
+  </script>
+
   <link rel="stylesheet" href="css/style.css">
   <style>
     /* ─── HERO ─── */
@@ -76,14 +153,11 @@
       flex-wrap: wrap;
       animation: fadeUp 1s ease 0.8s both;
     }
-   .hero-scroll {
-  position: absolute;
-  bottom: 36px;
-  left: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 0;
+      right: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -163,10 +237,8 @@
     .carousel-btn {
       width: 50px; height: 50px;
       border: 1px solid var(--border);
-      background: none;
-      color: var(--white);
-      cursor: pointer;
-      font-size: 1.1rem;
+      background: none; color: var(--white);
+      cursor: pointer; font-size: 1.1rem;
       transition: all 0.2s;
       display: flex; align-items: center; justify-content: center;
     }
@@ -241,6 +313,24 @@
     }
     .faq-body.open { max-height: 220px; padding-bottom: 22px; }
 
+    /* ─── DEV CREDIT ─── */
+    .dev-credit {
+      text-align: center;
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: #444;
+    }
+    .dev-credit a {
+      color: var(--gold);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .dev-credit a:hover { opacity: 1; }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .about-grid { grid-template-columns: 1fr; gap: 44px; }
@@ -271,7 +361,6 @@
   </button>
 </nav>
 
-<!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a>
   <a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a>
@@ -281,8 +370,8 @@
 </div>
 
 <!-- ═══ HERO ═══ -->
-<section class="hero">
-  <div class="hero-bg"></div>
+<section class="hero" aria-label="NR40 Athens Tattoo Studio">
+  <div class="hero-bg" role="img" aria-label="Tattoo studio background"></div>
   <div class="hero-content">
     <span class="hero-eyebrow" data-gr="Tattoo Studio · Αθήνα, Ελλάδα" data-en="Tattoo Studio · Athens, Greece">Tattoo Studio · Αθήνα, Ελλάδα</span>
     <h1 class="hero-title">
@@ -296,26 +385,25 @@
       <a href="team.html" class="btn btn-ghost" data-gr="Δες τους Καλλιτέχνες" data-en="Meet the Artists">Δες τους Καλλιτέχνες</a>
     </div>
   </div>
-  <div class="hero-scroll">
+  <div class="hero-scroll" aria-hidden="true">
     <div class="scroll-line"></div>
     <span data-gr="Scroll" data-en="Scroll">Scroll</span>
   </div>
 </section>
 
 <!-- ═══ ABOUT ═══ -->
-<section class="about-section">
+<section class="about-section" id="about">
   <div class="container">
     <div class="about-grid">
       <div class="about-body">
         <span class="label" data-gr="Ποιοι είμαστε" data-en="Who We Are">Ποιοι είμαστε</span>
         <h2 class="heading" style="font-size:clamp(2rem,4vw,3.2rem);margin-bottom:20px;" data-gr="Τέχνη που <em>μένει</em> για πάντα." data-en="Art that <em>lasts</em> forever.">Τέχνη που <em>μένει</em> για πάντα.</h2>
         <div class="gold-rule"></div>
-        <p data-gr="Στο NR40, πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism." data-en="At NR40, we believe every tattoo is a unique expression of your soul. Our team consists of experienced artists with different specializations — from fine line to traditional and realism.">Στο 
-          , πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism.</p>
+        <p data-gr="Στο NR40 Athens, πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism." data-en="At NR40 Athens, we believe every tattoo is a unique expression of your soul. Our team consists of experienced artists with different specializations — from fine line to traditional and realism.">Στο NR40 Athens, πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism.</p>
         <p data-gr="Χρησιμοποιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα." data-en="We use exclusively professional materials in a space designed for your comfort and safety. Hygiene is always our top priority.">Χρησιμοποιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα.</p>
         <div class="stats-row">
-          <div><div class="stat-num">10+</div><div class="stat-lbl" data-gr="Χρόνια" data-en="Years">Χρόνια</div></div>
-          <div><div class="stat-num">2K+</div><div class="stat-lbl" data-gr="Σχέδια" data-en="Designs">Σχέδια</div></div>
+          <div><div class="stat-num">4.9</div><div class="stat-lbl" data-gr="Google Rating" data-en="Google Rating">Google Rating</div></div>
+          <div><div class="stat-num">128+</div><div class="stat-lbl" data-gr="Κριτικές" data-en="Reviews">Κριτικές</div></div>
           <div><div class="stat-num">12</div><div class="stat-lbl" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</div></div>
         </div>
         <div style="margin-top:40px;">
@@ -323,64 +411,65 @@
         </div>
       </div>
       <div class="about-image-wrap">
-        <img class="about-img" src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=800&q=80" alt="Studio">
+        <img class="about-img" src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=800&q=80" alt="NR40 Athens Tattoo Studio interior" loading="lazy" width="800" height="1000">
       </div>
     </div>
   </div>
 </section>
 
 <!-- ═══ TESTIMONIALS ═══ -->
-<section class="testimonials-section">
+<section class="testimonials-section" id="reviews" aria-label="Customer reviews">
   <div class="container">
     <div class="section-header-row">
       <div>
         <span class="label" data-gr="Τι λένε οι πελάτες" data-en="What clients say">Τι λένε οι πελάτες</span>
         <h2 class="heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);" data-gr="Αληθινές <em>εμπειρίες</em>" data-en="Real <em>experiences</em>">Αληθινές <em>εμπειρίες</em></h2>
+        <p style="color:var(--gray);font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;margin-top:8px;">★★★★★ 4.9 · 128 Google Reviews</p>
       </div>
       <div class="carousel-controls">
-        <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
-        <button class="carousel-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+        <button class="carousel-btn" id="prevBtn" aria-label="Previous review">&#8592;</button>
+        <button class="carousel-btn" id="nextBtn" aria-label="Next review">&#8594;</button>
       </div>
     </div>
     <div class="carousel-overflow">
       <div class="carousel-track" id="carouselTrack">
-  <div class="testimonial-card">
-    <div class="t-stars">★★★★★</div>
-    <p class="t-text">"Great service and attention. I went for a walk in and got a great piece from Zoe. She was very helpful and caring. Her attention to detail was amazing. I couldn't be happier with my new tattoo."</p>
-    <div class="t-author"><div class="t-avatar">RC</div><div><div class="t-name">Rafael Catalán Ortega</div><div class="t-service">Google Review</div></div></div>
-  </div>
-  <div class="testimonial-card">
-    <div class="t-stars">★★★★★</div>
-    <p class="t-text">"Highly recommend this tattoo studio! I passed by spontaneously and was welcomed very warmly. Love the vibes and the community they have built. Everything was super professional, the tattoo is exactly what I wanted."</p>
-    <div class="t-author"><div class="t-avatar">ZW</div><div><div class="t-name">Zora Weeme</div><div class="t-service">Google Review · Jimmy</div></div></div>
-  </div>
-  <div class="testimonial-card">
-    <div class="t-stars">★★★★★</div>
-    <p class="t-text">"Very nice place with cool vibes! Especially Plazz is extremely professional — we are 5 sessions in for a full sleeve tattoo and everything turned out amazing. Very unique tattoo shop!"</p>
-    <div class="t-author"><div class="t-avatar">AP</div><div><div class="t-name">Alex Politis</div><div class="t-service">Google Review · Plazz</div></div></div>
-  </div>
-  <div class="testimonial-card">
-    <div class="t-stars">★★★★★</div>
-    <p class="t-text">"One of the nicest studios — the space is fantastic and spotlessly clean. The atmosphere is very chill. The artists are cheerful, professional and their work is excellent!"</p>
-    <div class="t-author"><div class="t-avatar">AK</div><div><div class="t-name">Anastasia Kiapoka</div><div class="t-service">Google Review</div></div></div>
-  </div>
-  <div class="testimonial-card">
-    <div class="t-stars">★★★★★</div>
-    <p class="t-text">"Just yesterday I got my first tattoo with Jimmy and the process was so smooth. Excellent studio in terms of space, cleanliness and vibes — the bar/cafe inside is a big plus!"</p>
-    <div class="t-author"><div class="t-avatar">ΔΕ</div><div><div class="t-name">Δήμητρα Ε.</div><div class="t-service">Google Review · Jimmy</div></div></div>
-  </div>
-  <div class="testimonial-card">
-    <div class="t-stars">★★★★★</div>
-    <p class="t-text">"Me and my friend got our first tattoos here from Valia, it was a great experience and we massively recommend."</p>
-    <div class="t-author"><div class="t-avatar">MW</div><div><div class="t-name">Matt Warner</div><div class="t-service">Google Review · Valia</div></div></div>
-  </div>
-</div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Great service and attention. I went for a walk in and got a great piece from Zoe. She was very helpful and caring. Her attention to detail was amazing. I couldn't be happier with my new tattoo."</p>
+          <div class="t-author"><div class="t-avatar">RC</div><div><div class="t-name">Rafael Catalán Ortega</div><div class="t-service">Google Review</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Highly recommend this tattoo studio! I passed by spontaneously and was welcomed very warmly. Love the vibes and the community they have built. Everything was super professional, the tattoo is exactly what I wanted."</p>
+          <div class="t-author"><div class="t-avatar">ZW</div><div><div class="t-name">Zora Weeme</div><div class="t-service">Google Review · Jimmy</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Very nice place with cool vibes! Especially Plazz is extremely professional — we are 5 sessions in for a full sleeve tattoo and everything turned out amazing. Very unique tattoo shop!"</p>
+          <div class="t-author"><div class="t-avatar">AP</div><div><div class="t-name">Alex Politis</div><div class="t-service">Google Review · Plazz</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"One of the nicest studios — the space is fantastic and spotlessly clean. The atmosphere is very chill. The artists are cheerful, professional and their work is excellent!"</p>
+          <div class="t-author"><div class="t-avatar">AK</div><div><div class="t-name">Anastasia Kiapoka</div><div class="t-service">Google Review</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Just yesterday I got my first tattoo with Jimmy and the process was so smooth. Excellent studio in terms of space, cleanliness and vibes — the bar/cafe inside is a big plus!"</p>
+          <div class="t-author"><div class="t-avatar">ΔΕ</div><div><div class="t-name">Δήμητρα Ε.</div><div class="t-service">Google Review · Jimmy</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Me and my friend got our first tattoos here from Valia, it was a great experience and we massively recommend."</p>
+          <div class="t-author"><div class="t-avatar">MW</div><div><div class="t-name">Matt Warner</div><div class="t-service">Google Review · Valia</div></div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ═══ FAQ ═══ -->
-<section class="faq-section">
+<section class="faq-section" id="faq">
   <div class="container">
     <div class="faq-layout">
       <div>
@@ -390,34 +479,34 @@
         <p style="color:var(--gray-light);font-style:italic;" data-gr="Βρες απαντήσεις στις πιο συχνές ερωτήσεις ή επικοινώνησε μαζί μας απευθείας." data-en="Find answers to common questions or contact us directly.">Βρες απαντήσεις στις πιο συχνές ερωτήσεις ή επικοινώνησε μαζί μας απευθείας.</p>
         <div style="margin-top:32px;"><a href="contact.html" class="btn btn-ghost" data-gr="Επικοινωνία" data-en="Contact Us">Επικοινωνία</a></div>
       </div>
-      <div class="faq-list">
-        <div class="faq-item">
-          <button class="faq-trigger"><span data-gr="Πώς κλείνω ραντεβού;" data-en="How do I book an appointment?">Πώς κλείνω ραντεβού;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body"><p data-gr="Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης στον ιστότοπό μας. Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών." data-en="You can book through our booking form. We will contact you within 24 hours to confirm.">Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης. Θα επικοινωνήσουμε εντός 24 ωρών.</p></div>
+      <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-trigger"><span itemprop="name" data-gr="Πώς κλείνω ραντεβού;" data-en="How do I book an appointment?">Πώς κλείνω ραντεβού;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης στον ιστότοπό μας. Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών." data-en="You can book through our booking form. We will contact you within 24 hours to confirm.">Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης. Θα επικοινωνήσουμε εντός 24 ωρών.</p></div>
         </div>
-        <div class="faq-item">
-          <button class="faq-trigger"><span data-gr="Πόσο κοστίζει ένα τατουάζ;" data-en="How much does a tattoo cost?">Πόσο κοστίζει ένα τατουάζ;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body"><p data-gr="Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€. Επικοινώνησε μαζί μας για δωρεάν εκτίμηση." data-en="Price depends on size, style, complexity and artist. Minimum starts from €50. Contact us for a free estimate.">Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€.</p></div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-trigger"><span itemprop="name" data-gr="Πόσο κοστίζει ένα τατουάζ;" data-en="How much does a tattoo cost?">Πόσο κοστίζει ένα τατουάζ;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€. Επικοινώνησε μαζί μας για δωρεάν εκτίμηση." data-en="Price depends on size, style, complexity and artist. Minimum starts from €50. Contact us for a free estimate.">Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€.</p></div>
         </div>
-        <div class="faq-item">
-          <button class="faq-trigger"><span data-gr="Πόσο καιρό διαρκεί η επούλωση;" data-en="How long does healing take?">Πόσο καιρό διαρκεί η επούλωση;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body"><p data-gr="Η επιφανειακή επούλωση διαρκεί 2-3 εβδομάδες. Η πλήρης επούλωση 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες φροντίδας." data-en="Surface healing takes 2-3 weeks. Full healing 3-6 months. You will receive detailed aftercare instructions.">Επιφανειακή επούλωση: 2-3 εβδομάδες. Πλήρης: 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες.</p></div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-trigger"><span itemprop="name" data-gr="Πόσο καιρό διαρκεί η επούλωση;" data-en="How long does healing take?">Πόσο καιρό διαρκεί η επούλωση;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Η επιφανειακή επούλωση διαρκεί 2-3 εβδομάδες. Η πλήρης επούλωση 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες φροντίδας." data-en="Surface healing takes 2-3 weeks. Full healing 3-6 months. You will receive detailed aftercare instructions.">Επιφανειακή επούλωση: 2-3 εβδομάδες. Πλήρης: 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες.</p></div>
         </div>
-        <div class="faq-item">
-          <button class="faq-trigger"><span data-gr="Κάνετε cover-up τατουάζ;" data-en="Do you do cover-up tattoos?">Κάνετε cover-up τατουάζ;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body"><p data-gr="Ναι! Διαθέτουμε εξειδικευμένους καλλιτέχνες σε cover-up. Στείλε φωτογραφία του υπάρχοντος τατουάζ και θα σου προτείνουμε λύσεις." data-en="Yes! We have specialized cover-up artists. Send a photo of the existing tattoo and we will suggest solutions.">Ναι! Στείλε φωτογραφία και θα σου προτείνουμε λύσεις.</p></div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-trigger"><span itemprop="name" data-gr="Κάνετε cover-up τατουάζ;" data-en="Do you do cover-up tattoos?">Κάνετε cover-up τατουάζ;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Ναι! Διαθέτουμε εξειδικευμένους καλλιτέχνες σε cover-up. Στείλε φωτογραφία του υπάρχοντος τατουάζ και θα σου προτείνουμε λύσεις." data-en="Yes! We have specialized cover-up artists. Send a photo of the existing tattoo and we will suggest solutions.">Ναι! Στείλε φωτογραφία και θα σου προτείνουμε λύσεις.</p></div>
         </div>
-        <div class="faq-item">
-          <button class="faq-trigger"><span data-gr="Χρειάζεται προκαταβολή;" data-en="Is a deposit required?">Χρειάζεται προκαταβολή;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body"><p data-gr="Ναι, απαιτείται προκαταβολή 30% για να κρατηθεί το ραντεβού σου. Αφαιρείται από το συνολικό κόστος." data-en="Yes, a 30% deposit is required. It is deducted from the total cost.">Ναι, 30% προκαταβολή για κράτηση. Αφαιρείται από το συνολικό κόστος.</p></div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-trigger"><span itemprop="name" data-gr="Χρειάζεται προκαταβολή;" data-en="Is a deposit required?">Χρειάζεται προκαταβολή;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Ναι, απαιτείται προκαταβολή 30% για να κρατηθεί το ραντεβού σου. Αφαιρείται από το συνολικό κόστος." data-en="Yes, a 30% deposit is required. It is deducted from the total cost.">Ναι, 30% προκαταβολή για κράτηση. Αφαιρείται από το συνολικό κόστος.</p></div>
         </div>
-        <div class="faq-item">
-          <button class="faq-trigger"><span data-gr="Από ποια ηλικία γίνονται τατουάζ;" data-en="Minimum age for tattoos?">Από ποια ηλικία γίνονται τατουάζ;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body"><p data-gr="Τατουάζ γίνονται μόνο σε άτομα 18 ετών και άνω. Απαιτείται έγκυρη ταυτότητα ή διαβατήριο." data-en="Tattoos for ages 18+. Valid ID or passport required.">Μόνο 18+. Απαιτείται έγκυρη ταυτότητα.</p></div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-trigger"><span itemprop="name" data-gr="Από ποια ηλικία γίνονται τατουάζ;" data-en="Minimum age for tattoos?">Από ποια ηλικία γίνονται τατουάζ;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Τατουάζ γίνονται μόνο σε άτομα 18 ετών και άνω. Απαιτείται έγκυρη ταυτότητα ή διαβατήριο." data-en="Tattoos for ages 18+. Valid ID or passport required.">Μόνο 18+. Απαιτείται έγκυρη ταυτότητα.</p></div>
         </div>
-        <div class="faq-item">
-          <button class="faq-trigger"><span data-gr="Ποια είναι τα μέτρα υγιεινής σας;" data-en="What are your hygiene standards?">Ποια είναι τα μέτρα υγιεινής σας;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body"><p data-gr="Χρησιμοποιούμε αποκλειστικά μίας χρήσης βελόνες και γάντια. Όλος ο εξοπλισμός στειρώνεται με κλίβανο." data-en="We use exclusively single-use needles and gloves. All equipment is sterilized in an autoclave.">Μίας χρήσης βελόνες και γάντια. Στείρωση με κλίβανο. Πλήρη πρωτόκολλα υγιεινής.</p></div>
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-trigger"><span itemprop="name" data-gr="Ποια είναι τα μέτρα υγιεινής σας;" data-en="What are your hygiene standards?">Ποια είναι τα μέτρα υγιεινής σας;</span><span class="faq-icon">+</span></button>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Χρησιμοποιούμε αποκλειστικά μίας χρήσης βελόνες και γάντια. Όλος ο εξοπλισμός στειρώνεται με κλίβανο." data-en="We use exclusively single-use needles and gloves. All equipment is sterilized in an autoclave.">Μίας χρήσης βελόνες και γάντια. Στείρωση με κλίβανο. Πλήρη πρωτόκολλα υγιεινής.</p></div>
         </div>
       </div>
     </div>
@@ -444,15 +533,19 @@
       <div>
         <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
         <ul class="footer-links">
-          <li><a href="tel:+30 210 380 6408">+30 210 380 6408</a></li>
+          <li><a href="tel:+302103806408">+30 210 380 6408</a></li>
           <li><a href="mailto:info@nr40athens.com">info@nr40athens.com</a></li>
-          <li><span data-gr="Κάνιγγος 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κάνιγγος 27, Αθήνα 106 82</span></li>
+          <li><span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 NR40. <span data-gr="Όλα τα δικαιώματα διατηρούνται." data-en="All rights reserved.">Όλα τα δικαιώματα διατηρούνται.</span></span>
-<span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κάνιγγός 27, Αθήνα 106 82</span>    </div>
+      <span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span>
+    </div>
+  </div>
+  <div class="dev-credit">
+    Developed by <a href="https://nikolassapa.vercel.app/" target="_blank" rel="noopener">Nikolas Sapalidis</a>
   </div>
 </footer>
 
