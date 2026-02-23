@@ -278,23 +278,12 @@
       <p style="color:var(--gray-light);font-style:italic;max-width:540px;margin:0 auto;" data-gr="Περισσότερο από ένα tattoo studio — ένας ζωντανός χώρος τέχνης, events και δημιουργικότητας στο κέντρο της Αθήνας." data-en="More than a tattoo studio — a living space for art, events and creativity in central Athens.">Περισσότερο από ένα tattoo studio — ένας ζωντανός χώρος τέχνης, events και δημιουργικότητας στο κέντρο της Αθήνας.</p>
     </div>
     <div class="space-grid">
-      <div class="space-img-main">
-        <img src="PLACEHOLDER_STUDIO_MAIN" alt="NR40 Athens studio interior" loading="lazy">
-        <div class="space-img-label" data-gr="The Studio" data-en="The Studio">The Studio</div>
+      <div class="space-img-main" id="studioImgMain">
+        <!-- Populated dynamically from /api/gallery?type=studio — first photo becomes main -->
+        <div style="width:100%;min-height:480px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-size:0.7rem;font-family:'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;">Loading photos...</div>
       </div>
-      <div class="space-img-side">
-        <div class="space-img-item">
-          <img src="PLACEHOLDER_STUDIO_BAR" alt="NR40 bar and lounge area" loading="lazy">
-          <div class="space-img-label" data-gr="Bar & Lounge" data-en="Bar & Lounge">Bar & Lounge</div>
-        </div>
-        <div class="space-img-item">
-          <img src="PLACEHOLDER_STUDIO_EVENT" alt="NR40 events space" loading="lazy">
-          <div class="space-img-label" data-gr="Events" data-en="Events">Events</div>
-        </div>
-        <div class="space-img-item">
-          <img src="PLACEHOLDER_STUDIO_ART" alt="NR40 art and culture space" loading="lazy">
-          <div class="space-img-label" data-gr="Art Space" data-en="Art Space">Art Space</div>
-        </div>
+      <div class="space-img-side" id="studioImgSide">
+        <!-- Photos 2–4 from API populate here -->
       </div>
     </div>
     <div class="events-strip">
@@ -326,15 +315,8 @@
       <a href="team.html" class="btn btn-ghost btn-sm" data-gr="Δες τους Καλλιτέχνες" data-en="Meet the Artists">Δες τους Καλλιτέχνες</a>
     </div>
     <div class="gallery-masonry" id="galleryGrid">
-      <!-- Replace src values with real Cloudinary URLs. alt text describes the tattoo style/subject -->
-      <div class="g-item" data-idx="0"><img src="PLACEHOLDER_TATTOO_1" alt="Fine line tattoo" loading="lazy"></div>
-      <div class="g-item" data-idx="1"><img src="PLACEHOLDER_TATTOO_2" alt="Realism tattoo Athens" loading="lazy"></div>
-      <div class="g-item" data-idx="2"><img src="PLACEHOLDER_TATTOO_3" alt="Traditional tattoo" loading="lazy"></div>
-      <div class="g-item" data-idx="3"><img src="PLACEHOLDER_TATTOO_4" alt="Black work tattoo" loading="lazy"></div>
-      <div class="g-item" data-idx="4"><img src="PLACEHOLDER_TATTOO_5" alt="Japanese tattoo Athens" loading="lazy"></div>
-      <div class="g-item" data-idx="5"><img src="PLACEHOLDER_TATTOO_6" alt="Abstract tattoo" loading="lazy"></div>
-      <div class="g-item" data-idx="6"><img src="PLACEHOLDER_TATTOO_7" alt="Geometric tattoo" loading="lazy"></div>
-      <div class="g-item" data-idx="7"><img src="PLACEHOLDER_TATTOO_8" alt="Color tattoo Athens" loading="lazy"></div>
+      <!-- Populated dynamically from /api/gallery?type=tattoo -->
+      <div style="grid-column:1/-1;color:var(--gray);font-style:italic;padding:40px;text-align:center;font-size:0.95rem;">Loading gallery...</div>
     </div>
   </div>
 </section>
@@ -427,7 +409,7 @@
     <div class="review-progress"><div class="review-progress-bar" id="reviewProgressBar"></div></div>
     <div class="review-footer-row">
       <div class="review-dots" id="reviewDots"></div>
-      <a href="https://www.google.com/maps/place/NR40+ATHENS/@37.9864087,23.7308042,15z/data=!4m8!3m7!1s0x14a1bd30cec8ff8b:0x71e62f8d58cf9285!8m2!3d37.9864087!4d23.7308042!9m1!1b1!16s%2Fg%2F11w7_n6psj?hl=en&entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener"
+      <a href="https://g.page/r/REPLACE_WITH_GOOGLE_PLACE_ID/review" target="_blank" rel="noopener"
          style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:opacity 0.2s;"
          data-gr="Όλες οι κριτικές στο Google →" data-en="All reviews on Google →">
         Όλες οι κριτικές στο Google →
@@ -590,7 +572,7 @@
 })();
 
 // ─── LIGHTBOX ───
-(function() {
+function initLightbox() {
   const items = document.querySelectorAll('#galleryGrid .g-item');
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lightboxImg');
@@ -618,19 +600,94 @@
   }
 
   items.forEach((item, i) => {
-    item.addEventListener('click', () => openLightbox(i));
+    // Remove old listeners by cloning
+    const fresh = item.cloneNode(true);
+    item.parentNode.replaceChild(fresh, item);
+    fresh.addEventListener('click', () => openLightbox(i));
   });
 
-  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-  document.getElementById('lightboxPrev').addEventListener('click', () => lbNav(-1));
-  document.getElementById('lightboxNext').addEventListener('click', () => lbNav(1));
-  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
-  document.addEventListener('keydown', e => {
-    if (!lb.classList.contains('open')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowRight') lbNav(1);
-    if (e.key === 'ArrowLeft') lbNav(-1);
-  });
+  document.getElementById('lightboxClose').onclick = closeLightbox;
+  document.getElementById('lightboxPrev').onclick = () => lbNav(-1);
+  document.getElementById('lightboxNext').onclick = () => lbNav(1);
+  lb.onclick = e => { if (e.target === lb) closeLightbox(); };
+}
+
+document.addEventListener('keydown', e => {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  if (e.key === 'ArrowRight') document.getElementById('lightboxNext').click();
+  if (e.key === 'ArrowLeft')  document.getElementById('lightboxPrev').click();
+});
+
+// ─── DYNAMIC GALLERY & STUDIO LOADER ───
+(function() {
+  const API = 'https://backend-63o7.onrender.com';
+
+  async function loadTattooGallery() {
+    const grid = document.getElementById('galleryGrid');
+    if (!grid) return;
+    try {
+      const res = await fetch(API + '/api/gallery?type=tattoo');
+      if (!res.ok) throw new Error('API error');
+      const photos = await res.json();
+      if (!photos.length) { grid.innerHTML = '<div style="color:var(--gray);font-style:italic;text-align:center;padding:40px;font-size:0.95rem;">Gallery coming soon.</div>'; return; }
+      grid.innerHTML = '';
+      photos.forEach((p, i) => {
+        const item = document.createElement('div');
+        item.className = 'g-item';
+        item.dataset.idx = i;
+        item.innerHTML = '<img src="' + p.url + '" alt="' + (p.caption || 'Tattoo NR40 Athens') + '" loading="lazy">';
+        grid.appendChild(item);
+      });
+      initLightbox();
+    } catch (_) {
+      grid.innerHTML = '<div style="color:var(--gray);font-style:italic;text-align:center;padding:40px;font-size:0.95rem;">Gallery coming soon.</div>';
+    }
+  }
+
+  async function loadStudioGallery() {
+    const mainWrap = document.getElementById('studioImgMain');
+    const sideWrap = document.getElementById('studioImgSide');
+    if (!mainWrap || !sideWrap) return;
+    try {
+      const res = await fetch(API + '/api/gallery?type=studio');
+      if (!res.ok) throw new Error('API error');
+      const photos = await res.json();
+      if (!photos.length) {
+        mainWrap.innerHTML = '<div style="width:100%;min-height:480px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-family:\'Space Mono\',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;">Photos coming soon</div>';
+        return;
+      }
+      // Main photo — first in list
+      const main = photos[0];
+      mainWrap.innerHTML =
+        '<img src="' + main.url + '" alt="' + (main.caption || 'NR40 Athens Studio') + '" loading="lazy">' +
+        '<div class="space-img-label">' + (main.caption || 'The Studio') + '</div>';
+
+      // Side photos — next up to 3
+      const sidePhotos = photos.slice(1, 4);
+      const fallbackLabels = ['Bar &amp; Lounge', 'Events', 'Art Space'];
+      sideWrap.innerHTML = '';
+      for (let i = 0; i < 3; i++) {
+        const div = document.createElement('div');
+        div.className = 'space-img-item';
+        if (sidePhotos[i]) {
+          div.innerHTML =
+            '<img src="' + sidePhotos[i].url + '" alt="' + (sidePhotos[i].caption || fallbackLabels[i]) + '" loading="lazy">' +
+            '<div class="space-img-label">' + (sidePhotos[i].caption || fallbackLabels[i]) + '</div>';
+        } else {
+          div.style.cssText = 'background:var(--dark);display:flex;align-items:flex-end;';
+          div.innerHTML = '<div class="space-img-label">' + fallbackLabels[i] + '</div>';
+        }
+        sideWrap.appendChild(div);
+      }
+    } catch (_) {
+      mainWrap.innerHTML = '<div style="width:100%;min-height:480px;background:var(--dark);"></div>';
+    }
+  }
+
+  loadTattooGallery();
+  loadStudioGallery();
 })();
 
 // ─── FAQ ───
