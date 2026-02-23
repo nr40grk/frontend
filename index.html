@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ─── PRIMARY SEO ─── -->
   <title>NR40 Athens | Tattoo Studio — Κανιγγός 27, Αθήνα</title>
   <meta name="description" content="NR40 Athens Tattoo Studio. Επαγγελματικά τατουάζ, piercing & tooth gems στο κέντρο της Αθήνας. Walk-ins welcome. Δευτέρα–Σάββατο 11:00–20:00. Κανιγγός 27, Αθήνα 106 82.">
   <meta name="keywords" content="tattoo athens, τατουάζ αθήνα, tattoo studio athens, nr40, nr40 athens, piercing αθήνα, tooth gems αθήνα, fine line tattoo athens, realism tattoo athens, κανιγγός τατουάζ">
@@ -12,8 +10,6 @@
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#080808">
   <link rel="canonical" href="https://nr40athens.com/">
-
-  <!-- ─── OPEN GRAPH (Facebook, WhatsApp, etc.) ─── -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://nr40athens.com/">
   <meta property="og:title" content="NR40 Athens | Tattoo Studio">
@@ -23,20 +19,14 @@
   <meta property="og:image:height" content="630">
   <meta property="og:site_name" content="NR40 Athens">
   <meta property="og:locale" content="el_GR">
-
-  <!-- ─── TWITTER CARD ─── -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="NR40 Athens | Tattoo Studio">
   <meta name="twitter:description" content="Επαγγελματικά τατουάζ, piercing & tooth gems στο κέντρο της Αθήνας. Walk-ins welcome.">
   <meta name="twitter:image" content="https://nr40athens.com/og-image.jpg">
-
-  <!-- ─── GEO ─── -->
   <meta name="geo.region" content="GR-I">
   <meta name="geo.placename" content="Athens">
   <meta name="geo.position" content="37.9839;23.7301">
   <meta name="ICBM" content="37.9839, 23.7301">
-
-  <!-- ─── SCHEMA.ORG STRUCTURED DATA ─── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -54,297 +44,145 @@
       "postalCode": "106 82",
       "addressCountry": "GR"
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 37.9839,
-      "longitude": 23.7301
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
-        "opens": "11:00",
-        "closes": "20:00"
-      }
-    ],
-    "sameAs": [
-      "https://www.instagram.com/nr40_ath/",
-      "https://www.facebook.com/p/NR40-ATH-100067196989146/",
-      "https://www.tiktok.com/@nr40.ath"
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "128"
-    },
+    "geo": { "@type": "GeoCoordinates", "latitude": 37.9839, "longitude": 23.7301 },
+    "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "11:00", "closes": "20:00" }],
+    "sameAs": ["https://www.instagram.com/nr40_ath/","https://www.facebook.com/p/NR40-ATH-100067196989146/","https://www.tiktok.com/@nr40.ath"],
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "128" },
     "priceRange": "€€"
   }
   </script>
-
   <link rel="stylesheet" href="css/style.css">
-  
-  <!-- Vercel Web Analytics -->
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
-  
+
   <style>
     /* ─── HERO ─── */
-    .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(8,8,8,0.25) 0%, rgba(8,8,8,0.55) 50%, rgba(8,8,8,1) 100%),
-        url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1800&q=80') center/cover no-repeat;
-      transform: scale(1.04);
-      animation: heroZoom 12s ease-out forwards;
-    }
-    @keyframes heroZoom { to { transform: scale(1); } }
-    .hero-content {
-      position: relative;
-      text-align: center;
-      max-width: 960px;
-      padding: 0 24px;
-    }
-    .hero-eyebrow {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.38em;
-      color: var(--gold);
-      text-transform: uppercase;
-      display: block;
-      margin-bottom: 28px;
-      animation: fadeUp 1s ease 0.2s both;
-    }
-    .hero-title {
-      font-family: 'Unbounded', sans-serif;
-      font-weight: 900;
-      font-size: clamp(3.2rem, 10vw, 9rem);
-      line-height: 0.88;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      margin-bottom: 28px;
-      animation: fadeUp 1s ease 0.4s both;
-    }
-    .hero-title .gold-word {
-      font-style: italic;
-      font-family: 'Cormorant Garamond', serif;
-      color: var(--gold);
-      font-weight: 300;
-      font-size: 1.12em;
-      display: block;
-      letter-spacing: 0;
-    }
-    .hero-sub {
-      font-size: 1.1rem;
-      color: var(--gray-light);
-      max-width: 460px;
-      margin: 0 auto 44px;
-      font-style: italic;
-      animation: fadeUp 1s ease 0.6s both;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      animation: fadeUp 1s ease 0.8s both;
-    }
-    .hero-scroll {
-      position: absolute;
-      bottom: 36px;
-      left: 0;
-      right: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      color: var(--gray);
-      text-transform: uppercase;
-      animation: fadeUp 1s ease 1.2s both;
-    }
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
+    .hero { position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden; }
+    .hero-bg { position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,0.25) 0%,rgba(8,8,8,0.55) 50%,rgba(8,8,8,1) 100%), url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1800&q=80') center/cover no-repeat;transform:scale(1.04);animation:heroZoom 12s ease-out forwards; }
+    @keyframes heroZoom { to { transform:scale(1); } }
+    .hero-content { position:relative;text-align:center;max-width:960px;padding:0 24px; }
+    .hero-eyebrow { font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:28px;animation:fadeUp 1s ease 0.2s both; }
+    .hero-title { font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(3.2rem,10vw,9rem);line-height:0.88;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:28px;animation:fadeUp 1s ease 0.4s both; }
+    .hero-title .gold-word { font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--gold);font-weight:300;font-size:1.12em;display:block;letter-spacing:0; }
+    .hero-sub { font-size:1.1rem;color:var(--gray-light);max-width:460px;margin:0 auto 44px;font-style:italic;animation:fadeUp 1s ease 0.6s both; }
+    .hero-actions { display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp 1s ease 0.8s both; }
+    .hero-scroll { position:absolute;bottom:36px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.2em;color:var(--gray);text-transform:uppercase;animation:fadeUp 1s ease 1.2s both; }
+    .scroll-line { width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease-in-out infinite; }
     @keyframes scrollPulse { 0%,100%{opacity:0.4;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)} }
 
     /* ─── ABOUT ─── */
-    .about-section { padding: 100px 0; background: var(--dark); border-bottom: 1px solid var(--border); }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-    .about-image-wrap { position: relative; }
-    .about-img {
-      width: 100%;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      filter: grayscale(25%);
-      transition: filter 0.5s;
-      display: block;
+    .about-section { padding:100px 0;background:var(--dark);border-bottom:1px solid var(--border); }
+    .about-grid { display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center; }
+    .about-image-wrap { position:relative; }
+    .about-img { width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(25%);transition:filter 0.5s;display:block; }
+    .about-image-wrap:hover .about-img { filter:grayscale(0%); }
+    .about-image-wrap::after { content:'';position:absolute;inset:0;border:1px solid var(--gold);transform:translate(14px,14px);pointer-events:none;transition:transform 0.4s; }
+    .about-image-wrap:hover::after { transform:translate(8px,8px); }
+    .about-body p { color:var(--gray-light);font-style:italic;margin-bottom:22px;font-size:1.05rem; }
+    .stats-row { display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;padding-top:40px;border-top:1px solid var(--border); }
+    .stat-num { font-family:'Unbounded',sans-serif;font-size:2.4rem;font-weight:900;color:var(--gold);line-height:1; }
+    .stat-lbl { font-family:'Space Mono',monospace;font-size:0.58rem;color:var(--gray);letter-spacing:0.12em;text-transform:uppercase;margin-top:6px; }
+
+    /* ─── STUDIO / SPACE ─── */
+    .space-section { padding:100px 0;background:var(--black);border-bottom:1px solid var(--border); }
+    .space-grid { display:grid;grid-template-columns:1.4fr 1fr;gap:4px;margin-bottom:32px; }
+    .space-img-main { position:relative;overflow:hidden; }
+    .space-img-main img { width:100%;height:100%;min-height:480px;object-fit:cover;display:block;transition:transform 0.6s ease; }
+    .space-img-main:hover img { transform:scale(1.04); }
+    .space-img-side { display:grid;grid-template-rows:repeat(3,1fr);gap:4px; }
+    .space-img-item { position:relative;overflow:hidden; }
+    .space-img-item img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease; }
+    .space-img-item:hover img { transform:scale(1.06); }
+    .space-img-label { position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(8,8,8,0.85));padding:18px 16px 12px;font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold); }
+    .events-strip { display:flex;align-items:center;gap:28px;background:var(--card);border:1px solid var(--border);padding:28px 32px;margin-top:4px; }
+    .events-strip-icon { font-size:2rem;color:var(--gold);flex-shrink:0; }
+    .events-strip-title { font-family:'Unbounded',sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px; }
+    .events-strip p { color:var(--gray-light);font-style:italic;font-size:0.95rem;line-height:1.6; }
+    .events-strip .btn { flex-shrink:0; }
+    @media(max-width:900px){
+      .space-grid{grid-template-columns:1fr;gap:4px;}
+      .space-img-main img{min-height:280px;}
+      .space-img-side{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr;}
+      .events-strip{flex-direction:column;align-items:flex-start;gap:16px;}
     }
-    .about-image-wrap:hover .about-img { filter: grayscale(0%); }
-    .about-image-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 1px solid var(--gold);
-      transform: translate(14px, 14px);
-      pointer-events: none;
-      transition: transform 0.4s;
-    }
-    .about-image-wrap:hover::after { transform: translate(8px, 8px); }
-    .about-body p {
-      color: var(--gray-light);
-      font-style: italic;
-      margin-bottom: 22px;
-      font-size: 1.05rem;
-    }
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-      margin-top: 44px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-    .stat-num {
-      font-family: 'Unbounded', sans-serif;
-      font-size: 2.4rem;
-      font-weight: 900;
-      color: var(--gold);
-      line-height: 1;
-    }
-    .stat-lbl {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.58rem;
-      color: var(--gray);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
+
+    /* ─── TATTOO GALLERY ─── */
+    .gallery-section { padding:100px 0;background:var(--dark);border-bottom:1px solid var(--border); }
+    .gallery-masonry { columns:4;column-gap:4px; }
+    .gallery-masonry .g-item { break-inside:avoid;margin-bottom:4px;position:relative;overflow:hidden;cursor:pointer; }
+    .gallery-masonry .g-item img { width:100%;display:block;transition:transform 0.5s ease; }
+    .gallery-masonry .g-item:hover img { transform:scale(1.06); }
+    .gallery-masonry .g-item::after { content:'';position:absolute;inset:0;background:rgba(8,8,8,0);transition:background 0.3s; }
+    .gallery-masonry .g-item:hover::after { background:rgba(8,8,8,0.25); }
+    /* Lightbox */
+    .lightbox { position:fixed;inset:0;background:rgba(8,8,8,0.97);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s; }
+    .lightbox.open { opacity:1;pointer-events:all; }
+    .lightbox img { max-width:90vw;max-height:88vh;object-fit:contain;display:block; }
+    .lightbox-close { position:absolute;top:24px;right:28px;background:none;border:none;color:var(--gold);font-size:2rem;cursor:pointer;line-height:1;font-family:'Space Mono',monospace; }
+    .lightbox-nav { position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid var(--border);color:var(--white);width:48px;height:48px;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s,color 0.2s; }
+    .lightbox-nav:hover { border-color:var(--gold);color:var(--gold); }
+    .lightbox-prev { left:20px; }
+    .lightbox-next { right:20px; }
+    @media(max-width:900px){ .gallery-masonry{columns:2;} }
+    @media(max-width:520px){ .gallery-masonry{columns:2;} }
 
     /* ─── TESTIMONIALS ─── */
-    .testimonials-section { padding: 100px 0; overflow: hidden; }
-    .section-header-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
-    .carousel-controls { display: flex; gap: 12px; }
-    .carousel-btn {
-      width: 50px; height: 50px;
-      border: 1px solid var(--border);
-      background: none; color: var(--white);
-      cursor: pointer; font-size: 1.1rem;
-      transition: all 0.2s;
-      display: flex; align-items: center; justify-content: center;
+    .testimonials-section { padding:100px 0;overflow:hidden;background:var(--black); }
+    .section-header-row { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px; }
+    /* Review card with fade */
+    .review-stage { position:relative;min-height:320px; }
+    .review-card {
+      position:absolute;inset:0;
+      display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;
+      opacity:0;pointer-events:none;
+      transition:opacity 0.5s ease;
     }
-    .carousel-btn:hover { border-color: var(--gold); color: var(--gold); }
-    .carousel-overflow { overflow: hidden; }
-    .carousel-track {
-      display: flex;
-      gap: 24px;
-      transition: transform 0.55s cubic-bezier(0.4,0,0.2,1);
+    .review-card.active { opacity:1;pointer-events:all;position:relative; }
+    .testimonial-card { background:var(--card);border:1px solid var(--border);padding:40px;position:relative; }
+    .testimonial-card::before { content:'"';font-family:'Cormorant Garamond',serif;font-size:8rem;color:var(--gold);opacity:0.15;position:absolute;top:0;left:24px;line-height:1.1; }
+    .t-stars { color:var(--gold);font-size:0.85rem;margin-bottom:14px; }
+    .t-text { font-style:italic;color:var(--gray-light);font-size:1rem;margin-bottom:28px;position:relative;z-index:1; }
+    .t-author { display:flex;align-items:center;gap:14px; }
+    .t-avatar { width:46px;height:46px;border-radius:50%;background:var(--border);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:0.75rem;color:var(--gold);flex-shrink:0; }
+    .t-name { font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--white); }
+    .t-service { font-size:0.9rem;color:var(--gold);font-style:italic;margin-top:3px; }
+    /* Progress bar */
+    .review-progress { height:2px;background:var(--border);margin-top:40px;position:relative;overflow:hidden; }
+    .review-progress-bar { height:100%;background:var(--gold);width:0%;transition:width linear; }
+    /* Dots */
+    .review-dots { display:flex;gap:10px;margin-top:20px;justify-content:center; }
+    .review-dot { width:8px;height:8px;border-radius:50%;background:var(--border);border:1px solid var(--border);cursor:pointer;transition:background 0.2s,border-color 0.2s; }
+    .review-dot.active { background:var(--gold);border-color:var(--gold); }
+    .review-footer-row { display:flex;justify-content:space-between;align-items:center;margin-top:28px; }
+    .carousel-controls { display:flex;gap:12px; }
+    .carousel-btn { width:50px;height:50px;border:1px solid var(--border);background:none;color:var(--white);cursor:pointer;font-size:1.1rem;transition:all 0.2s;display:flex;align-items:center;justify-content:center; }
+    .carousel-btn:hover { border-color:var(--gold);color:var(--gold); }
+    @media(max-width:900px){
+      .review-card{grid-template-columns:1fr;}
+      .section-header-row{flex-direction:column;align-items:flex-start;gap:20px;}
     }
-    .testimonial-card {
-      flex: 0 0 calc(33.333% - 16px);
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 40px;
-      position: relative;
-    }
-    .testimonial-card::before {
-      content: '"';
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 8rem;
-      color: var(--gold);
-      opacity: 0.15;
-      position: absolute;
-      top: 0; left: 24px;
-      line-height: 1.1;
-    }
-    .t-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 14px; }
-    .t-text { font-style: italic; color: var(--gray-light); font-size: 1rem; margin-bottom: 28px; position: relative; z-index: 1; }
-    .t-author { display: flex; align-items: center; gap: 14px; }
-    .t-avatar {
-      width: 46px; height: 46px;
-      border-radius: 50%;
-      background: var(--border);
-      border: 1px solid var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Unbounded', sans-serif;
-      font-size: 0.75rem;
-      color: var(--gold);
-      flex-shrink: 0;
-    }
-    .t-name { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--white); }
-    .t-service { font-size: 0.9rem; color: var(--gold); font-style: italic; margin-top: 3px; }
 
     /* ─── FAQ ─── */
-    .faq-section { padding: 100px 0; background: var(--dark); border-top: 1px solid var(--border); }
-    .faq-layout { display: grid; grid-template-columns: 1fr 1.1fr; gap: 80px; align-items: start; }
-    .faq-list { border-top: 1px solid var(--border); }
-    .faq-item { border-bottom: 1px solid var(--border); }
-    .faq-trigger {
-      width: 100%; background: none; border: none;
-      padding: 22px 0; text-align: left;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem; color: var(--white);
-      cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 16px; transition: color 0.2s;
-    }
-    .faq-trigger:hover, .faq-trigger.open { color: var(--gold); }
-    .faq-icon {
-      width: 26px; height: 26px;
-      border: 1px solid currentColor;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0; font-size: 1.1rem;
-      transition: transform 0.3s;
-    }
-    .faq-trigger.open .faq-icon { transform: rotate(45deg); }
-    .faq-body {
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.38s ease, padding 0.3s;
-      font-style: italic; color: var(--gray-light); font-size: 1rem;
-    }
-    .faq-body.open { max-height: 220px; padding-bottom: 22px; }
+    .faq-section { padding:100px 0;background:var(--dark);border-top:1px solid var(--border); }
+    .faq-layout { display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:start; }
+    .faq-list { border-top:1px solid var(--border); }
+    .faq-item { border-bottom:1px solid var(--border); }
+    .faq-trigger { width:100%;background:none;border:none;padding:22px 0;text-align:left;font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--white);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:color 0.2s; }
+    .faq-trigger:hover,.faq-trigger.open { color:var(--gold); }
+    .faq-icon { width:26px;height:26px;border:1px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;transition:transform 0.3s; }
+    .faq-trigger.open .faq-icon { transform:rotate(45deg); }
+    .faq-body { max-height:0;overflow:hidden;transition:max-height 0.38s ease,padding 0.3s;font-style:italic;color:var(--gray-light);font-size:1rem; }
+    .faq-body.open { max-height:220px;padding-bottom:22px; }
 
     /* ─── DEV CREDIT ─── */
-    .dev-credit {
-      text-align: center;
-      padding: 14px 0;
-      border-top: 1px solid var(--border);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.1em;
-      color: #444;
-    }
-    .dev-credit a {
-      color: var(--gold);
-      text-decoration: none;
-      opacity: 0.6;
-      transition: opacity 0.2s;
-    }
-    .dev-credit a:hover { opacity: 1; }
+    .dev-credit { text-align:center;padding:14px 0;border-top:1px solid var(--border);font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;color:#444; }
+    .dev-credit a { color:var(--gold);text-decoration:none;opacity:0.6;transition:opacity 0.2s; }
+    .dev-credit a:hover { opacity:1; }
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .about-grid { grid-template-columns: 1fr; gap: 44px; }
-      .stats-row { grid-template-columns: repeat(3, 1fr); }
-      .testimonial-card { flex: 0 0 85%; }
-      .faq-layout { grid-template-columns: 1fr; gap: 48px; }
-      .section-header-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+    @media(max-width:900px){
+      .about-grid{grid-template-columns:1fr;gap:44px;}
+      .stats-row{grid-template-columns:repeat(3,1fr);}
+      .faq-layout{grid-template-columns:1fr;gap:48px;}
     }
   </style>
 </head>
@@ -367,7 +205,6 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
-
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a>
   <a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a>
@@ -407,24 +244,115 @@
         <h2 class="heading" style="font-size:clamp(2rem,4vw,3.2rem);margin-bottom:20px;" data-gr="Τέχνη που <em>μένει</em> για πάντα." data-en="Art that <em>lasts</em> forever.">Τέχνη που <em>μένει</em> για πάντα.</h2>
         <div class="gold-rule"></div>
         <p data-gr="Στο NR40 Athens, πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism." data-en="At NR40 Athens, we believe every tattoo is a unique expression of your soul. Our team consists of experienced artists with different specializations — from fine line to traditional and realism.">Στο NR40 Athens, πιστεύουμε πως κάθε τατουάζ είναι μια μοναδική έκφραση της ψυχής σου. Η ομάδα μας αποτελείται από έμπειρους καλλιτέχνες με διαφορετικές εξειδικεύσεις — από fine line έως traditional και realism.</p>
-        <p data-gr="Χρησιμοπ��ιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα." data-en="We use exclusively professional materials in a space designed for your comfort and safety. Hygiene is always our top priority.">Χρησιμοποιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα.</p>
+        <p data-gr="Χρησιμοποιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα." data-en="We use exclusively professional materials in a space designed for your comfort and safety. Hygiene is always our top priority.">Χρησιμοποιούμε αποκλειστικά επαγγελματικά υλικά, σε ένα χώρο σχεδιασμένο για την άνεση και ασφάλειά σου. Η υγιεινή είναι πάντα η πρώτη μας προτεραιότητα.</p>
         <div class="stats-row">
           <div><div class="stat-num">4.9</div><div class="stat-lbl" data-gr="Google Rating" data-en="Google Rating">Google Rating</div></div>
           <div><div class="stat-num">128+</div><div class="stat-lbl" data-gr="Κριτικές" data-en="Reviews">Κριτικές</div></div>
           <div><div class="stat-num">12</div><div class="stat-lbl" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</div></div>
         </div>
-        <div style="margin-top:40px;">
-          <a href="booking.html" class="btn btn-gold" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a>
-        </div>
+        <div style="margin-top:40px;"><a href="booking.html" class="btn btn-gold" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a></div>
       </div>
       <div class="about-image-wrap">
+        <!--
+          REPLACE: swap this src with a real studio photo from Cloudinary
+          Example: src="https://res.cloudinary.com/YOUR_CLOUD/image/upload/v.../about-studio.jpg"
+        -->
         <img class="about-img" src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=800&q=80" alt="NR40 Athens Tattoo Studio interior" loading="lazy" width="800" height="1000">
       </div>
     </div>
   </div>
 </section>
 
+<!-- ═══ STUDIO / SPACE ═══ -->
+<!--
+  HOW TO USE: Replace every src="PLACEHOLDER_STUDIO_X" with real Cloudinary URLs.
+  These are photos of the studio interior, bar, events, art space.
+  Recommended dimensions: main photo ~900x680px, side photos ~600x300px each.
+-->
+<section class="space-section" id="space">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px;">
+      <span class="label" data-gr="Ο Χώρος Μας" data-en="Our Space">Ο Χώρος Μας</span>
+      <h2 class="heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);" data-gr="Καλλιτεχνικός <em>Πολυχώρος</em>" data-en="Artistic <em>Multi-Space</em>">Καλλιτεχνικός <em>Πολυχώρος</em></h2>
+      <div class="gold-rule" style="margin:20px auto;"></div>
+      <p style="color:var(--gray-light);font-style:italic;max-width:540px;margin:0 auto;" data-gr="Περισσότερο από ένα tattoo studio — ένας ζωντανός χώρος τέχνης, events και δημιουργικότητας στο κέντρο της Αθήνας." data-en="More than a tattoo studio — a living space for art, events and creativity in central Athens.">Περισσότερο από ένα tattoo studio — ένας ζωντανός χώρος τέχνης, events και δημιουργικότητας στο κέντρο της Αθήνας.</p>
+    </div>
+    <div class="space-grid">
+      <div class="space-img-main">
+        <img src="PLACEHOLDER_STUDIO_MAIN" alt="NR40 Athens studio interior" loading="lazy">
+        <div class="space-img-label" data-gr="The Studio" data-en="The Studio">The Studio</div>
+      </div>
+      <div class="space-img-side">
+        <div class="space-img-item">
+          <img src="PLACEHOLDER_STUDIO_BAR" alt="NR40 bar and lounge area" loading="lazy">
+          <div class="space-img-label" data-gr="Bar & Lounge" data-en="Bar & Lounge">Bar & Lounge</div>
+        </div>
+        <div class="space-img-item">
+          <img src="PLACEHOLDER_STUDIO_EVENT" alt="NR40 events space" loading="lazy">
+          <div class="space-img-label" data-gr="Events" data-en="Events">Events</div>
+        </div>
+        <div class="space-img-item">
+          <img src="PLACEHOLDER_STUDIO_ART" alt="NR40 art and culture space" loading="lazy">
+          <div class="space-img-label" data-gr="Art Space" data-en="Art Space">Art Space</div>
+        </div>
+      </div>
+    </div>
+    <div class="events-strip">
+      <div class="events-strip-icon">◈</div>
+      <div style="flex:1;">
+        <div class="events-strip-title" data-gr="Events & Εκδηλώσεις" data-en="Events & Gatherings">Events & Εκδηλώσεις</div>
+        <p data-gr="Ο χώρος φιλοξενεί καλλιτεχνικά events, μουσικές βραδιές και πολιτιστικές εκδηλώσεις. Ακολούθησέ μας στο Instagram για να μαθαίνεις πρώτος." data-en="The space hosts art events, music nights and cultural gatherings. Follow us on Instagram to be the first to know.">Ο χώρος φιλοξενεί καλλιτεχνικά events, μουσικές βραδιές και πολιτιστικές εκδηλώσεις. Ακολούθησέ μας στο Instagram για να μαθαίνεις πρώτος.</p>
+      </div>
+      <a href="https://www.instagram.com/nr40_ath/" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TATTOO GALLERY ═══ -->
+<!--
+  HOW TO USE: Replace every src="PLACEHOLDER_TATTOO_X" with real Cloudinary URLs.
+  These are general tattoo work photos — NOT linked to specific artists.
+  Mix portrait/landscape for the masonry effect. Aim for 8–12 photos.
+  Recommended: square crops at 600x600px or 600x800px work best.
+  Add more .g-item blocks as needed — the grid auto-flows.
+-->
+<section class="gallery-section" id="gallery">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;">
+      <div>
+        <span class="label" data-gr="Η Δουλειά Μας" data-en="Our Work">Η Δουλειά Μας</span>
+        <h2 class="heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);" data-gr="Κάθε κομμάτι, <em>μια ιστορία</em>" data-en="Every piece, <em>a story</em>">Κάθε κομμάτι, <em>μια ιστορία</em></h2>
+      </div>
+      <a href="team.html" class="btn btn-ghost btn-sm" data-gr="Δες τους Καλλιτέχνες" data-en="Meet the Artists">Δες τους Καλλιτέχνες</a>
+    </div>
+    <div class="gallery-masonry" id="galleryGrid">
+      <!-- Replace src values with real Cloudinary URLs. alt text describes the tattoo style/subject -->
+      <div class="g-item" data-idx="0"><img src="PLACEHOLDER_TATTOO_1" alt="Fine line tattoo" loading="lazy"></div>
+      <div class="g-item" data-idx="1"><img src="PLACEHOLDER_TATTOO_2" alt="Realism tattoo Athens" loading="lazy"></div>
+      <div class="g-item" data-idx="2"><img src="PLACEHOLDER_TATTOO_3" alt="Traditional tattoo" loading="lazy"></div>
+      <div class="g-item" data-idx="3"><img src="PLACEHOLDER_TATTOO_4" alt="Black work tattoo" loading="lazy"></div>
+      <div class="g-item" data-idx="4"><img src="PLACEHOLDER_TATTOO_5" alt="Japanese tattoo Athens" loading="lazy"></div>
+      <div class="g-item" data-idx="5"><img src="PLACEHOLDER_TATTOO_6" alt="Abstract tattoo" loading="lazy"></div>
+      <div class="g-item" data-idx="6"><img src="PLACEHOLDER_TATTOO_7" alt="Geometric tattoo" loading="lazy"></div>
+      <div class="g-item" data-idx="7"><img src="PLACEHOLDER_TATTOO_8" alt="Color tattoo Athens" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous">&#8592;</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next">&#8594;</button>
+</div>
+
 <!-- ═══ TESTIMONIALS ═══ -->
+<!--
+  HOW TO USE: Each .review-card holds 3 .testimonial-card blocks (one page of 3 reviews).
+  Add more .review-card divs for more pages. Update the dot generation in the script below.
+  To link real Google reviews, the name + text are manually set here.
+-->
 <section class="testimonials-section" id="reviews" aria-label="Customer reviews">
   <div class="container">
     <div class="section-header-row">
@@ -434,27 +362,32 @@
         <p style="color:var(--gray);font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.1em;margin-top:8px;">★★★★★ 4.9 · 128 Google Reviews</p>
       </div>
       <div class="carousel-controls">
-        <button class="carousel-btn" id="prevBtn" aria-label="Previous review">&#8592;</button>
-        <button class="carousel-btn" id="nextBtn" aria-label="Next review">&#8594;</button>
+        <button class="carousel-btn" id="reviewPrev" aria-label="Previous">&#8592;</button>
+        <button class="carousel-btn" id="reviewNext" aria-label="Next">&#8594;</button>
       </div>
     </div>
-    <div class="carousel-overflow">
-      <div class="carousel-track" id="carouselTrack">
+
+    <div class="review-stage" id="reviewStage">
+      <!-- PAGE 1 -->
+      <div class="review-card active" data-page="0">
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
-          <p class="t-text">"Great service and attention. I went for a walk in and got a great piece from Zoe. She was very helpful and caring. Her attention to detail was amazing. I couldn't be happier with my new tattoo."</p>
-          <div class="t-author"><div class="t-avatar">RC</div><div><div class="t-name">Rafael Catalán Ortega</div><div class="t-service">Google Review</div></div></div>
+          <p class="t-text">"Great service and attention. I went for a walk in and got a great piece from Zoe. She was very helpful and caring. Her attention to detail was amazing."</p>
+          <div class="t-author"><div class="t-avatar">RC</div><div><div class="t-name">Rafael Catalán Ortega</div><div class="t-service">Google Review · Zoe</div></div></div>
         </div>
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
-          <p class="t-text">"Highly recommend this tattoo studio! I passed by spontaneously and was welcomed very warmly. Love the vibes and the community they have built. Everything was super professional, the tattoo is exactly what I wanted."</p>
+          <p class="t-text">"Highly recommend! I passed by spontaneously and was welcomed very warmly. Love the vibes and the community they have built. Everything was super professional."</p>
           <div class="t-author"><div class="t-avatar">ZW</div><div><div class="t-name">Zora Weeme</div><div class="t-service">Google Review · Jimmy</div></div></div>
         </div>
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
-          <p class="t-text">"Very nice place with cool vibes! Especially Plazz is extremely professional — we are 5 sessions in for a full sleeve tattoo and everything turned out amazing. Very unique tattoo shop!"</p>
+          <p class="t-text">"Very nice place with cool vibes! Plazz is extremely professional — we are 5 sessions in for a full sleeve tattoo and everything turned out amazing."</p>
           <div class="t-author"><div class="t-avatar">AP</div><div><div class="t-name">Alex Politis</div><div class="t-service">Google Review · Plazz</div></div></div>
         </div>
+      </div>
+      <!-- PAGE 2 -->
+      <div class="review-card" data-page="1">
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
           <p class="t-text">"One of the nicest studios — the space is fantastic and spotlessly clean. The atmosphere is very chill. The artists are cheerful, professional and their work is excellent!"</p>
@@ -462,15 +395,43 @@
         </div>
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
-          <p class="t-text">"Just yesterday I got my first tattoo with Jimmy and the process was so smooth. Excellent studio in terms of space, cleanliness and vibes — the bar/cafe inside is a big plus!"</p>
+          <p class="t-text">"I got my first tattoo with Jimmy and the process was so smooth. Excellent studio — the bar/cafe inside is a big plus!"</p>
           <div class="t-author"><div class="t-avatar">ΔΕ</div><div><div class="t-name">Δήμητρα Ε.</div><div class="t-service">Google Review · Jimmy</div></div></div>
         </div>
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
-          <p class="t-text">"Me and my friend got our first tattoos here from Valia, it was a great experience and we massively recommend."</p>
+          <p class="t-text">"Me and my friend got our first tattoos here from Valia. It was a great experience and we massively recommend."</p>
           <div class="t-author"><div class="t-avatar">MW</div><div><div class="t-name">Matt Warner</div><div class="t-service">Google Review · Valia</div></div></div>
         </div>
       </div>
+      <!-- PAGE 3 -->
+      <div class="review-card" data-page="2">
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Best tattoo experience ever! Very kind personal and the music vibes perfectly with the Athens underground identity."</p>
+          <div class="t-author"><div class="t-avatar">ΠΘ</div><div><div class="t-name">Πέτρος Σιδερης</div><div class="t-service">Google Review</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Studio's atmosphere was very nice, Jimmy's work was sensational, will definitely be back in the future for another piece."</p>
+          <div class="t-author"><div class="t-avatar">JP</div><div><div class="t-name">JSP Productions</div><div class="t-service">Google Review · Jimmy</div></div></div>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"Top advice, top artists and fair prices. I came here for my first tattoo and was really amazed by the result."</p>
+          <div class="t-author"><div class="t-avatar">JM</div><div><div class="t-name">Jacques Morin</div><div class="t-service">Google Review · Zoe</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-progress"><div class="review-progress-bar" id="reviewProgressBar"></div></div>
+    <div class="review-footer-row">
+      <div class="review-dots" id="reviewDots"></div>
+      <a href="https://g.page/r/REPLACE_WITH_GOOGLE_PLACE_ID/review" target="_blank" rel="noopener"
+         style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:opacity 0.2s;"
+         data-gr="Όλες οι κριτικές στο Google →" data-en="All reviews on Google →">
+        Όλες οι κριτικές στο Google →
+      </a>
     </div>
   </div>
 </section>
@@ -489,31 +450,31 @@
       <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-trigger"><span itemprop="name" data-gr="Πώς κλείνω ραντεβού;" data-en="How do I book an appointment?">Πώς κλείνω ραντεβού;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης στον ιστότοπό μας. Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών." data-en="You can book through our booking form. We will contact you within 24 hours to confirm.">Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης. Θα επικοινωνήσουμε εντός 24 ωρών.</p></div>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης. Θα επικοινωνήσουμε εντός 24 ωρών." data-en="You can book through our booking form. We will contact you within 24 hours to confirm.">Μπορείς να κλείσεις ραντεβού μέσω της φόρμας κράτησης. Θα επικοινωνήσουμε εντός 24 ωρών.</p></div>
         </div>
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-trigger"><span itemprop="name" data-gr="Πόσο κοστίζει ένα τατουάζ;" data-en="How much does a tattoo cost?">Πόσο κοστίζει ένα τατουάζ;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€. Επικοινώνησε μαζί μας για δωρεάν εκτίμηση." data-en="Price depends on size, style, complexity and artist. Minimum starts from €50. Contact us for a free estimate.">Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€.</p></div>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€." data-en="Price depends on size, style, complexity and artist. Minimum starts from €50. Contact us for a free estimate.">Η τιμή εξαρτάται από μέγεθος, τύπο, πολυπλοκότητα και καλλιτέχνη. Το ελάχιστο ξεκινά από 50€.</p></div>
         </div>
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-trigger"><span itemprop="name" data-gr="Πόσο καιρό διαρκεί η επούλωση;" data-en="How long does healing take?">Πόσο καιρό διαρκεί η επούλωση;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Η επιφανειακή επούλωση διαρκεί 2-3 εβδομάδες. Η πλήρης επούλωση 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες φροντίδας." data-en="Surface healing takes 2-3 weeks. Full healing 3-6 months. You will receive detailed aftercare instructions.">Επιφανειακή επούλωση: 2-3 εβδομάδες. Πλήρης: 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες.</p></div>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Επιφανειακή επούλωση: 2-3 εβδομάδες. Πλήρης: 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες." data-en="Surface healing takes 2-3 weeks. Full healing 3-6 months. You will receive detailed aftercare instructions.">Επιφανειακή επούλωση: 2-3 εβδομάδες. Πλήρης: 3-6 μήνες. Θα λάβεις αναλυτικές οδηγίες.</p></div>
         </div>
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-trigger"><span itemprop="name" data-gr="Κάνετε cover-up τατουάζ;" data-en="Do you do cover-up tattoos?">Κάνετε cover-up τατουάζ;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Ναι! Διαθέτουμε εξειδικευμένους καλλιτέχνες σε cover-up. Στείλε φωτογραφία του υπάρχοντος τατουάζ και θα σου προτείνουμε λύσεις." data-en="Yes! We have specialized cover-up artists. Send a photo of the existing tattoo and we will suggest solutions.">Ναι! Στείλε φωτογραφία και θα σου προτείνουμε λύσεις.</p></div>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Ναι! Στείλε φωτογραφία και θα σου προτείνουμε λύσεις." data-en="Yes! Send a photo of the existing tattoo and we will suggest solutions.">Ναι! Στείλε φωτογραφία και θα σου προτείνουμε λύσεις.</p></div>
         </div>
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-trigger"><span itemprop="name" data-gr="Χρειάζεται προκαταβολή;" data-en="Is a deposit required?">Χρειάζεται προκαταβολή;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Ναι, απαιτείται προκαταβολή 30% για να κρατηθεί το ραντεβού σου. Αφαιρείται από το συνολικό κόστος." data-en="Yes, a 30% deposit is required. It is deducted from the total cost.">Ναι, 30% προκαταβολή για κράτηση. Αφαιρείται από το συνολικό κόστος.</p></div>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Ναι, 30% προκαταβολή για κράτηση. Αφαιρείται από το συνολικό κόστος." data-en="Yes, a 30% deposit is required. It is deducted from the total cost.">Ναι, 30% προκαταβολή για κράτηση. Αφαιρείται από το συνολικό κόστος.</p></div>
         </div>
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-trigger"><span itemprop="name" data-gr="Από ποια ηλικία γίνονται τατουάζ;" data-en="Minimum age for tattoos?">Από ποια ηλικία γίνονται τατουάζ;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Τατουάζ γίνονται μόνο σε άτομα 18 ετών και άνω. Απαιτείται έγκυρη ταυτότητα ή διαβατήριο." data-en="Tattoos for ages 18+. Valid ID or passport required.">Μόνο 18+. Απαιτείται έγκυρη ταυτότητα.</p></div>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Μόνο 18+. Απαιτείται έγκυρη ταυτότητα." data-en="Tattoos for ages 18+. Valid ID or passport required.">Μόνο 18+. Απαιτείται έγκυρη ταυτότητα.</p></div>
         </div>
         <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
           <button class="faq-trigger"><span itemprop="name" data-gr="Ποια είναι τα μέτρα υγιεινής σας;" data-en="What are your hygiene standards?">Ποια είναι τα μέτρα υγιεινής σας;</span><span class="faq-icon">+</span></button>
-          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Χρησιμοποιούμε αποκλειστικά μίας χρήσης βελόνες και γάντια. Όλος ο εξοπλισμός στειρώνεται με κλίβανο." data-en="We use exclusively single-use needles and gloves. All equipment is sterilized in an autoclave.">Μίας χρήσης βελόνες και γάντια. Στείρωση με κλίβανο. Πλήρη πρωτόκολλα υγιεινής.</p></div>
+          <div class="faq-body" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer"><p itemprop="text" data-gr="Μίας χρήσης βελόνες και γάντια. Στείρωση με κλίβανο. Πλήρη πρωτόκολλα υγιεινής." data-en="We use exclusively single-use needles and gloves. All equipment is sterilized in an autoclave.">Μίας χρήσης βελόνες και γάντια. Στείρωση με κλίβανο. Πλήρη πρωτόκολλα υγιεινής.</p></div>
         </div>
       </div>
     </div>
@@ -534,7 +495,7 @@
           <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
           <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
           <li><a href="booking.html" data-gr="Κράτηση" data-en="Booking">Κράτηση</a></li>
-          <li><a href="contact.html" data-gr="Επικοιν��νία" data-en="Contact">Επικοινωνία</a></li>
+          <li><a href="contact.html" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</a></li>
         </ul>
       </div>
       <div>
@@ -551,53 +512,140 @@
       <span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span>
     </div>
   </div>
-  <div class="dev-credit">
-    Developed by <a href="https://nikolassapa.vercel.app/" target="_blank" rel="noopener">Nikolas Sapalidis</a>
-  </div>
+  <div class="dev-credit">Developed by <a href="https://nikolassapa.vercel.app/" target="_blank" rel="noopener">Nikolas Sapalidis</a></div>
 </footer>
 
 <script src="js/main.js"></script>
 <script>
-  // ─── CAROUSEL ───
-  let cIdx = 0;
-  const track = document.getElementById('carouselTrack');
+// ─── INTERACTIVE REVIEWS ───
+(function() {
+  const pages = document.querySelectorAll('.review-card');
+  const dotsContainer = document.getElementById('reviewDots');
+  const progressBar = document.getElementById('reviewProgressBar');
+  const INTERVAL = 6000;
+  let current = 0;
+  let timer = null;
+  let progressTimer = null;
 
-  function getVis() {
-    if (window.innerWidth <= 520) return 1;
-    if (window.innerWidth <= 900) return 1.2;
-    return 3;
-  }
-
-  function updateCarousel() {
-    const cards = track.querySelectorAll('.testimonial-card');
-    if (!cards.length) return;
-    const cardW = cards[0].offsetWidth + 24;
-    const vis = Math.floor(getVis());
-    const max = cards.length - vis;
-    cIdx = Math.max(0, Math.min(cIdx, max));
-    track.style.transform = `translateX(-${cIdx * cardW}px)`;
-  }
-
-  document.getElementById('nextBtn').addEventListener('click', () => { cIdx++; updateCarousel(); });
-  document.getElementById('prevBtn').addEventListener('click', () => { cIdx--; updateCarousel(); });
-  window.addEventListener('resize', () => { cIdx = 0; updateCarousel(); });
-
-  // ─── FAQ ───
-  document.querySelectorAll('.faq-trigger').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const body = btn.nextElementSibling;
-      const isOpen = body.classList.contains('open');
-      document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
-      document.querySelectorAll('.faq-trigger').forEach(b => b.classList.remove('open'));
-      if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
-    });
+  // Build dots
+  pages.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'review-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Review page ' + (i + 1));
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
   });
+
+  function goTo(idx) {
+    pages[current].classList.remove('active');
+    dotsContainer.querySelectorAll('.review-dot')[current].classList.remove('active');
+    current = (idx + pages.length) % pages.length;
+    pages[current].classList.add('active');
+    dotsContainer.querySelectorAll('.review-dot')[current].classList.add('active');
+    resetProgress();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function resetProgress() {
+    clearInterval(timer);
+    clearInterval(progressTimer);
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    // Force reflow
+    void progressBar.offsetWidth;
+    progressBar.style.transition = 'width ' + INTERVAL + 'ms linear';
+    progressBar.style.width = '100%';
+    timer = setTimeout(next, INTERVAL);
+  }
+
+  document.getElementById('reviewNext').addEventListener('click', next);
+  document.getElementById('reviewPrev').addEventListener('click', prev);
+
+  // Pause on hover
+  const stage = document.getElementById('reviewStage');
+  stage.addEventListener('mouseenter', () => {
+    clearTimeout(timer);
+    clearInterval(progressTimer);
+    progressBar.style.transition = 'none';
+  });
+  stage.addEventListener('mouseleave', resetProgress);
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
+  });
+
+  resetProgress();
+})();
+
+// ─── LIGHTBOX ───
+(function() {
+  const items = document.querySelectorAll('#galleryGrid .g-item');
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  let lbCurrent = 0;
+
+  function openLightbox(idx) {
+    lbCurrent = idx;
+    const img = items[idx].querySelector('img');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function lbNav(dir) {
+    lbCurrent = (lbCurrent + dir + items.length) % items.length;
+    const img = items[lbCurrent].querySelector('img');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+  }
+
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => openLightbox(i));
+  });
+
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  document.getElementById('lightboxPrev').addEventListener('click', () => lbNav(-1));
+  document.getElementById('lightboxNext').addEventListener('click', () => lbNav(1));
+  lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft') lbNav(-1);
+  });
+})();
+
+// ─── FAQ ───
+document.querySelectorAll('.faq-trigger').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = btn.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.faq-trigger').forEach(b => b.classList.remove('open'));
+    if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
+  });
+});
 </script>
 
-<!-- Vercel Speed Insights -->
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
+<script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
