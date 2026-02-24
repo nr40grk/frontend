@@ -93,7 +93,8 @@
     .space-img-item { position:relative;overflow:hidden; }
     .space-img-item img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease; }
     .space-img-item:hover img { transform:scale(1.06); }
-    .space-img-label { position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(8,8,8,0.85));padding:18px 16px 12px;font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold); }
+    /* space-img-label hidden — labels removed per request */
+    .space-img-label { display:none; }
     .events-strip { display:flex;align-items:center;gap:28px;background:var(--card);border:1px solid var(--border);padding:28px 32px;margin-top:4px; }
     .events-strip-icon { font-size:2rem;color:var(--gold);flex-shrink:0; }
     .events-strip-title { font-family:'Unbounded',sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px; }
@@ -273,7 +274,6 @@
           <div><div class="stat-num">128+</div><div class="stat-lbl" data-gr="Κριτικές" data-en="Reviews">Κριτικές</div></div>
           <div><div class="stat-num">12</div><div class="stat-lbl" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</div></div>
         </div>
-        <!-- REMOVED: Book Appointment button per request -->
       </div>
       <div class="about-image-wrap">
         <img class="about-img" src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=800&q=80" alt="NR40 Athens Tattoo Studio interior" loading="lazy" width="800" height="1000">
@@ -463,12 +463,15 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a href="index.html" class="footer-logo-link">
-          <img src="logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
-        </a>
-        <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
+        <!-- LOGO + TAGLINE SIDE BY SIDE -->
+        <div class="footer-logo-row">
+          <a href="index.html" class="footer-logo-link">
+            <img src="logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
+          </a>
+          <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
+        </div>
         <!-- INSTAGRAM LINKS -->
-        <div class="footer-social" style="margin-top:20px;">
+        <div class="footer-social">
           <div class="footer-col-title" style="margin-bottom:12px;" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <a href="https://www.instagram.com/nr40urban_ath/" target="_blank" rel="noopener" class="footer-ig-link">
@@ -605,7 +608,6 @@ function initLightbox() {
   items.forEach((item, i) => {
     const fresh = item.cloneNode(true);
     item.parentNode.replaceChild(fresh, item);
-    // Click on image area opens lightbox; artist button handles its own click
     fresh.addEventListener('click', (e) => {
       if (e.target.closest('.g-artist-btn')) return;
       openLightbox(i);
@@ -647,7 +649,6 @@ document.addEventListener('keydown', e => {
         item.className = 'g-item';
         item.dataset.idx = i;
 
-        // Artist link overlay — shows if photo has artistId or artistName from API
         let artistOverlay = '';
         if (p.artistId || p.artistName) {
           const artistUrl = p.artistId
@@ -679,27 +680,23 @@ document.addEventListener('keydown', e => {
       if (!res.ok) throw new Error('API error');
       const photos = await res.json();
       if (!photos.length) {
-        mainWrap.innerHTML = '<div style="width:100%;min-height:480px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-family:\'Space Mono\',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;">Photos coming soon</div>';
+        mainWrap.innerHTML = '<div style="width:100%;min-height:480px;background:var(--dark);"></div>';
         return;
       }
       const main = photos[0];
-      mainWrap.innerHTML =
-        '<img src="' + main.url + '" alt="' + (main.caption || 'NR40 Athens Studio') + '" loading="lazy">' +
-        '<div class="space-img-label">' + (main.caption || 'The Studio') + '</div>';
+      // Main image — NO label
+      mainWrap.innerHTML = '<img src="' + main.url + '" alt="' + (main.caption || 'NR40 Athens Studio') + '" loading="lazy">';
 
       const sidePhotos = photos.slice(1, 4);
-      const fallbackLabels = ['Bar &amp; Lounge', 'Events', 'Art Space'];
       sideWrap.innerHTML = '';
       for (let i = 0; i < 3; i++) {
         const div = document.createElement('div');
         div.className = 'space-img-item';
         if (sidePhotos[i]) {
-          div.innerHTML =
-            '<img src="' + sidePhotos[i].url + '" alt="' + (sidePhotos[i].caption || fallbackLabels[i]) + '" loading="lazy">' +
-            '<div class="space-img-label">' + (sidePhotos[i].caption || fallbackLabels[i]) + '</div>';
+          // Side images — NO label
+          div.innerHTML = '<img src="' + sidePhotos[i].url + '" alt="' + (sidePhotos[i].caption || 'NR40 Athens') + '" loading="lazy">';
         } else {
-          div.style.cssText = 'background:var(--dark);display:flex;align-items:flex-end;';
-          div.innerHTML = '<div class="space-img-label">' + fallbackLabels[i] + '</div>';
+          div.style.cssText = 'background:var(--dark);';
         }
         sideWrap.appendChild(div);
       }

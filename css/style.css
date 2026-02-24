@@ -30,6 +30,12 @@ body {
   overflow-x: hidden;
 }
 
+/* ─── ENGLISH FONT SIZE FIX ─── */
+/* Cormorant Garamond Latin chars render slightly smaller optically — scale base up */
+html[lang="en"] {
+  font-size: 17px;
+}
+
 /* ─── NOISE ─── */
 body::before {
   content: '';
@@ -558,25 +564,21 @@ footer {
 @media (max-width: 520px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
 }
-/* ═══════════════════════════════════════════════
-   ADDITIONS — append these to the bottom of style.css
-   ═══════════════════════════════════════════════ */
 
 /* ─── LOGO IMAGE (nav + footer) ─── */
 .nav-logo-img {
-  height: 44px;        /* controls nav logo height */
+  height: 44px;
   width: auto;
   display: block;
   object-fit: contain;
-  /* white is preserved since logo is white on transparent */
 }
 
 .footer-logo-link {
   display: inline-block;
-  margin-bottom: 12px;
+  margin-bottom: 0; /* reset — row layout handles spacing */
 }
 .footer-logo-img {
-  height: 56px;        /* footer logo slightly larger */
+  height: 52px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -584,6 +586,18 @@ footer {
   transition: opacity 0.2s;
 }
 .footer-logo-link:hover .footer-logo-img { opacity: 1; }
+
+/* ─── FOOTER LOGO ROW (logo + tagline side by side) ─── */
+.footer-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+.footer-logo-row .footer-desc {
+  margin: 0;
+  line-height: 1.45;
+}
 
 /* ─── FOOTER INSTAGRAM LINKS ─── */
 .footer-ig-link {
@@ -605,13 +619,22 @@ footer {
 .footer-ig-link:hover,
 .footer-ig-link:hover svg { color: var(--gold); }
 
-/* ─── FONT CONSISTENCY (bilingual) ─── */
-/* All data-gr / data-en toggled elements use the same font stack.
-   No conditional font override — Cormorant Garamond handles both
-   Latin and Greek character sets natively. No additional rules needed. */
-
-/* ─── RESPONSIVE LOGO ─── */
+/* ─── HERO: eyebrow spacing from nav on mid-screens ─── */
+@media (max-width: 1280px) and (min-width: 901px) {
+  .hero-content { padding-top: 80px; }
+}
 @media (max-width: 900px) {
+  .hero-content { padding-top: 72px; }
   .nav-logo-img { height: 36px; }
-  .footer-logo-img { height: 48px; }
+  .footer-logo-img { height: 44px; }
+}
+
+/* ─── HERO SCROLL: fix overlap on small screens ─── */
+@media (max-width: 600px) {
+  /* Hide scroll indicator on very small screens — buttons fill space */
+  .hero-scroll { display: none; }
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .hero-scroll { bottom: 16px; }
+  .hero-content { padding-bottom: 72px; }
 }
