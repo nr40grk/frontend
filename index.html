@@ -46,7 +46,7 @@
     },
     "geo": { "@type": "GeoCoordinates", "latitude": 37.9839, "longitude": 23.7301 },
     "openingHoursSpecification": [{ "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "11:00", "closes": "20:00" }],
-    "sameAs": ["https://www.instagram.com/nr40_ath/","https://www.facebook.com/p/NR40-ATH-100067196989146/","https://www.tiktok.com/@nr40.ath"],
+    "sameAs": ["https://www.instagram.com/nr40_ath/","https://www.instagram.com/nr40urban_ath/","https://www.facebook.com/p/NR40-ATH-100067196989146/","https://www.tiktok.com/@nr40.ath"],
     "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "128" },
     "priceRange": "€€"
   }
@@ -114,6 +114,30 @@
     .gallery-masonry .g-item:hover img { transform:scale(1.06); }
     .gallery-masonry .g-item::after { content:'';position:absolute;inset:0;background:rgba(8,8,8,0);transition:background 0.3s; }
     .gallery-masonry .g-item:hover::after { background:rgba(8,8,8,0.25); }
+
+    /* Artist overlay on gallery items */
+    .g-artist-link {
+      position:absolute;bottom:0;left:0;right:0;z-index:2;
+      padding:32px 12px 12px;
+      background:linear-gradient(transparent,rgba(8,8,8,0.9));
+      display:flex;align-items:flex-end;justify-content:space-between;
+      opacity:0;transition:opacity 0.3s;
+      pointer-events:none;
+    }
+    .g-item:hover .g-artist-link { opacity:1;pointer-events:all; }
+    .g-artist-name {
+      font-family:'Space Mono',monospace;font-size:0.55rem;
+      letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);
+    }
+    .g-artist-btn {
+      font-family:'Space Mono',monospace;font-size:0.5rem;
+      letter-spacing:0.12em;text-transform:uppercase;
+      border:1px solid var(--gold);color:var(--gold);
+      background:none;padding:5px 10px;cursor:pointer;
+      transition:all 0.2s;text-decoration:none;
+    }
+    .g-artist-btn:hover { background:var(--gold);color:var(--black); }
+
     /* Lightbox */
     .lightbox { position:fixed;inset:0;background:rgba(8,8,8,0.97);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s; }
     .lightbox.open { opacity:1;pointer-events:all; }
@@ -129,7 +153,6 @@
     /* ─── TESTIMONIALS ─── */
     .testimonials-section { padding:100px 0;overflow:hidden;background:var(--black); }
     .section-header-row { display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px; }
-    /* Review card with fade */
     .review-stage { position:relative;min-height:320px; }
     .review-card {
       position:absolute;inset:0;
@@ -146,10 +169,8 @@
     .t-avatar { width:46px;height:46px;border-radius:50%;background:var(--border);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:0.75rem;color:var(--gold);flex-shrink:0; }
     .t-name { font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--white); }
     .t-service { font-size:0.9rem;color:var(--gold);font-style:italic;margin-top:3px; }
-    /* Progress bar */
     .review-progress { height:2px;background:var(--border);margin-top:40px;position:relative;overflow:hidden; }
     .review-progress-bar { height:100%;background:var(--gold);width:0%;transition:width linear; }
-    /* Dots */
     .review-dots { display:flex;gap:10px;margin-top:20px;justify-content:center; }
     .review-dot { width:8px;height:8px;border-radius:50%;background:var(--border);border:1px solid var(--border);cursor:pointer;transition:background 0.2s,border-color 0.2s; }
     .review-dot.active { background:var(--gold);border-color:var(--gold); }
@@ -190,7 +211,9 @@
 
 <!-- ═══ NAV ═══ -->
 <nav id="navbar">
-  <a href="index.html" class="nav-logo">Nr40</a>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="NR40 Urban Arts" class="nav-logo-img">
+  </a>
   <ul class="nav-links">
     <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
     <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
@@ -250,13 +273,9 @@
           <div><div class="stat-num">128+</div><div class="stat-lbl" data-gr="Κριτικές" data-en="Reviews">Κριτικές</div></div>
           <div><div class="stat-num">12</div><div class="stat-lbl" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</div></div>
         </div>
-        <div style="margin-top:40px;"><a href="booking.html" class="btn btn-gold" data-gr="Κλείσε Ραντεβού" data-en="Book Now">Κλείσε Ραντεβού</a></div>
+        <!-- REMOVED: Book Appointment button per request -->
       </div>
       <div class="about-image-wrap">
-        <!--
-          REPLACE: swap this src with a real studio photo from Cloudinary
-          Example: src="https://res.cloudinary.com/YOUR_CLOUD/image/upload/v.../about-studio.jpg"
-        -->
         <img class="about-img" src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?w=800&q=80" alt="NR40 Athens Tattoo Studio interior" loading="lazy" width="800" height="1000">
       </div>
     </div>
@@ -264,11 +283,6 @@
 </section>
 
 <!-- ═══ STUDIO / SPACE ═══ -->
-<!--
-  HOW TO USE: Replace every src="PLACEHOLDER_STUDIO_X" with real Cloudinary URLs.
-  These are photos of the studio interior, bar, events, art space.
-  Recommended dimensions: main photo ~900x680px, side photos ~600x300px each.
--->
 <section class="space-section" id="space">
   <div class="container">
     <div style="text-align:center;margin-bottom:56px;">
@@ -279,12 +293,9 @@
     </div>
     <div class="space-grid">
       <div class="space-img-main" id="studioImgMain">
-        <!-- Populated dynamically from /api/gallery?type=studio — first photo becomes main -->
         <div style="width:100%;min-height:480px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-size:0.7rem;font-family:'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;">Loading photos...</div>
       </div>
-      <div class="space-img-side" id="studioImgSide">
-        <!-- Photos 2–4 from API populate here -->
-      </div>
+      <div class="space-img-side" id="studioImgSide"></div>
     </div>
     <div class="events-strip">
       <div class="events-strip-icon">◈</div>
@@ -298,13 +309,6 @@
 </section>
 
 <!-- ═══ TATTOO GALLERY ═══ -->
-<!--
-  HOW TO USE: Replace every src="PLACEHOLDER_TATTOO_X" with real Cloudinary URLs.
-  These are general tattoo work photos — NOT linked to specific artists.
-  Mix portrait/landscape for the masonry effect. Aim for 8–12 photos.
-  Recommended: square crops at 600x600px or 600x800px work best.
-  Add more .g-item blocks as needed — the grid auto-flows.
--->
 <section class="gallery-section" id="gallery">
   <div class="container">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:52px;">
@@ -315,7 +319,6 @@
       <a href="team.html" class="btn btn-ghost btn-sm" data-gr="Δες τους Καλλιτέχνες" data-en="Meet the Artists">Δες τους Καλλιτέχνες</a>
     </div>
     <div class="gallery-masonry" id="galleryGrid">
-      <!-- Populated dynamically from /api/gallery?type=tattoo -->
       <div style="grid-column:1/-1;color:var(--gray);font-style:italic;padding:40px;text-align:center;font-size:0.95rem;">Loading gallery...</div>
     </div>
   </div>
@@ -330,11 +333,6 @@
 </div>
 
 <!-- ═══ TESTIMONIALS ═══ -->
-<!--
-  HOW TO USE: Each .review-card holds 3 .testimonial-card blocks (one page of 3 reviews).
-  Add more .review-card divs for more pages. Update the dot generation in the script below.
-  To link real Google reviews, the name + text are manually set here.
--->
 <section class="testimonials-section" id="reviews" aria-label="Customer reviews">
   <div class="container">
     <div class="section-header-row">
@@ -350,7 +348,6 @@
     </div>
 
     <div class="review-stage" id="reviewStage">
-      <!-- PAGE 1 -->
       <div class="review-card active" data-page="0">
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
@@ -368,7 +365,6 @@
           <div class="t-author"><div class="t-avatar">AP</div><div><div class="t-name">Alex Politis</div><div class="t-service">Google Review · Plazz</div></div></div>
         </div>
       </div>
-      <!-- PAGE 2 -->
       <div class="review-card" data-page="1">
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
@@ -386,7 +382,6 @@
           <div class="t-author"><div class="t-avatar">MW</div><div><div class="t-name">Matt Warner</div><div class="t-service">Google Review · Valia</div></div></div>
         </div>
       </div>
-      <!-- PAGE 3 -->
       <div class="review-card" data-page="2">
         <div class="testimonial-card">
           <div class="t-stars">★★★★★</div>
@@ -468,8 +463,24 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <div class="footer-logo">Nr40</div>
+        <a href="index.html" class="footer-logo-link">
+          <img src="logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
+        </a>
         <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
+        <!-- INSTAGRAM LINKS -->
+        <div class="footer-social" style="margin-top:20px;">
+          <div class="footer-col-title" style="margin-bottom:12px;" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="https://www.instagram.com/nr40urban_ath/" target="_blank" rel="noopener" class="footer-ig-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+              <span>@nr40urban_ath</span>
+            </a>
+            <a href="https://www.instagram.com/nr40_ath/" target="_blank" rel="noopener" class="footer-ig-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+              <span>@nr40_ath</span>
+            </a>
+          </div>
+        </div>
       </div>
       <div>
         <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
@@ -507,9 +518,7 @@
   const INTERVAL = 6000;
   let current = 0;
   let timer = null;
-  let progressTimer = null;
 
-  // Build dots
   pages.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'review-dot' + (i === 0 ? ' active' : '');
@@ -531,11 +540,9 @@
   function prev() { goTo(current - 1); }
 
   function resetProgress() {
-    clearInterval(timer);
-    clearInterval(progressTimer);
+    clearTimeout(timer);
     progressBar.style.transition = 'none';
     progressBar.style.width = '0%';
-    // Force reflow
     void progressBar.offsetWidth;
     progressBar.style.transition = 'width ' + INTERVAL + 'ms linear';
     progressBar.style.width = '100%';
@@ -545,22 +552,18 @@
   document.getElementById('reviewNext').addEventListener('click', next);
   document.getElementById('reviewPrev').addEventListener('click', prev);
 
-  // Pause on hover
   const stage = document.getElementById('reviewStage');
   stage.addEventListener('mouseenter', () => {
     clearTimeout(timer);
-    clearInterval(progressTimer);
     progressBar.style.transition = 'none';
   });
   stage.addEventListener('mouseleave', resetProgress);
 
-  // Keyboard
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') next();
     if (e.key === 'ArrowLeft') prev();
   });
 
-  // Touch swipe
   let touchStartX = 0;
   stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
   stage.addEventListener('touchend', e => {
@@ -600,10 +603,13 @@ function initLightbox() {
   }
 
   items.forEach((item, i) => {
-    // Remove old listeners by cloning
     const fresh = item.cloneNode(true);
     item.parentNode.replaceChild(fresh, item);
-    fresh.addEventListener('click', () => openLightbox(i));
+    // Click on image area opens lightbox; artist button handles its own click
+    fresh.addEventListener('click', (e) => {
+      if (e.target.closest('.g-artist-btn')) return;
+      openLightbox(i);
+    });
   });
 
   document.getElementById('lightboxClose').onclick = closeLightbox;
@@ -631,13 +637,31 @@ document.addEventListener('keydown', e => {
       const res = await fetch(API + '/api/gallery?type=tattoo');
       if (!res.ok) throw new Error('API error');
       const photos = await res.json();
-      if (!photos.length) { grid.innerHTML = '<div style="color:var(--gray);font-style:italic;text-align:center;padding:40px;font-size:0.95rem;">Gallery coming soon.</div>'; return; }
+      if (!photos.length) {
+        grid.innerHTML = '<div style="color:var(--gray);font-style:italic;text-align:center;padding:40px;font-size:0.95rem;">Gallery coming soon.</div>';
+        return;
+      }
       grid.innerHTML = '';
       photos.forEach((p, i) => {
         const item = document.createElement('div');
         item.className = 'g-item';
         item.dataset.idx = i;
-        item.innerHTML = '<img src="' + p.url + '" alt="' + (p.caption || 'Tattoo NR40 Athens') + '" loading="lazy">';
+
+        // Artist link overlay — shows if photo has artistId or artistName from API
+        let artistOverlay = '';
+        if (p.artistId || p.artistName) {
+          const artistUrl = p.artistId
+            ? 'team.html?artist=' + encodeURIComponent(p.artistId)
+            : 'team.html?artist=' + encodeURIComponent(p.artistName);
+          const displayName = p.artistName || 'Artist';
+          artistOverlay = `
+            <div class="g-artist-link">
+              <span class="g-artist-name">${displayName}</span>
+              <a href="${artistUrl}" class="g-artist-btn" data-gr="Δες τον Καλλιτέχνη" data-en="View Artist">View Artist</a>
+            </div>`;
+        }
+
+        item.innerHTML = '<img src="' + p.url + '" alt="' + (p.caption || 'Tattoo NR40 Athens') + '" loading="lazy">' + artistOverlay;
         grid.appendChild(item);
       });
       initLightbox();
@@ -658,13 +682,11 @@ document.addEventListener('keydown', e => {
         mainWrap.innerHTML = '<div style="width:100%;min-height:480px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-family:\'Space Mono\',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;">Photos coming soon</div>';
         return;
       }
-      // Main photo — first in list
       const main = photos[0];
       mainWrap.innerHTML =
         '<img src="' + main.url + '" alt="' + (main.caption || 'NR40 Athens Studio') + '" loading="lazy">' +
         '<div class="space-img-label">' + (main.caption || 'The Studio') + '</div>';
 
-      // Side photos — next up to 3
       const sidePhotos = photos.slice(1, 4);
       const fallbackLabels = ['Bar &amp; Lounge', 'Events', 'Art Space'];
       sideWrap.innerHTML = '';

@@ -558,3 +558,60 @@ footer {
 @media (max-width: 520px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
 }
+/* ═══════════════════════════════════════════════
+   ADDITIONS — append these to the bottom of style.css
+   ═══════════════════════════════════════════════ */
+
+/* ─── LOGO IMAGE (nav + footer) ─── */
+.nav-logo-img {
+  height: 44px;        /* controls nav logo height */
+  width: auto;
+  display: block;
+  object-fit: contain;
+  /* white is preserved since logo is white on transparent */
+}
+
+.footer-logo-link {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.footer-logo-img {
+  height: 56px;        /* footer logo slightly larger */
+  width: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0.92;
+  transition: opacity 0.2s;
+}
+.footer-logo-link:hover .footer-logo-img { opacity: 1; }
+
+/* ─── FOOTER INSTAGRAM LINKS ─── */
+.footer-ig-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-ig-link svg {
+  flex-shrink: 0;
+  color: var(--gray);
+  transition: color 0.2s;
+}
+.footer-ig-link:hover,
+.footer-ig-link:hover svg { color: var(--gold); }
+
+/* ─── FONT CONSISTENCY (bilingual) ─── */
+/* All data-gr / data-en toggled elements use the same font stack.
+   No conditional font override — Cormorant Garamond handles both
+   Latin and Greek character sets natively. No additional rules needed. */
+
+/* ─── RESPONSIVE LOGO ─── */
+@media (max-width: 900px) {
+  .nav-logo-img { height: 36px; }
+  .footer-logo-img { height: 48px; }
+}

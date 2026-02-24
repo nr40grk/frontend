@@ -5,18 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Κράτηση Ραντεβού — NR40</title>
   <link rel="stylesheet" href="css/style.css">
-  
-  <!-- Vercel Web Analytics -->
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
+
+  <style>
+    /* ─── PIERCING EXTRAS ─── */
+    .piercing-only { display: none; }
+    .piercing-only.visible { display: block; }
+
+    .cal-embed-wrap {
+      border: 1px solid var(--border);
+      background: var(--dark);
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .cal-embed-wrap iframe {
+      width: 100%;
+      height: 540px;
+      border: none;
+      display: block;
+    }
+    .cal-placeholder {
+      padding: 32px;
+      text-align: center;
+      color: var(--gray);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Deposit notice */
+    .deposit-notice {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .deposit-notice-icon { font-size: 1.4rem; color: var(--gold); flex-shrink: 0; }
+    .deposit-notice p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--gray-light);
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+    .deposit-notice strong { color: var(--gold); }
+
+    /* Deposit redirect block (shown after successful piercing submit) */
+    .deposit-redirect {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--gold);
+      padding: 36px;
+      text-align: center;
+      margin-top: 24px;
+    }
+    .deposit-redirect.visible { display: block; }
+    .deposit-redirect h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .deposit-redirect p {
+      color: var(--gray-light);
+      font-style: italic;
+      margin-bottom: 28px;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="index.html" class="nav-logo">Nr40</a>
+  <a href="index.html" class="nav-logo">
+    <img src="logo.png" alt="NR40 Urban Arts" class="nav-logo-img">
+  </a>
   <ul class="nav-links">
     <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
     <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
@@ -77,20 +148,7 @@
         </div>
 
         <div class="form-grid-2">
-          <div class="form-group">
-            <label class="form-label" for="artist" data-gr="Καλλιτέχνης *" data-en="Artist *">Καλλιτέχνης *</label>
-            <select class="form-select" id="artist" name="artist" required>
-              <option value="" disabled selected data-gr="Επέλεξε καλλιτέχνη" data-en="Select artist">Επέλεξε καλλιτέχνη</option>
-              <option>Quipster</option>
-              <option>Valia</option>
-              <option>Storm</option>
-              <option>Alex</option>
-              <option>Jimmy</option>
-              <option>Konstantinos</option>
-              <option>Lacrimost</option>
-              <option data-gr="Όποιον θέλετε" data-en="Any available">Όποιον θέλετε</option>
-            </select>
-          </div>
+          <!-- SERVICE — comes BEFORE artist so we can filter artist based on service -->
           <div class="form-group">
             <label class="form-label" for="service" data-gr="Υπηρεσία *" data-en="Service *">Υπηρεσία *</label>
             <select class="form-select" id="service" name="service" required>
@@ -109,8 +167,74 @@
               <option data-gr="Portrait" data-en="Portrait">Portrait</option>
               <option data-gr="Sleeve" data-en="Sleeve">Sleeve</option>
               <option data-gr="Lettering / Calligraphy" data-en="Lettering / Calligraphy">Lettering / Calligraphy</option>
-              <option data-gr="Piercing" data-en="Piercing">Piercing</option>
+              <option value="Piercing" data-gr="Piercing" data-en="Piercing">Piercing</option>
             </select>
+          </div>
+          <!-- ARTIST — filtered to Storm-only when Piercing selected -->
+          <div class="form-group">
+            <label class="form-label" for="artist" data-gr="Καλλιτέχνης *" data-en="Artist *">Καλλιτέχνης *</label>
+            <select class="form-select" id="artist" name="artist" required>
+              <option value="" disabled selected data-gr="Επέλεξε καλλιτέχνη" data-en="Select artist">Επέλεξε καλλιτέχνη</option>
+              <option class="tattoo-artist" value="Quipster">Quipster</option>
+              <option class="tattoo-artist" value="Valia">Valia</option>
+              <option class="tattoo-artist" value="Storm">Storm</option>
+              <option class="tattoo-artist" value="Alex">Alex</option>
+              <option class="tattoo-artist" value="Jimmy">Jimmy</option>
+              <option class="tattoo-artist" value="Konstantinos">Konstantinos</option>
+              <option class="tattoo-artist" value="Lacrimost">Lacrimost</option>
+              <option class="tattoo-artist" data-gr="Όποιον θέλετε" data-en="Any available">Όποιον θέλετε</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ─── PIERCING ONLY: Type ─── -->
+        <div class="form-group piercing-only" id="piercingTypeGroup">
+          <label class="form-label" for="piercingType" data-gr="Τύπος Piercing *" data-en="Piercing Type *">Τύπος Piercing *</label>
+          <select class="form-select" id="piercingType" name="piercingType">
+            <option value="" disabled selected data-gr="Επέλεξε τύπο" data-en="Select type">Επέλεξε τύπο</option>
+            <option value="Tooth Gem" data-gr="Tooth Gem" data-en="Tooth Gem">Tooth Gem</option>
+            <option value="Ear - Lobe" data-gr="Αυτί — Λοβός" data-en="Ear — Lobe">Αυτί — Λοβός</option>
+            <option value="Ear - Helix" data-gr="Αυτί — Helix" data-en="Ear — Helix">Αυτί — Helix</option>
+            <option value="Ear - Tragus" data-gr="Αυτί — Tragus" data-en="Ear — Tragus">Αυτί — Tragus</option>
+            <option value="Ear - Daith" data-gr="Αυτί — Daith" data-en="Ear — Daith">Αυτί — Daith</option>
+            <option value="Nose - Nostril" data-gr="Μύτη — Nostril" data-en="Nose — Nostril">Μύτη — Nostril</option>
+            <option value="Nose - Septum" data-gr="Μύτη — Septum" data-en="Nose — Septum">Μύτη — Septum</option>
+            <option value="Eyebrow" data-gr="Φρύδι" data-en="Eyebrow">Φρύδι</option>
+            <option value="Lip" data-gr="Χείλος" data-en="Lip">Χείλος</option>
+            <option value="Belly Button" data-gr="Αφαλός" data-en="Belly Button">Αφαλός</option>
+            <option value="Other" data-gr="Άλλο" data-en="Other">Άλλο</option>
+          </select>
+        </div>
+
+        <!-- ─── PIERCING ONLY: Cal.com Date ─── -->
+        <div class="form-group piercing-only" id="calBookingGroup">
+          <label class="form-label" data-gr="Επέλεξε Ημερομηνία & Ώρα *" data-en="Select Date & Time *">Επέλεξε Ημερομηνία & Ώρα *</label>
+          <div class="cal-embed-wrap">
+            <!--
+              SETUP: Storm creates a Cal.com account at https://cal.com
+              1. Connect his Google Calendar under Settings > Calendars
+              2. Create an event type "Piercing Appointment"
+              3. Replace YOUR_CALCOM_USERNAME below with his Cal.com username
+              4. Replace piercing-appointment with his event type slug
+              Example: https://cal.com/storm-nr40/piercing
+            -->
+            <iframe
+              src="https://cal.com/YOUR_CALCOM_USERNAME/piercing-appointment?embed=true&theme=dark&brandColor=%23c9a84c"
+              id="calIframe"
+              title="Book piercing appointment"
+              loading="lazy"
+              allow="camera; microphone">
+            </iframe>
+          </div>
+          <p class="form-hint" data-gr="Επέλεξε ημερομηνία από το ημερολόγιο του Storm." data-en="Select an available date from Storm's calendar.">Επέλεξε ημερομηνία από το ημερολόγιο του Storm.</p>
+        </div>
+
+        <!-- ─── PIERCING ONLY: Deposit notice ─── -->
+        <div class="form-group piercing-only" id="depositNoticeGroup">
+          <label class="form-label" data-gr="Προκαταβολή Piercing" data-en="Piercing Deposit">Προκαταβολή Piercing</label>
+          <div class="deposit-notice">
+            <div class="deposit-notice-icon">◈</div>
+            <p data-gr="Απαιτείται προκαταβολή <strong>€12</strong> για την κράτηση piercing. Μετά την υποβολή θα ανακατευθυνθείς στη σελίδα πληρωμής." data-en="A <strong>€12</strong> deposit is required to confirm your piercing booking. You will be redirected to the payment page after submission.">Απαιτείται προκαταβολή <strong>€12</strong> για την κράτηση piercing. Μετά την υποβολή θα ανακατευθυνθείς στη σελίδα πληρωμής.</p>
           </div>
         </div>
 
@@ -141,6 +265,24 @@
         </button>
 
         <div class="alert" id="formAlert"></div>
+
+        <!-- ─── DEPOSIT REDIRECT (shown after piercing booking success) ─── -->
+        <div class="deposit-redirect" id="depositRedirect">
+          <h3 data-gr="✓ Κράτηση Ελήφθη!" data-en="✓ Booking Received!">✓ Κράτηση Ελήφθη!</h3>
+          <p data-gr="Η κράτησή σου καταγράφηκε. Παρακαλώ ολοκλήρωσε την πληρωμή της προκαταβολής €12 για να επιβεβαιωθεί το ραντεβού σου." data-en="Your booking was saved. Please complete the €12 deposit payment to confirm your appointment.">Η κράτησή σου καταγράφηκε. Παρακαλώ ολοκλήρωσε την πληρωμή της προκαταβολής €12 για να επιβεβαιωθεί το ραντεβού σου.</p>
+          <!--
+            SETUP: Create a Stripe Payment Link at https://dashboard.stripe.com/payment-links
+            1. Create a product "Piercing Deposit" at €12
+            2. Create a payment link for it
+            3. Replace YOUR_STRIPE_PAYMENT_LINK_URL below with the full Stripe URL
+            Example: https://buy.stripe.com/abcXYZ123
+          -->
+          <a href="YOUR_STRIPE_PAYMENT_LINK_URL" target="_blank" class="btn btn-gold btn-full" style="display:inline-block;max-width:400px;margin:0 auto;"
+             data-gr="Πλήρωσε Προκαταβολή €12 →" data-en="Pay €12 Deposit →">
+            Πλήρωσε Προκαταβολή €12 →
+          </a>
+        </div>
+
       </form>
     </div>
 
@@ -149,11 +291,12 @@
       <div class="info-card">
         <div class="info-card-title" data-gr="Ωράριο Λειτουργίας" data-en="Opening Hours">Ωράριο Λειτουργίας</div>
         <div class="info-row"><span class="info-icon">◷</span><span data-gr="Δευτέρα – Σάββατο: 11:00–20:00" data-en="Monday – Saturday: 11:00–20:00">Δευτέρα – Σάββατο: 11:00–20:00</span></div>
-<div class="info-row"><span class="info-icon">◷</span><span data-gr="Κυριακή: Κλειστά" data-en="Sunday: Closed">Κυριακή: Κλειστά</span></div>
+        <div class="info-row"><span class="info-icon">◷</span><span data-gr="Κυριακή: Κλειστά" data-en="Sunday: Closed">Κυριακή: Κλειστά</span></div>
       </div>
       <div class="info-card">
         <div class="info-card-title" data-gr="Σημαντικές Πληροφορίες" data-en="Important Info">Σημαντικές Πληροφορίες</div>
         <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Απαιτείται προκαταβολή 30%" data-en="30% deposit required">Απαιτείται προκαταβολή 30%</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Piercing: προκαταβολή €12 online" data-en="Piercing: €12 deposit online">Piercing: προκαταβολή €12 online</span></div>
         <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Ελάχιστη ηλικία: 18 ετών" data-en="Minimum age: 18 years">Ελάχιστη ηλικία: 18 ετών</span></div>
         <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Φέρε έγκυρη ταυτότητα" data-en="Bring valid ID">Φέρε έγκυρη ταυτότητα</span></div>
         <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Απάντηση εντός 24 ωρών" data-en="Response within 24 hours">Απάντηση εντός 24 ωρών</span></div>
@@ -168,7 +311,25 @@
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div><div class="footer-logo">Nr40</div><p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p></div>
+      <div>
+        <a href="index.html" class="footer-logo-link">
+          <img src="logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
+        </a>
+        <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
+        <div class="footer-social" style="margin-top:20px;">
+          <div class="footer-col-title" style="margin-bottom:12px;" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="https://www.instagram.com/nr40urban_ath/" target="_blank" rel="noopener" class="footer-ig-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+              <span>@nr40urban_ath</span>
+            </a>
+            <a href="https://www.instagram.com/nr40_ath/" target="_blank" rel="noopener" class="footer-ig-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+              <span>@nr40_ath</span>
+            </a>
+          </div>
+        </div>
+      </div>
       <div>
         <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
         <ul class="footer-links">
@@ -188,15 +349,63 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 NR40.</span>
-<span data-gr="Κάνιγγος 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κάνιγγος 27, Αθήνα 106 82</span>    </div>
+      <span data-gr="Κάνιγγος 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κάνιγγος 27, Αθήνα 106 82</span>
+    </div>
   </div>
 </footer>
 
 <script src="js/main.js"></script>
 <script>
   let selectedFiles = [];
+  let isPiercing = false;
 
-  // File input handler
+  // ─── PIERCING LOGIC ───
+  const serviceSelect = document.getElementById('service');
+  const artistSelect = document.getElementById('artist');
+  const piercingOnlyEls = document.querySelectorAll('.piercing-only');
+
+  // All artist options (store for restore)
+  const allArtistOptions = Array.from(artistSelect.options).map(o => o.cloneNode(true));
+
+  serviceSelect.addEventListener('change', function() {
+    isPiercing = this.value === 'Piercing';
+
+    if (isPiercing) {
+      // Show piercing-only fields
+      piercingOnlyEls.forEach(el => el.classList.add('visible'));
+
+      // Filter artist to Storm only
+      artistSelect.innerHTML = '';
+      const defaultOpt = document.createElement('option');
+      defaultOpt.value = ''; defaultOpt.disabled = true; defaultOpt.selected = true;
+      defaultOpt.setAttribute('data-gr', 'Καλλιτέχνης Piercing');
+      defaultOpt.setAttribute('data-en', 'Piercing Artist');
+      defaultOpt.textContent = lang === 'en' ? 'Piercing Artist' : 'Καλλιτέχνης Piercing';
+      artistSelect.appendChild(defaultOpt);
+
+      const stormOpt = document.createElement('option');
+      stormOpt.value = 'Storm';
+      stormOpt.textContent = 'Storm';
+      stormOpt.selected = true;
+      artistSelect.appendChild(stormOpt);
+
+      // Make piercingType required
+      document.getElementById('piercingType').required = true;
+
+    } else {
+      // Hide piercing-only fields
+      piercingOnlyEls.forEach(el => el.classList.remove('visible'));
+
+      // Restore all artists
+      artistSelect.innerHTML = '';
+      allArtistOptions.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
+      document.getElementById('piercingType').required = false;
+    }
+
+    applyLang();
+  });
+
+  // ─── FILE INPUT ───
   document.getElementById('fileInput').addEventListener('change', function() {
     const newFiles = Array.from(this.files);
     newFiles.forEach(f => {
@@ -212,16 +421,25 @@
     selectedFiles.forEach((f, i) => {
       const chip = document.createElement('div');
       chip.className = 'file-chip';
-      chip.innerHTML = `<span>${f.name} <span style="color:var(--gray);font-size:0.8em;">(${(f.size/1024).toFixed(0)}kb)</span></span><button onclick="removeFile(${i})" title="Remove">✕</button>`;
+      chip.innerHTML = `<span>${f.name} <span style="color:var(--gray);font-size:0.8em;">(${(f.size/1024).toFixed(0)}kb)</span></span><button type="button" onclick="removeFile(${i})" title="Remove">✕</button>`;
       list.appendChild(chip);
     });
   }
 
   function removeFile(i) { selectedFiles.splice(i, 1); renderFiles(); }
 
-  // Form submit
+  // ─── FORM SUBMIT ───
   document.getElementById('bookingForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+
+    // Validate piercing type if piercing selected
+    if (isPiercing && !document.getElementById('piercingType').value) {
+      showAlert('formAlert', 'error',
+        '✕ Παρακαλώ επέλεξε τύπο piercing.',
+        '✕ Please select a piercing type.'
+      );
+      return;
+    }
 
     const btn = document.getElementById('submitBtn');
     btn.classList.add('loading');
@@ -235,17 +453,34 @@
       formData.append('artist', document.getElementById('artist').value);
       formData.append('service', document.getElementById('service').value);
       formData.append('message', document.getElementById('message').value.trim());
+      if (isPiercing) {
+        formData.append('piercingType', document.getElementById('piercingType').value);
+        formData.append('depositAmount', '12');
+      }
       selectedFiles.forEach(f => formData.append('attachments', f));
 
       await apiPostForm('/api/booking', formData);
 
-      showAlert('formAlert', 'success',
-        '✓ Η κράτησή σου ελήφθη! Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών.',
-        '✓ Your booking was received! We will contact you within 24 hours.'
-      );
+      if (isPiercing) {
+        // Show deposit redirect block instead of generic success alert
+        document.getElementById('depositRedirect').classList.add('visible');
+        document.getElementById('depositRedirect').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        applyLang();
+      } else {
+        showAlert('formAlert', 'success',
+          '✓ Η κράτησή σου ελήφθη! Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών.',
+          '✓ Your booking was received! We will contact you within 24 hours.'
+        );
+      }
+
       this.reset();
       selectedFiles = [];
       renderFiles();
+      isPiercing = false;
+      piercingOnlyEls.forEach(el => el.classList.remove('visible'));
+      artistSelect.innerHTML = '';
+      allArtistOptions.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
+
     } catch (err) {
       showAlert('formAlert', 'error',
         '✕ Σφάλμα κατά την αποστολή. Παρακαλώ δοκίμασε ξανά.',
@@ -258,10 +493,7 @@
   });
 </script>
 
-<!-- Vercel Speed Insights -->
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
+<script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
