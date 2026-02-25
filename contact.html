@@ -15,7 +15,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
-    <img src="logo.png" alt="NR40 Urban Arts" class="nav-logo-img">
+    <img src="nr40-logo.png" alt="NR40 Urban Arts" class="nav-logo-img">
   </a>
   <ul class="nav-links">
     <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
@@ -105,7 +105,7 @@
           <span class="info-icon">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </span>
-          <a href="mailto:info@nr40athens.com" style="color:inherit;text-decoration:none;">info@nr40athens.com</a>
+          <a href="/cdn-cgi/l/email-protection#bdd4d3dbd2fdd3cf898ddcc9d5d8d3ce93ded2d0" style="color:inherit;text-decoration:none;"><span class="__cf_email__" data-cfemail="244d4a424b644a56101445504c414a570a474b49">[email&#160;protected]</span></a>
         </div>
         <div class="info-row">
           <span class="info-icon">
@@ -149,7 +149,7 @@
         <!-- LOGO + TAGLINE SIDE BY SIDE -->
         <div class="footer-logo-row">
           <a href="index.html" class="footer-logo-link">
-            <img src="logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
+            <img src="nr40-logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
           </a>
           <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
         </div>
@@ -181,7 +181,7 @@
         <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
         <ul class="footer-links">
           <li><a href="tel:+302103806408">+30 210 380 6408</a></li>
-          <li><a href="mailto:info@nr40athens.com">info@nr40athens.com</a></li>
+          <li><a href="/cdn-cgi/l/email-protection#751c1b131a351b07414514011d101b065b161a18"><span class="__cf_email__" data-cfemail="d8b1b6beb798b6aaece8b9acb0bdb6abf6bbb7b5">[email&#160;protected]</span></a></li>
           <li><span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span></li>
         </ul>
       </div>
@@ -193,7 +193,7 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
 <script>
   document.getElementById('contactForm').addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -224,11 +224,31 @@
       btn.disabled = false;
     }
   });
-</script>
 
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  // ─── PHONE: numbers only ───
+  const phoneInput = document.getElementById('phone');
+  phoneInput.addEventListener('input', function() {
+    const pos = this.selectionStart;
+    let v = this.value.replace(/[^\d+]/g, '');
+    v = v.charAt(0) + v.slice(1).replace(/\+/g, '');
+    this.value = v;
+    try { this.setSelectionRange(pos, pos); } catch(e) {}
+  });
+
+  // ─── EMAIL: validate on blur & input ───
+  const emailInput = document.getElementById('email');
+  const isValidEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+  emailInput.addEventListener('blur', function() {
+    if (!this.value) return;
+    this.classList.toggle('invalid', !isValidEmail(this.value));
+    this.classList.toggle('valid', isValidEmail(this.value));
+  });
+  emailInput.addEventListener('input', function() {
+    this.classList.remove('invalid');
+    this.classList.toggle('valid', isValidEmail(this.value));
+  });
 </script>
+<script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

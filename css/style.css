@@ -73,29 +73,10 @@ nav.scrolled {
   flex-shrink: 0;
 }
 .nav-logo-img {
-  height: 40px;
+  height: 44px;
   width: auto;
   display: block;
   object-fit: contain;
-}
-.nav-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-.nav-logo-name {
-  font-family: 'Unbounded', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  color: var(--white);
-}
-.nav-logo-sub {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.48rem;
-  letter-spacing: 0.22em;
-  color: var(--gold);
-  text-transform: uppercase;
 }
 
 .nav-links {
@@ -476,7 +457,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
 }
 .footer-logo-link { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
 .footer-logo-img {
-  height: 48px;
+  height: 56px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -560,8 +541,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   .form-wrap { padding: 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-  .nav-logo-img { height: 34px; }
-  .nav-logo-text { display: none; }
+  .nav-logo-img { height: 36px; }
   .footer-logo-img { height: 40px; }
 }
 @media (max-width: 600px) {
