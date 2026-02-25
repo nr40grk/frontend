@@ -23,11 +23,10 @@ body {
   background: var(--black);
   color: var(--white);
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.7;
   min-height: 100vh;
   overflow-x: hidden;
-  /* Force consistent font rendering across both languages */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -91,7 +90,7 @@ nav.scrolled {
 }
 .nav-links a {
   font-family: 'Space Mono', monospace;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   letter-spacing: 0.14em;
   color: var(--gray-light);
   text-decoration: none;
@@ -112,7 +111,7 @@ nav.scrolled {
 .nav-right { display: flex; align-items: center; gap: 14px; }
 .lang-btn {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   letter-spacing: 0.12em;
   background: none;
   border: 1px solid var(--border);
@@ -124,7 +123,7 @@ nav.scrolled {
 .lang-btn:hover { border-color: var(--gold); color: var(--gold); }
 .nav-cta-btn {
   font-family: 'Space Mono', monospace;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   background: var(--gold);
@@ -195,8 +194,7 @@ nav.scrolled {
 
 /* ─── PAGE HEADER ─── */
 .page-header {
-  /* Increased top padding to clear fixed nav — extra room on all screens */
-  padding: 140px 0 80px;
+  padding: 160px 0 80px;
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
@@ -218,7 +216,7 @@ nav.scrolled {
 /* ─── TYPOGRAPHY ─── */
 .label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   letter-spacing: 0.3em;
   color: var(--gold);
   text-transform: uppercase;
@@ -240,16 +238,36 @@ nav.scrolled {
 }
 .gold-rule { width: 44px; height: 1px; background: var(--gold); margin: 28px 0; }
 
-/* ─── FONT SIZE: consistent across both languages ─── */
-/* Cormorant Garamond body text — explicit size so Greek/English match */
-p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
-.form-hint, .info-row, .footer-links a, .footer-desc {
-  font-size: 1.05rem;
+/* ─── CONSISTENT FONT SIZES — EN & GR ─── */
+/* Body text: Cormorant Garamond — same size regardless of language */
+p, li, td, th { font-size: 1.1rem; }
+
+/* All Space Mono UI labels — bump up so English is readable */
+.label,
+.form-label,
+.info-card-title,
+.footer-col-title,
+.nav-links a,
+.file-upload-text,
+.footer-ig-link,
+.footer-bottom span,
+.artist-role-tag,
+.t-name,
+.t-service,
+.form-hint,
+.info-row,
+.footer-links a,
+.footer-links li span,
+.footer-desc {
+  font-size: 0.68rem;
 }
-/* Space Mono elements — ensure minimum readable size */
-.label, .form-label, .info-card-title, .footer-col-title,
-.nav-links a, .artist-role-tag, .portfolio-section-title,
-.footer-ig-link, .footer-bottom {
+
+/* Keep tiny decorative labels at their intentional small sizes */
+.artist-role-tag,
+.portfolio-btn,
+.g-artist-name,
+.g-artist-btn,
+.lb-artist-role {
   font-size: 0.62rem;
 }
 
@@ -257,7 +275,7 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
 .btn {
   display: inline-block;
   font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   border: none;
@@ -271,9 +289,9 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
 .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--white); border: 1px solid rgba(240,236,228,0.25); }
 .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-.btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); padding: 8px 16px; font-size: 0.6rem; }
+.btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); padding: 8px 16px; font-size: 0.62rem; }
 .btn-danger:hover { background: var(--red); color: var(--white); }
-.btn-sm { padding: 9px 18px; font-size: 0.62rem; }
+.btn-sm { padding: 9px 18px; font-size: 0.65rem; }
 .btn-full { width: 100%; text-align: center; }
 
 /* ─── FORMS ─── */
@@ -289,7 +307,7 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
 .form-label {
   display: block;
   font-family: 'Space Mono', monospace;
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
@@ -303,7 +321,7 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
   border: 1px solid var(--border);
   color: var(--white);
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   padding: 14px 18px;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
@@ -327,8 +345,8 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
 }
 .form-select option { background: var(--dark); color: var(--white); }
 .form-textarea { min-height: 130px; resize: vertical; line-height: 1.6; }
-.form-hint { font-size: 0.9rem; color: var(--gray); margin-top: 6px; font-style: italic; }
-.form-error { font-size: 0.9rem; color: var(--red); margin-top: 6px; }
+.form-hint { font-size: 0.92rem; color: var(--gray); margin-top: 6px; font-style: italic; }
+.form-error { font-size: 0.92rem; color: var(--red); margin-top: 6px; }
 
 /* File upload */
 .file-upload {
@@ -344,7 +362,7 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
 .file-upload-icon { font-size: 2rem; color: var(--gold); display: block; margin-bottom: 10px; }
 .file-upload-text {
   font-family: 'Space Mono', monospace;
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   color: var(--gray);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -358,7 +376,7 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
   border: 1px solid rgba(201,168,76,0.2);
   padding: 8px 14px;
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 0.62rem;
   color: var(--gold);
 }
 .file-chip button { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 1rem; line-height: 1; transition: color 0.2s; }
@@ -417,7 +435,7 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
 .info-card { background: var(--card); border: 1px solid var(--border); padding: 28px; }
 .info-card-title {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--gold);
@@ -428,7 +446,7 @@ p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 14px;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--gray-light);
   line-height: 1.5;
 }
@@ -484,19 +502,25 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   transition: opacity 0.2s;
 }
 .footer-logo-link:hover .footer-logo-img { opacity: 1; }
-.footer-desc { color: var(--gray); font-style: italic; font-size: 0.95rem; margin: 0; line-height: 1.5; }
+.footer-desc {
+  color: var(--gray);
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
 
 .footer-col-title {
   font-family: 'Space Mono', monospace;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 20px;
 }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.footer-links a { font-size: 0.95rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
-.footer-links li span { font-size: 0.95rem; color: var(--gray); }
+.footer-links a { font-size: 1rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+.footer-links li span { font-size: 1rem; color: var(--gray); }
 .footer-links a:hover { color: var(--white); }
 .footer-bottom {
   border-top: 1px solid var(--border);
@@ -505,7 +529,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   justify-content: space-between;
   align-items: center;
   font-family: 'Space Mono', monospace;
-  font-size: 0.58rem;
+  font-size: 0.6rem;
   color: var(--gray);
   letter-spacing: 0.08em;
 }
@@ -514,7 +538,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   align-items: center;
   gap: 9px;
   font-family: 'Space Mono', monospace;
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   letter-spacing: 0.1em;
   color: var(--gray);
   text-decoration: none;
@@ -549,6 +573,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid > *:first-child { grid-column: 1 / -1; }
 }
+
 @media (max-width: 900px) {
   nav { padding: 16px 24px; }
   .nav-links, .nav-cta-btn, .lang-btn { display: none; }
@@ -561,25 +586,40 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   .form-wrap { padding: 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-  /* Reduced nav logo height on mobile */
   .nav-logo-img { height: 36px; }
   .footer-logo-img { height: 48px; }
-  /* Page header: more top padding so title clears mobile nav */
-  .page-header { padding: 110px 0 60px; }
-  /* Footer logo row wraps gracefully */
+  /* Page header: generous top padding to clear mobile nav */
+  .page-header { padding: 120px 0 60px; }
+  /* Footer logo row wraps gracefully on narrow screens */
   .footer-logo-row { gap: 12px; }
 }
 
-/* Hero scroll: visible from tablet up, hidden on small phones */
+/* ─── HERO CONTENT: push below fixed nav on all screen sizes ─── */
+/* On large desktops, hero is 100vh centered — content naturally clears nav */
+/* On medium laptops (900–1200px), center shifts up — add padding to compensate */
+@media (max-width: 1200px) and (min-width: 901px) {
+  .hero-content {
+    padding-top: 100px;
+  }
+}
+/* On short/wide screens the hero scroll can sit too high — keep it out of the way */
+@media (max-width: 1024px) and (min-width: 601px) {
+  .hero-scroll {
+    bottom: 20px;
+    /* Prevent the scroll indicator from overlapping with next section on short screens */
+    pointer-events: none;
+  }
+}
+
+/* Small phones */
 @media (max-width: 600px) {
+  /* Hide scroll indicator entirely on mobile — avoids overlapping CTA buttons */
   .hero-scroll { display: none !important; }
-  /* Page header on small phones */
-  .page-header { padding: 100px 0 52px; }
+  .page-header { padding: 110px 0 52px; }
+  /* Hero content: push down so eyebrow text clears the mobile nav (height ~64px) */
+  .hero-content { padding-top: 72px; }
 }
-@media (min-width: 601px) and (max-width: 900px) {
-  /* Hero scroll sits higher so it clears bottom of screen properly */
-  .hero-scroll { bottom: 24px; pointer-events: none; }
-}
+
 @media (max-width: 520px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
 }

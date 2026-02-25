@@ -23,7 +23,6 @@
     background: var(--card);
     transition: outline 0.2s;
   }
-  /* Highlight when navigated from gallery */
   .artist-card.highlighted {
     outline: 2px solid var(--gold);
     outline-offset: 2px;
@@ -70,7 +69,7 @@
 
   .artist-role-tag {
     font-family: 'Space Mono', monospace;
-    font-size: 0.55rem;
+    font-size: 0.62rem;
     color: var(--gold);
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -87,7 +86,7 @@
   }
 
   .artist-bio-tag {
-    font-size: 0.84rem;
+    font-size: 0.95rem;
     color: var(--gray-light);
     font-style: italic;
     margin-bottom: 16px;
@@ -104,7 +103,7 @@
 
   .portfolio-btn {
     font-family: 'Space Mono', monospace;
-    font-size: 0.55rem;
+    font-size: 0.62rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     border: 1px solid var(--gold);
@@ -133,7 +132,7 @@
     flex-shrink: 0;
   }
   .lb-artist-name { font-family: 'Unbounded', sans-serif; font-size: 0.9rem; letter-spacing: 0.08em; }
-  .lb-artist-role { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: var(--gold); letter-spacing: 0.14em; margin-top: 3px; }
+  .lb-artist-role { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.14em; margin-top: 3px; }
   .lb-close {
     width: 44px; height: 44px;
     border: 1px solid var(--border);
@@ -203,7 +202,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
-    <img src="logo.png" alt="NR40 Urban Arts" class="nav-logo-img">
+    <img src="nr40-logo.png" alt="NR40 Urban Arts" class="nav-logo-img">
   </a>
   <ul class="nav-links">
     <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
@@ -271,11 +270,14 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a href="index.html" class="footer-logo-link">
-          <img src="logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
-        </a>
-        <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
-        <div class="footer-social" style="margin-top:20px;">
+        <!-- Logo + tagline side by side -->
+        <div class="footer-logo-row">
+          <a href="index.html" class="footer-logo-link">
+            <img src="nr40-logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
+          </a>
+          <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
+        </div>
+        <div class="footer-social">
           <div class="footer-col-title" style="margin-bottom:12px;" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
             <a href="https://www.instagram.com/nr40urban_ath/" target="_blank" rel="noopener" class="footer-ig-link">
@@ -303,12 +305,13 @@
         <ul class="footer-links">
           <li><a href="tel:+30 210 380 6408">+30 210 380 6408</a></li>
           <li><a href="mailto:info@nr40athens.com">info@nr40athens.com</a></li>
+          <li><span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 NR40.</span>
-      <span data-gr="Κάνιγγος 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κάνιγγος 27, Αθήνα 106 82</span>
+      <span>© 2026 NR40. <span data-gr="Όλα τα δικαιώματα διατηρούνται." data-en="All rights reserved.">Όλα τα δικαιώματα διατηρούνται.</span></span>
+      <span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span>
     </div>
   </div>
 </footer>
@@ -329,7 +332,6 @@
       }
       grid.innerHTML = '';
 
-      // Check URL param for highlighted artist (navigated from gallery)
       const urlParams = new URLSearchParams(window.location.search);
       const targetArtist = urlParams.get('artist');
 
@@ -359,7 +361,6 @@
 
       applyLang();
 
-      // Scroll to & highlight artist if navigated from gallery photo
       if (targetArtist) {
         setTimeout(() => {
           const match = grid.querySelector(`[data-artist-id="${targetArtist}"], [data-artist-name="${targetArtist}"]`);
