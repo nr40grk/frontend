@@ -27,6 +27,10 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   overflow-x: hidden;
+  /* Force consistent font rendering across both languages */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* ─── NOISE ─── */
@@ -63,7 +67,7 @@ nav.scrolled {
   border-bottom-color: var(--border);
 }
 
-/* ─── NAV LOGO: image + "NR40 / URBAN ARTS" text ─── */
+/* ─── NAV LOGO ─── */
 .nav-logo {
   display: flex;
   align-items: center;
@@ -191,7 +195,8 @@ nav.scrolled {
 
 /* ─── PAGE HEADER ─── */
 .page-header {
-  padding: 160px 0 80px;
+  /* Increased top padding to clear fixed nav — extra room on all screens */
+  padding: 140px 0 80px;
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
@@ -234,6 +239,19 @@ nav.scrolled {
   font-size: 1.1em;
 }
 .gold-rule { width: 44px; height: 1px; background: var(--gold); margin: 28px 0; }
+
+/* ─── FONT SIZE: consistent across both languages ─── */
+/* Cormorant Garamond body text — explicit size so Greek/English match */
+p, li, span:not(.label):not(.info-icon):not(.file-upload-text):not(.file-chip),
+.form-hint, .info-row, .footer-links a, .footer-desc {
+  font-size: 1.05rem;
+}
+/* Space Mono elements — ensure minimum readable size */
+.label, .form-label, .info-card-title, .footer-col-title,
+.nav-links a, .artist-role-tag, .portfolio-section-title,
+.footer-ig-link, .footer-bottom {
+  font-size: 0.62rem;
+}
 
 /* ─── BUTTONS ─── */
 .btn {
@@ -454,6 +472,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   align-items: center;
   gap: 16px;
   margin-bottom: 20px;
+  flex-wrap: nowrap;
 }
 .footer-logo-link { display: flex; align-items: center; text-decoration: none; flex-shrink: 0; }
 .footer-logo-img {
@@ -477,6 +496,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
 }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .footer-links a { font-size: 0.95rem; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+.footer-links li span { font-size: 0.95rem; color: var(--gray); }
 .footer-links a:hover { color: var(--white); }
 .footer-bottom {
   border-top: 1px solid var(--border);
@@ -530,7 +550,7 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   .footer-grid > *:first-child { grid-column: 1 / -1; }
 }
 @media (max-width: 900px) {
-  nav { padding: 18px 24px; }
+  nav { padding: 16px 24px; }
   .nav-links, .nav-cta-btn, .lang-btn { display: none; }
   .hamburger { display: flex; }
   .container, .container-narrow { padding: 0 24px; }
@@ -541,14 +561,24 @@ footer { background: var(--dark); border-top: 1px solid var(--border); padding: 
   .form-wrap { padding: 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  /* Reduced nav logo height on mobile */
   .nav-logo-img { height: 36px; }
-  .footer-logo-img { height: 40px; }
+  .footer-logo-img { height: 48px; }
+  /* Page header: more top padding so title clears mobile nav */
+  .page-header { padding: 110px 0 60px; }
+  /* Footer logo row wraps gracefully */
+  .footer-logo-row { gap: 12px; }
 }
+
+/* Hero scroll: visible from tablet up, hidden on small phones */
 @media (max-width: 600px) {
-  .hero-scroll { display: none; }
+  .hero-scroll { display: none !important; }
+  /* Page header on small phones */
+  .page-header { padding: 100px 0 52px; }
 }
 @media (min-width: 601px) and (max-width: 900px) {
-  .hero-scroll { bottom: 16px; }
+  /* Hero scroll sits higher so it clears bottom of screen properly */
+  .hero-scroll { bottom: 24px; pointer-events: none; }
 }
 @media (max-width: 520px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }

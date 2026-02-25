@@ -6,7 +6,6 @@
   <title>Artist — NR40</title>
   <link rel="stylesheet" href="css/style.css">
   
-  <!-- Vercel Web Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   </script>
@@ -146,7 +145,9 @@
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="index.html" class="nav-logo">Nr40</a>
+  <a href="index.html" class="nav-logo">
+    <img src="nr40-logo.png" alt="NR40 Urban Arts" class="nav-logo-img">
+  </a>
   <ul class="nav-links">
     <li><a href="index.html" data-gr="Αρχική" data-en="Home">Αρχική</a></li>
     <li><a href="team.html" data-gr="Καλλιτέχνες" data-en="Artists">Καλλιτέχνες</a></li>
@@ -184,7 +185,27 @@
 <footer>
   <div class="container">
     <div class="footer-grid">
-      <div><div class="footer-logo">Nr40</div><p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p></div>
+      <div>
+        <div class="footer-logo-row">
+          <a href="index.html" class="footer-logo-link">
+            <img src="nr40-logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
+          </a>
+          <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
+        </div>
+        <div class="footer-social" style="margin-top:20px;">
+          <div class="footer-col-title" style="margin-bottom:12px;" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="https://www.instagram.com/nr40urban_ath/" target="_blank" rel="noopener" class="footer-ig-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+              <span>@nr40urban_ath</span>
+            </a>
+            <a href="https://www.instagram.com/nr40_ath/" target="_blank" rel="noopener" class="footer-ig-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+              <span>@nr40_ath</span>
+            </a>
+          </div>
+        </div>
+      </div>
       <div>
         <div class="footer-col-title" data-gr="Σελίδες" data-en="Pages">Σελίδες</div>
         <ul class="footer-links">
@@ -197,14 +218,16 @@
       <div>
         <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
         <ul class="footer-links">
-          <li><a href="tel:+30 210 380 6408">+30 210 380 6408</a></li>
+          <li><a href="tel:+302103806408">+30 210 380 6408</a></li>
           <li><a href="mailto:info@nr40athens.com">info@nr40athens.com</a></li>
+          <li><span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 NR40.</span>
-<span data-gr="Κάνιγγος 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κάνιγγος 27, Αθήνα 106 82</span>    </div>
+      <span>© 2026 NR40. <span data-gr="Όλα τα δικαιώματα διατηρούνται." data-en="All rights reserved.">Όλα τα δικαιώματα διατηρούνται.</span></span>
+      <span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span>
+    </div>
   </div>
 </footer>
 
@@ -296,7 +319,6 @@
   loadArtist();
 </script>
 
-<!-- Vercel Speed Insights -->
 <script>
   window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
 </script>

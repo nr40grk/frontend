@@ -5,21 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Κράτηση Ραντεβού — NR40</title>
   <link rel="stylesheet" href="css/style.css">
+  <!-- Stripe.js — loaded early -->
+  <script src="https://js.stripe.com/v3/"></script>
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
   <style>
     .piercing-only { display: none; }
     .piercing-only.visible { display: block; }
-    .cal-embed-wrap { border: 1px solid var(--border); background: var(--dark); margin-top: 8px; overflow: hidden; }
-    .cal-embed-wrap iframe { width: 100%; height: 540px; border: none; display: block; }
-    .deposit-notice { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); padding: 20px 24px; display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+
+    /* ── Calendly embed ── */
+    .cal-embed-wrap {
+      border: 1px solid var(--border);
+      background: var(--dark);
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .cal-embed-wrap iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+      display: block;
+    }
+
+    /* ── Piercing deposit info strip ── */
+    .deposit-notice {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 8px;
+    }
     .deposit-notice-icon { font-size: 1.4rem; color: var(--gold); flex-shrink: 0; }
-    .deposit-notice p { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; color: var(--gray-light); line-height: 1.7; text-transform: uppercase; }
+    .deposit-notice p {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--gray-light);
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
     .deposit-notice strong { color: var(--gold); }
-    .deposit-redirect { display: none; background: var(--card); border: 1px solid var(--gold); padding: 36px; text-align: center; margin-top: 24px; }
-    .deposit-redirect.visible { display: block; }
-    .deposit-redirect h3 { font-family: 'Unbounded', sans-serif; font-size: 0.9rem; letter-spacing: 0.08em; color: var(--gold); margin-bottom: 12px; }
-    .deposit-redirect p { color: var(--gray-light); font-style: italic; margin-bottom: 28px; font-size: 1rem; }
+
+    /* ── Stripe Payment Element section ── */
+    .stripe-payment-section {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--gold);
+      padding: 36px;
+      margin-top: 24px;
+    }
+    .stripe-payment-section.visible { display: block; }
+    .stripe-section-title {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .stripe-section-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    #payment-element {
+      margin-bottom: 24px;
+    }
+    #stripe-pay-btn {
+      width: 100%;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 20px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.2s;
+      position: relative;
+    }
+    #stripe-pay-btn:hover:not(:disabled) { background: var(--gold-light); }
+    #stripe-pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    #stripe-pay-btn .btn-text { display: block; }
+    #stripe-pay-btn .btn-spinner {
+      display: none;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(0,0,0,0.3);
+      border-top-color: var(--black);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto;
+    }
+    #stripe-pay-btn.loading .btn-text { display: none; }
+    #stripe-pay-btn.loading .btn-spinner { display: block; }
+    #stripe-error {
+      color: var(--red);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      margin-top: 12px;
+      min-height: 18px;
+    }
+
+    /* ── Success block (shown after payment + booking) ── */
+    .booking-success {
+      display: none;
+      background: rgba(39,174,96,0.08);
+      border: 1px solid var(--green);
+      padding: 40px;
+      text-align: center;
+      margin-top: 24px;
+    }
+    .booking-success.visible { display: block; }
+    .booking-success h3 {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+    .booking-success p { color: var(--gray-light); font-style: italic; font-size: 1rem; }
+
     .form-input.invalid { border-color: var(--red) !important; }
     .form-input.valid { border-color: rgba(39,174,96,0.5) !important; }
   </style>
@@ -143,32 +256,38 @@
           </select>
         </div>
 
-        <!-- PIERCING: Calendar -->
+        <!-- PIERCING: Calendly date picker -->
         <div class="form-group piercing-only" id="calBookingGroup">
           <label class="form-label" data-gr="Επέλεξε Ημερομηνία & Ώρα *" data-en="Select Date & Time *">Επέλεξε Ημερομηνία & Ώρα *</label>
           <div class="cal-embed-wrap">
             <!--
-              SETUP: Storm creates account at https://cal.com
-              1. Settings > Calendars — connect Google Calendar
-              2. Create event type "Piercing Appointment"
-              3. Replace YOUR_CALCOM_USERNAME with his username
-              4. Replace piercing-appointment with his event slug
+              ════ CALENDLY SETUP (one time, Storm does this) ════
+              1. Storm creates free account at https://calendly.com
+              2. Connect Google Calendar:
+                 Account Settings → Calendar Connections → Add Google Calendar
+                 Calendly will auto-block times when Storm has other events.
+              3. Create event type "Piercing Appointment" (30 or 60 min)
+              4. Copy his Calendly username (shown in his profile URL)
+              5. Replace STORM_CALENDLY_USERNAME below with that username
+              6. Replace piercing-appointment with the event slug if different
+              ════════════════════════════════════════════════════
             -->
             <iframe
-              src="https://cal.com/YOUR_CALCOM_USERNAME/piercing-appointment?embed=true&theme=dark&brandColor=%23c9a84c"
-              id="calIframe" title="Book piercing appointment" loading="lazy"
-              allow="camera; microphone">
+              src="https://calendly.com/STORM_CALENDLY_USERNAME/piercing-appointment?background_color=0f0f0f&text_color=f0ece4&primary_color=c9a84c&hide_event_type_details=1&hide_gdpr_banner=1"
+              id="calendlyIframe"
+              title="Book piercing appointment with Storm"
+              loading="lazy">
             </iframe>
           </div>
-          <p class="form-hint" data-gr="Επέλεξε ημερομηνία από το ημερολόγιο του Storm." data-en="Select an available date from Storm's calendar.">Επέλεξε ημερομηνία από το ημερολόγιο του Storm.</p>
+          <p class="form-hint" data-gr="Επέλεξε διαθέσιμη ημερομηνία και ώρα από το ημερολόγιο του Storm." data-en="Select an available date and time from Storm's calendar.">Επέλεξε διαθέσιμη ημερομηνία και ώρα από το ημερολόγιο του Storm.</p>
         </div>
 
-        <!-- PIERCING: Deposit notice -->
+        <!-- PIERCING: Deposit notice (informational — payment happens after submit) -->
         <div class="form-group piercing-only" id="depositNoticeGroup">
           <label class="form-label" data-gr="Προκαταβολή Piercing" data-en="Piercing Deposit">Προκαταβολή Piercing</label>
           <div class="deposit-notice">
             <div class="deposit-notice-icon">◈</div>
-            <p data-gr="Απαιτείται προκαταβολή <strong>€12</strong>. Μετά την υποβολή θα ανακατευθυνθείς αυτόματα στη σελίδα πληρωμής." data-en="A <strong>€12</strong> deposit is required. You will be automatically redirected to payment after submission.">Απαιτείται προκαταβολή <strong>€12</strong>. Μετά την υποβολή θα ανακατευθυνθείς αυτόματα στη σελίδα πληρωμής.</p>
+            <p data-gr="Απαιτείται προκαταβολή <strong>€12</strong> με κάρτα. Θα εισαχθεί μετά την υποβολή της φόρμας." data-en="A <strong>€12</strong> card deposit is required. You will be prompted to pay after submitting the form.">Απαιτείται προκαταβολή <strong>€12</strong> με κάρτα. Θα εισαχθεί μετά την υποβολή της φόρμας.</p>
           </div>
         </div>
 
@@ -200,25 +319,32 @@
 
         <div class="alert" id="formAlert"></div>
 
-        <!-- Shown + tab auto-opens after successful piercing booking -->
-        <div class="deposit-redirect" id="depositRedirect">
-          <h3 data-gr="✓ Κράτηση Ελήφθη!" data-en="✓ Booking Received!">✓ Κράτηση Ελήφθη!</h3>
-          <p data-gr="Μια νέα καρτέλα άνοιξε για την πληρωμή των €12. Αν δεν άνοιξε αυτόματα, πάτα παρακάτω." data-en="A new tab opened for the €12 payment. If it didn't open automatically, click below.">Μια νέα καρτέλα άνοιξε για την πληρωμή των €12. Αν δεν άνοιξε αυτόματα, πάτα παρακάτω.</p>
-          <!--
-            ══ SWAP THIS ONE URL ══
-            1. https://dashboard.stripe.com/payment-links
-            2. Create "Piercing Deposit" product at €12
-            3. Copy the link and replace YOUR_STRIPE_PAYMENT_LINK_URL below
-          -->
-          <a id="stripeDepositBtn" href="YOUR_STRIPE_PAYMENT_LINK_URL" target="_blank"
-             class="btn btn-gold btn-full" style="display:inline-block;max-width:400px;margin:0 auto;"
-             data-gr="Πλήρωσε Προκαταβολή €12 →" data-en="Pay €12 Deposit →">
-            Πλήρωσε Προκαταβολή €12 →
-          </a>
-        </div>
-
       </form>
-    </div>
+
+      <!--
+        ═══════════════════════════════════════════════
+        STRIPE PAYMENT ELEMENT — appears after form submit (piercing only)
+        Inline card payment. No redirect. No external tab.
+        ═══════════════════════════════════════════════
+      -->
+      <div class="stripe-payment-section" id="stripePaymentSection">
+        <div class="stripe-section-title" data-gr="Πληρωμή Προκαταβολής" data-en="Pay Deposit">Πληρωμή Προκαταβολής</div>
+        <div class="stripe-section-sub" data-gr="Ασφαλής πληρωμή €12 με κάρτα — powered by Stripe" data-en="Secure €12 card payment — powered by Stripe">Ασφαλής πληρωμή €12 με κάρτα — powered by Stripe</div>
+        <div id="payment-element"></div>
+        <div id="stripe-error"></div>
+        <button id="stripe-pay-btn" type="button">
+          <span class="btn-text" data-gr="Πλήρωσε €12 →" data-en="Pay €12 →">Πλήρωσε €12 →</span>
+          <span class="btn-spinner"></span>
+        </button>
+      </div>
+
+      <!-- Shown after successful payment + booking submission -->
+      <div class="booking-success" id="bookingSuccess">
+        <h3 data-gr="✓ Κράτηση & Πληρωμή Επιβεβαιώθηκαν!" data-en="✓ Booking & Payment Confirmed!">✓ Κράτηση & Πληρωμή Επιβεβαιώθηκαν!</h3>
+        <p data-gr="Η κράτησή σου καταχωρήθηκε και η προκαταβολή πληρώθηκε. Θα επικοινωνήσουμε σύντομα." data-en="Your booking is confirmed and the deposit has been paid. We will be in touch shortly.">Η κράτησή σου καταχωρήθηκε και η προκαταβολή πληρώθηκε. Θα επικοινωνήσουμε σύντομα.</p>
+      </div>
+
+    </div><!-- /form-wrap -->
 
     <div class="sidebar">
       <div class="info-card">
@@ -276,7 +402,7 @@
         <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
         <ul class="footer-links">
           <li><a href="tel:+302103806408">+30 210 380 6408</a></li>
-          <li><a href="/cdn-cgi/l/email-protection#432a2d252c032d31777322372b262d306d202c2e"><span class="__cf_email__" data-cfemail="4a23242c250a24387e7a2b3e222f243964292527">[email&#160;protected]</span></a></li>
+          <li><a href="mailto:info@nr40athens.com">info@nr40athens.com</a></li>
           <li><span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span></li>
         </ul>
       </div>
@@ -288,20 +414,28 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
+<script src="js/main.js"></script>
 <script>
-  // ══ SWAP THIS ONE LINE when Stripe link is ready ══
-  const STRIPE_DEPOSIT_URL = 'YOUR_STRIPE_PAYMENT_LINK_URL';
+  // ══════════════════════════════════════════════
+  // STRIPE — swap this one key when ready
+  // Get from: https://dashboard.stripe.com/apikeys
+  // Use the PUBLISHABLE key (pk_live_... or pk_test_...)
+  // ══════════════════════════════════════════════
+  const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_PUBLISHABLE_KEY';
+
+  let stripe = null;
+  let stripeElements = null;
+  let savedFormData = null; // holds form data while user pays
 
   let selectedFiles = [];
   let isPiercing = false;
 
-  // ─── PHONE: numbers only — handles keyboard, paste, autofill ───
+  // ─── PHONE ───
   const phoneInput = document.getElementById('phone');
   phoneInput.addEventListener('input', function() {
     const pos = this.selectionStart;
-    let v = this.value.replace(/[^\d+]/g, '');   // keep digits + plus
-    v = v.charAt(0) + v.slice(1).replace(/\+/g, ''); // + only at position 0
+    let v = this.value.replace(/[^\d+]/g, '');
+    v = v.charAt(0) + v.slice(1).replace(/\+/g, '');
     this.value = v;
     try { this.setSelectionRange(pos, pos); } catch(e) {}
     const digits = v.replace('+','');
@@ -309,7 +443,7 @@
     this.classList.toggle('valid', digits.length >= 7);
   });
 
-  // ─── EMAIL: validate on blur & input ───
+  // ─── EMAIL ───
   const emailInput = document.getElementById('email');
   const isValidEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   emailInput.addEventListener('blur', function() {
@@ -331,17 +465,28 @@
   serviceSelect.addEventListener('change', function() {
     isPiercing = this.value === 'Piercing';
     piercingEls.forEach(el => el.classList.toggle('visible', isPiercing));
+
     if (isPiercing) {
+      // Lock artist to Storm only
       artistSelect.innerHTML = '';
       const def = new Option(lang === 'en' ? 'Piercing Artist' : 'Καλλιτέχνης Piercing', '', true, false);
-      def.disabled = true; artistSelect.appendChild(def);
+      def.disabled = true;
+      artistSelect.appendChild(def);
       const storm = new Option('Storm', 'Storm', false, true);
       artistSelect.appendChild(storm);
       document.getElementById('piercingType').required = true;
+
+      // Update submit button label
+      document.querySelector('#submitBtn .btn-text').setAttribute('data-gr', 'Υποβολή & Πληρωμή');
+      document.querySelector('#submitBtn .btn-text').setAttribute('data-en', 'Submit & Pay');
     } else {
+      // Restore all artists
       artistSelect.innerHTML = '';
       allArtists.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
       document.getElementById('piercingType').required = false;
+
+      document.querySelector('#submitBtn .btn-text').setAttribute('data-gr', 'Αποστολή');
+      document.querySelector('#submitBtn .btn-text').setAttribute('data-en', 'Send Request');
     }
     applyLang();
   });
@@ -361,78 +506,170 @@
   }
   function removeFile(i) { selectedFiles.splice(i,1); renderFiles(); }
 
-  // ─── SUBMIT ───
+  // ─── BUILD FormData ───
+  function buildFormData(paymentIntentId = null) {
+    const fd = new FormData();
+    fd.append('fullName', document.getElementById('fullName').value.trim());
+    fd.append('phone', phoneInput.value.trim());
+    fd.append('email', emailInput.value.trim());
+    fd.append('artist', artistSelect.value);
+    fd.append('service', serviceSelect.value);
+    fd.append('message', document.getElementById('message').value.trim());
+    if (isPiercing) {
+      fd.append('piercingType', document.getElementById('piercingType').value);
+      fd.append('depositAmount', '12');
+      if (paymentIntentId) fd.append('paymentIntentId', paymentIntentId);
+    }
+    selectedFiles.forEach(f => fd.append('attachments', f));
+    return fd;
+  }
+
+  // ─── SUBMIT HANDLER ───
   document.getElementById('bookingForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Phone check
+    // Validate phone
     const phoneDigits = phoneInput.value.replace('+','');
     if (phoneDigits.length < 7) {
       phoneInput.classList.add('invalid');
       return showAlert('formAlert','error','✕ Εισάγετε έγκυρο αριθμό τηλεφώνου.','✕ Please enter a valid phone number.');
     }
-
-    // Email check
+    // Validate email
     if (!isValidEmail(emailInput.value.trim())) {
       emailInput.classList.add('invalid');
       return showAlert('formAlert','error','✕ Εισάγετε έγκυρη διεύθυνση email.','✕ Please enter a valid email address.');
     }
-
-    // Piercing type check
+    // Validate piercing type
     if (isPiercing && !document.getElementById('piercingType').value) {
       return showAlert('formAlert','error','✕ Παρακαλώ επέλεξε τύπο piercing.','✕ Please select a piercing type.');
     }
 
     const btn = document.getElementById('submitBtn');
-    btn.classList.add('loading'); btn.disabled = true;
 
-    // For piercing: show redirect block + open Stripe tab IMMEDIATELY (before API)
-    // so the user always gets prompted to pay even if backend is slow/down
     if (isPiercing) {
-      const redirectEl = document.getElementById('depositRedirect');
-      const stripeBtn  = document.getElementById('stripeDepositBtn');
-      stripeBtn.href = STRIPE_DEPOSIT_URL;
-      redirectEl.classList.add('visible');
-      redirectEl.scrollIntoView({ behavior:'smooth', block:'center' });
-      applyLang();
-      // Auto-open tab — browsers allow this because it's inside a click/submit handler
-      window.open(STRIPE_DEPOSIT_URL, '_blank', 'noopener,noreferrer');
-    }
+      // ── Piercing flow: create PaymentIntent → show Stripe Element ──
+      btn.classList.add('loading'); btn.disabled = true;
 
-    try {
-      const fd = new FormData();
-      fd.append('fullName', document.getElementById('fullName').value.trim());
-      fd.append('phone', phoneInput.value.trim());
-      fd.append('email', emailInput.value.trim());
-      fd.append('artist', artistSelect.value);
-      fd.append('service', serviceSelect.value);
-      fd.append('message', document.getElementById('message').value.trim());
-      if (isPiercing) { fd.append('piercingType', document.getElementById('piercingType').value); fd.append('depositAmount','12'); }
-      selectedFiles.forEach(f => fd.append('attachments', f));
+      try {
+        // Call backend to create a PaymentIntent for €12
+        const data = await apiPost('/api/payment/create-intent', { amount: 1200, currency: 'eur' });
 
-      await apiPostForm('/api/booking', fd);
+        if (!data.clientSecret) throw new Error('No client secret returned');
 
-      if (!isPiercing) {
-        showAlert('formAlert','success',
-          '✓ Η κράτησή σου ελήφθη! Θα επικοινωνήσουμε μαζί σου εντός 24 ωρών.',
-          '✓ Booking received! We will contact you within 24 hours.'
-        );
+        // Init Stripe once
+        if (!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+
+        // Mount Payment Element
+        stripeElements = stripe.elements({
+          clientSecret: data.clientSecret,
+          appearance: {
+            theme: 'night',
+            variables: {
+              colorPrimary: '#c9a84c',
+              colorBackground: '#141414',
+              colorText: '#f0ece4',
+              colorDanger: '#c0392b',
+              fontFamily: 'Space Mono, monospace',
+              spacingUnit: '4px',
+              borderRadius: '0px',
+            }
+          }
+        });
+
+        const paymentElement = stripeElements.create('payment', {
+          layout: 'tabs'
+        });
+        paymentElement.mount('#payment-element');
+
+        // Show payment section
+        document.getElementById('stripePaymentSection').classList.add('visible');
+        document.getElementById('stripePaymentSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        applyLang();
+
+        // Hide form submit button (user now uses pay button)
+        btn.style.display = 'none';
+
+      } catch(err) {
+        showAlert('formAlert','error','✕ Σφάλμα σύνδεσης. Δοκίμασε ξανά.','✕ Connection error. Please try again.');
+      } finally {
+        btn.classList.remove('loading'); btn.disabled = false;
       }
 
-      // Reset
-      this.reset(); selectedFiles = []; renderFiles();
-      isPiercing = false;
-      piercingEls.forEach(el => el.classList.remove('visible'));
-      artistSelect.innerHTML = ''; allArtists.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
-      phoneInput.classList.remove('valid','invalid');
-      emailInput.classList.remove('valid','invalid');
-
-    } catch(err) {
-      showAlert('formAlert','error','✕ Σφάλμα αποστολής. Δοκίμασε ξανά.','✕ Submission failed. Please try again.');
-    } finally {
-      btn.classList.remove('loading'); btn.disabled = false;
+    } else {
+      // ── Normal tattoo booking (no payment) ──
+      btn.classList.add('loading'); btn.disabled = true;
+      try {
+        const fd = buildFormData();
+        await apiPostForm('/api/booking', fd);
+        showAlert('formAlert','success',
+          '✓ Η κράτησή σου ελήφθη! Θα επικοινωνήσουμε εντός 24 ωρών.',
+          '✓ Booking received! We will contact you within 24 hours.'
+        );
+        resetForm();
+      } catch(err) {
+        showAlert('formAlert','error','✕ Σφάλμα αποστολής. Δοκίμασε ξανά.','✕ Submission failed. Please try again.');
+      } finally {
+        btn.classList.remove('loading'); btn.disabled = false;
+      }
     }
   });
+
+  // ─── STRIPE PAY BUTTON ───
+  document.getElementById('stripe-pay-btn').addEventListener('click', async function() {
+    const errEl = document.getElementById('stripe-error');
+    errEl.textContent = '';
+    this.classList.add('loading'); this.disabled = true;
+
+    try {
+      // Confirm payment (no redirect — stays on page)
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements: stripeElements,
+        confirmParams: {
+          return_url: window.location.href, // fallback only for 3DS
+        },
+        redirect: 'if_required',
+      });
+
+      if (error) {
+        errEl.textContent = error.message;
+        this.classList.remove('loading'); this.disabled = false;
+        return;
+      }
+
+      if (paymentIntent && paymentIntent.status === 'succeeded') {
+        // Payment succeeded — now submit booking to backend
+        const fd = buildFormData(paymentIntent.id);
+        await apiPostForm('/api/booking', fd);
+
+        // Show success, hide payment section and form
+        document.getElementById('stripePaymentSection').classList.remove('visible');
+        document.getElementById('bookingSuccess').classList.add('visible');
+        document.getElementById('bookingSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        applyLang();
+        resetForm();
+      }
+
+    } catch(err) {
+      errEl.textContent = lang === 'en' ? 'Payment failed. Please try again.' : 'Αποτυχία πληρωμής. Δοκίμασε ξανά.';
+      this.classList.remove('loading'); this.disabled = false;
+    }
+  });
+
+  // ─── RESET ───
+  function resetForm() {
+    document.getElementById('bookingForm').reset();
+    selectedFiles = []; renderFiles();
+    isPiercing = false;
+    piercingEls.forEach(el => el.classList.remove('visible'));
+    artistSelect.innerHTML = ''; allArtists.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
+    phoneInput.classList.remove('valid','invalid');
+    emailInput.classList.remove('valid','invalid');
+    document.getElementById('submitBtn').style.display = '';
+    // Reset submit label
+    document.querySelector('#submitBtn .btn-text').setAttribute('data-gr', 'Αποστολή');
+    document.querySelector('#submitBtn .btn-text').setAttribute('data-en', 'Send Request');
+    applyLang();
+  }
 </script>
 <script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
 <script defer src="/_vercel/speed-insights/script.js"></script>

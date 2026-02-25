@@ -61,7 +61,16 @@
     .hero-bg { position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,0.25) 0%,rgba(8,8,8,0.55) 50%,rgba(8,8,8,1) 100%), url('https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=1800&q=80') center/cover no-repeat;transform:scale(1.04);animation:heroZoom 12s ease-out forwards; }
     @keyframes heroZoom { to { transform:scale(1); } }
     .hero-content { position:relative;text-align:center;max-width:960px;padding:0 24px; }
-    .hero-eyebrow { font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.38em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:28px;animation:fadeUp 1s ease 0.2s both; }
+    .hero-eyebrow {
+      font-family:'Space Mono',monospace;
+      font-size:0.65rem;
+      letter-spacing:0.38em;
+      color:var(--gold);
+      text-transform:uppercase;
+      display:block;
+      margin-bottom:28px;
+      animation:fadeUp 1s ease 0.2s both;
+    }
     .hero-title { font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(3.2rem,10vw,9rem);line-height:0.88;text-transform:uppercase;letter-spacing:-0.02em;margin-bottom:28px;animation:fadeUp 1s ease 0.4s both; }
     .hero-title .gold-word { font-style:italic;font-family:'Cormorant Garamond',serif;color:var(--gold);font-weight:300;font-size:1.12em;display:block;letter-spacing:0; }
     .hero-sub { font-size:1.1rem;color:var(--gray-light);max-width:460px;margin:0 auto 44px;font-style:italic;animation:fadeUp 1s ease 0.6s both; }
@@ -85,26 +94,27 @@
 
     /* ─── STUDIO / SPACE ─── */
     .space-section { padding:100px 0;background:var(--black);border-bottom:1px solid var(--border); }
-    .space-grid { display:grid;grid-template-columns:1.4fr 1fr;gap:4px;margin-bottom:32px; }
-    .space-img-main { position:relative;overflow:hidden; }
-    .space-img-main img { width:100%;height:100%;min-height:480px;object-fit:cover;display:block;transition:transform 0.6s ease; }
-    .space-img-main:hover img { transform:scale(1.04); }
-    .space-img-side { display:grid;grid-template-rows:repeat(3,1fr);gap:4px; }
-    .space-img-item { position:relative;overflow:hidden; }
-    .space-img-item img { width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.6s ease; }
-    .space-img-item:hover img { transform:scale(1.06); }
-    /* space-img-label hidden — labels removed per request */
-    .space-img-label { display:none; }
-    .events-strip { display:flex;align-items:center;gap:28px;background:var(--card);border:1px solid var(--border);padding:28px 32px;margin-top:4px; }
-    .events-strip-icon { font-size:2rem;color:var(--gold);flex-shrink:0; }
-    .events-strip-title { font-family:'Unbounded',sans-serif;font-size:0.78rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px; }
-    .events-strip p { color:var(--gray-light);font-style:italic;font-size:0.95rem;line-height:1.6; }
-    .events-strip .btn { flex-shrink:0; }
-    @media(max-width:900px){
-      .space-grid{grid-template-columns:1fr;gap:4px;}
-      .space-img-main img{min-height:280px;}
-      .space-img-side{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr;}
-      .events-strip{flex-direction:column;align-items:flex-start;gap:16px;}
+    /* Single full-width main image only — side images and events strip removed */
+    .space-main-img-wrap {
+      position:relative;
+      overflow:hidden;
+      width:100%;
+    }
+    .space-main-img-wrap img {
+      width:100%;
+      height:520px;
+      object-fit:cover;
+      display:block;
+      transition:transform 0.6s ease;
+      filter:grayscale(15%);
+    }
+    .space-main-img-wrap:hover img { transform:scale(1.03); filter:grayscale(0%); }
+    .space-placeholder {
+      width:100%;height:520px;
+      background:var(--dark);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Space Mono',monospace;font-size:0.7rem;
+      color:var(--border);letter-spacing:0.1em;text-transform:uppercase;
     }
 
     /* ─── TATTOO GALLERY ─── */
@@ -205,6 +215,10 @@
       .about-grid{grid-template-columns:1fr;gap:44px;}
       .stats-row{grid-template-columns:repeat(3,1fr);}
       .faq-layout{grid-template-columns:1fr;gap:48px;}
+      .space-main-img-wrap img, .space-placeholder { height:320px; }
+    }
+    @media(max-width:600px){
+      .space-main-img-wrap img, .space-placeholder { height:240px; }
     }
   </style>
 </head>
@@ -287,23 +301,13 @@
   <div class="container">
     <div style="text-align:center;margin-bottom:56px;">
       <span class="label" data-gr="Ο Χώρος Μας" data-en="Our Space">Ο Χώρος Μας</span>
-      <h2 class="heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);" data-gr="Καλλιτεχνικός <em>Πολυχώρος</em>" data-en="Artistic <em>Multi-Space</em>">Καλλιτεχνικός <em>Πολυχώρος</em></h2>
+      <h2 class="heading" style="font-size:clamp(1.8rem,3.5vw,2.8rem);" data-gr="Καλλιτεχνικός <em>Χώρος</em>" data-en="Artistic <em>Space</em>">Καλλιτεχνικός <em>Χώρος</em></h2>
       <div class="gold-rule" style="margin:20px auto;"></div>
-      <p style="color:var(--gray-light);font-style:italic;max-width:540px;margin:0 auto;" data-gr="Περισσότερο από ένα tattoo studio — ένας ζωντανός χώρος τέχνης, events και δημιουργικότητας στο κέντρο της Αθήνας." data-en="More than a tattoo studio — a living space for art, events and creativity in central Athens.">Περισσότερο από ένα tattoo studio — ένας ζωντανός χώρος τέχνης, events και δημιουργικότητας στο κέντρο της Αθήνας.</p>
+      <p style="color:var(--gray-light);font-style:italic;max-width:540px;margin:0 auto;" data-gr="Ένας χώρος σχεδιασμένος για σένα — άνετος, καθαρός και εμπνευσμένος." data-en="A space designed for you — comfortable, clean and inspired.">Ένας χώρος σχεδιασμένος για σένα — άνετος, καθαρός και εμπνευσμένος.</p>
     </div>
-    <div class="space-grid">
-      <div class="space-img-main" id="studioImgMain">
-        <div style="width:100%;min-height:480px;background:var(--dark);display:flex;align-items:center;justify-content:center;color:var(--border);font-size:0.7rem;font-family:'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;">Loading photos...</div>
-      </div>
-      <div class="space-img-side" id="studioImgSide"></div>
-    </div>
-    <div class="events-strip">
-      <div class="events-strip-icon">◈</div>
-      <div style="flex:1;">
-        <div class="events-strip-title" data-gr="Events & Εκδηλώσεις" data-en="Events & Gatherings">Events & Εκδηλώσεις</div>
-        <p data-gr="Ο χώρος φιλοξενεί καλλιτεχνικά events, μουσικές βραδιές και πολιτιστικές εκδηλώσεις. Ακολούθησέ μας στο Instagram για να μαθαίνεις πρώτος." data-en="The space hosts art events, music nights and cultural gatherings. Follow us on Instagram to be the first to know.">Ο χώρος φιλοξενεί καλλιτεχνικά events, μουσικές βραδιές και πολιτιστικές εκδηλώσεις. Ακολούθησέ μας στο Instagram για να μαθαίνεις πρώτος.</p>
-      </div>
-      <a href="https://www.instagram.com/nr40_ath/" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</a>
+    <!-- Single main image — loaded from API -->
+    <div class="space-main-img-wrap" id="studioImgMain">
+      <div class="space-placeholder">Loading photos...</div>
     </div>
   </div>
 </section>
@@ -404,8 +408,8 @@
     <div class="review-progress"><div class="review-progress-bar" id="reviewProgressBar"></div></div>
     <div class="review-footer-row">
       <div class="review-dots" id="reviewDots"></div>
-      <a href="https://www.google.com/maps/place/NR40+ATHENS/@37.9864087,23.7308042,15z/data=!4m8!3m7!1s0x14a1bd30cec8ff8b:0x71e62f8d58cf9285!8m2!3d37.9864087!4d23.7308042!9m1!1b1!16s%2Fg%2F11w7_n6psj?hl=en&entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener"
-         style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;transition:opacity 0.2s;"
+      <a href="https://www.google.com/maps/place/NR40+ATHENS/@37.9864087,23.7308042,15z/data=!4m8!3m7!1s0x14a1bd30cec8ff8b:0x71e62f8d58cf9285!8m2!3d37.9864087!4d23.7308042!9m1!1b1!16s%2Fg%2F11w7_n6psj?hl=en&entry=ttu" target="_blank" rel="noopener"
+         style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.3);padding-bottom:2px;"
          data-gr="Όλες οι κριτικές στο Google →" data-en="All reviews on Google →">
         Όλες οι κριτικές στο Google →
       </a>
@@ -463,14 +467,12 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <!-- LOGO + TAGLINE SIDE BY SIDE -->
         <div class="footer-logo-row">
           <a href="index.html" class="footer-logo-link">
             <img src="nr40-logo.png" alt="NR40 Urban Arts" class="footer-logo-img">
           </a>
           <p class="footer-desc" data-gr="Τέχνη που μένει για πάντα." data-en="Art that lasts forever.">Τέχνη που μένει για πάντα.</p>
         </div>
-        <!-- INSTAGRAM LINKS -->
         <div class="footer-social">
           <div class="footer-col-title" style="margin-bottom:12px;" data-gr="Ακολούθησέ μας" data-en="Follow Us">Ακολούθησέ μας</div>
           <div style="display:flex;flex-direction:column;gap:8px;">
@@ -498,7 +500,7 @@
         <div class="footer-col-title" data-gr="Επικοινωνία" data-en="Contact">Επικοινωνία</div>
         <ul class="footer-links">
           <li><a href="tel:+302103806408">+30 210 380 6408</a></li>
-          <li><a href="/cdn-cgi/l/email-protection#4d24232b220d233f797d2c392528233e632e2220"><span class="__cf_email__" data-cfemail="c5acaba3aa85abb7f1f5a4b1ada0abb6eba6aaa8">[email&#160;protected]</span></a></li>
+          <li><a href="mailto:info@nr40athens.com">info@nr40athens.com</a></li>
           <li><span data-gr="Κανιγγός 27, Αθήνα 106 82" data-en="Kaniggos 27, Athens 106 82">Κανιγγός 27, Αθήνα 106 82</span></li>
         </ul>
       </div>
@@ -511,7 +513,7 @@
   <div class="dev-credit">Developed by <a href="https://nikolassapa.vercel.app/" target="_blank" rel="noopener">Nikolas Sapalidis</a></div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
+<script src="js/main.js"></script>
 <script>
 // ─── INTERACTIVE REVIEWS ───
 (function() {
@@ -556,10 +558,7 @@
   document.getElementById('reviewPrev').addEventListener('click', prev);
 
   const stage = document.getElementById('reviewStage');
-  stage.addEventListener('mouseenter', () => {
-    clearTimeout(timer);
-    progressBar.style.transition = 'none';
-  });
+  stage.addEventListener('mouseenter', () => { clearTimeout(timer); progressBar.style.transition = 'none'; });
   stage.addEventListener('mouseleave', resetProgress);
 
   document.addEventListener('keydown', e => {
@@ -587,22 +586,15 @@ function initLightbox() {
   function openLightbox(idx) {
     lbCurrent = idx;
     const img = items[idx].querySelector('img');
-    lbImg.src = img.src;
-    lbImg.alt = img.alt;
+    lbImg.src = img.src; lbImg.alt = img.alt;
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
-  function closeLightbox() {
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
+  function closeLightbox() { lb.classList.remove('open'); document.body.style.overflow = ''; }
   function lbNav(dir) {
     lbCurrent = (lbCurrent + dir + items.length) % items.length;
     const img = items[lbCurrent].querySelector('img');
-    lbImg.src = img.src;
-    lbImg.alt = img.alt;
+    lbImg.src = img.src; lbImg.alt = img.alt;
   }
 
   items.forEach((item, i) => {
@@ -652,7 +644,7 @@ document.addEventListener('keydown', e => {
         let artistOverlay = '';
         if (p.artistId || p.artistName) {
           const artistUrl = p.artistId
-            ? 'team.html?artist=' + encodeURIComponent(p.artistId)
+            ? 'artist.html?id=' + encodeURIComponent(p.artistId)
             : 'team.html?artist=' + encodeURIComponent(p.artistName);
           const displayName = p.artistName || 'Artist';
           artistOverlay = `
@@ -665,6 +657,7 @@ document.addEventListener('keydown', e => {
         item.innerHTML = '<img src="' + p.url + '" alt="' + (p.caption || 'Tattoo NR40 Athens') + '" loading="lazy">' + artistOverlay;
         grid.appendChild(item);
       });
+      applyLang();
       initLightbox();
     } catch (_) {
       grid.innerHTML = '<div style="color:var(--gray);font-style:italic;text-align:center;padding:40px;font-size:0.95rem;">Gallery coming soon.</div>';
@@ -673,35 +666,19 @@ document.addEventListener('keydown', e => {
 
   async function loadStudioGallery() {
     const mainWrap = document.getElementById('studioImgMain');
-    const sideWrap = document.getElementById('studioImgSide');
-    if (!mainWrap || !sideWrap) return;
+    if (!mainWrap) return;
     try {
       const res = await fetch(API + '/api/gallery?type=studio');
       if (!res.ok) throw new Error('API error');
       const photos = await res.json();
       if (!photos.length) {
-        mainWrap.innerHTML = '<div style="width:100%;min-height:480px;background:var(--dark);"></div>';
+        mainWrap.innerHTML = '<div class="space-placeholder"></div>';
         return;
       }
       const main = photos[0];
-      // Main image — NO label
       mainWrap.innerHTML = '<img src="' + main.url + '" alt="' + (main.caption || 'NR40 Athens Studio') + '" loading="lazy">';
-
-      const sidePhotos = photos.slice(1, 4);
-      sideWrap.innerHTML = '';
-      for (let i = 0; i < 3; i++) {
-        const div = document.createElement('div');
-        div.className = 'space-img-item';
-        if (sidePhotos[i]) {
-          // Side images — NO label
-          div.innerHTML = '<img src="' + sidePhotos[i].url + '" alt="' + (sidePhotos[i].caption || 'NR40 Athens') + '" loading="lazy">';
-        } else {
-          div.style.cssText = 'background:var(--dark);';
-        }
-        sideWrap.appendChild(div);
-      }
     } catch (_) {
-      mainWrap.innerHTML = '<div style="width:100%;min-height:480px;background:var(--dark);"></div>';
+      mainWrap.innerHTML = '<div class="space-placeholder"></div>';
     }
   }
 
