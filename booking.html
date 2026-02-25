@@ -441,16 +441,17 @@
     isPiercing = this.value === 'Piercing';
     piercingEls.forEach(el => el.classList.toggle('visible', isPiercing));
 
-    if (isPiercing) {
-      // Lock artist to Storm only
-      artistSelect.innerHTML = '';
-      const def = new Option(lang === 'en' ? 'Piercing Artist' : 'Καλλιτέχνης Piercing', '', true, false);
-      def.disabled = true;
-      artistSelect.appendChild(def);
-      const storm = new Option('Storm', 'Storm', false, true);
-      artistSelect.appendChild(storm);
-      document.getElementById('piercingType').required = true;
-    } else {
+   if (isPiercing) {
+  artistSelect.innerHTML = '';
+  const def = new Option(lang === 'en' ? 'Piercing Artist' : 'Καλλιτέχνης Piercing', '', true, false);
+  def.disabled = true;
+  artistSelect.appendChild(def);
+  artistSelect.appendChild(new Option('Storm', 'Storm', false, true));
+  document.getElementById('piercingType').required = true;
+
+  // Prefill Calendly with whatever name/email the user already typed
+  updateCalendlyUrl();
+} else {
       // Restore all artists
       artistSelect.innerHTML = '';
       allArtists.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
@@ -591,6 +592,27 @@
       this.classList.remove('loading'); this.disabled = false;
     }
   });
+  function updateCalendlyUrl() {
+  const name  = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const base  = 'https://calendly.com/YOUR_USERNAME/piercing-appointment';
+  const params = new URLSearchParams({
+    background_color: '0f0f0f',
+    text_color:       'f0ece4',
+    primary_color:    'c9a84c',
+    hide_event_type_details: '1',
+    hide_gdpr_banner: '1',
+    name:  name  || '',
+    email: email || '',
+  });
+  document.getElementById('calendlyIframe').src = base + '?' + params.toString();
+}
+document.getElementById('fullName').addEventListener('input', function() {
+  if (isPiercing) updateCalendlyUrl();
+});
+document.getElementById('email').addEventListener('input', function() {
+  if (isPiercing) updateCalendlyUrl();
+});
 
   // ─── RESET ───
   function resetForm() {
