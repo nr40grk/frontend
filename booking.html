@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Κράτηση Ραντεβού — NR40</title>
   <link rel="stylesheet" href="css/style.css">
-  <!-- Stripe.js — loaded early -->
   <script src="https://js.stripe.com/v3/"></script>
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
@@ -27,7 +26,7 @@
       display: block;
     }
 
-    /* ── Piercing deposit info strip ── */
+    /* ── Deposit notice strip (shown for ALL bookings) ── */
     .deposit-notice {
       background: rgba(201,168,76,0.08);
       border: 1px solid rgba(201,168,76,0.3);
@@ -73,9 +72,7 @@
       text-transform: uppercase;
       margin-bottom: 28px;
     }
-    #payment-element {
-      margin-bottom: 24px;
-    }
+    #payment-element { margin-bottom: 24px; }
     #stripe-pay-btn {
       width: 100%;
       font-family: 'Space Mono', monospace;
@@ -89,7 +86,6 @@
       cursor: pointer;
       font-weight: 700;
       transition: background 0.2s;
-      position: relative;
     }
     #stripe-pay-btn:hover:not(:disabled) { background: var(--gold-light); }
     #stripe-pay-btn:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -114,7 +110,7 @@
       min-height: 18px;
     }
 
-    /* ── Success block (shown after payment + booking) ── */
+    /* ── Success block ── */
     .booking-success {
       display: none;
       background: rgba(39,174,96,0.08);
@@ -131,7 +127,7 @@
       color: var(--green);
       margin-bottom: 12px;
     }
-    .booking-success p { color: var(--gray-light); font-style: italic; font-size: 1rem; }
+    .booking-success p { color: var(--gray-light); font-style: italic; font-size: 1.05rem; }
 
     .form-input.invalid { border-color: var(--red) !important; }
     .form-input.valid { border-color: rgba(39,174,96,0.5) !important; }
@@ -237,7 +233,7 @@
           </div>
         </div>
 
-        <!-- PIERCING: Type -->
+        <!-- PIERCING ONLY: Type selector -->
         <div class="form-group piercing-only" id="piercingTypeGroup">
           <label class="form-label" for="piercingType" data-gr="Τύπος Piercing *" data-en="Piercing Type *">Τύπος Piercing *</label>
           <select class="form-select" id="piercingType" name="piercingType">
@@ -256,22 +252,10 @@
           </select>
         </div>
 
-        <!-- PIERCING: Calendly date picker -->
+        <!-- PIERCING ONLY: Calendly date picker -->
         <div class="form-group piercing-only" id="calBookingGroup">
           <label class="form-label" data-gr="Επέλεξε Ημερομηνία & Ώρα *" data-en="Select Date & Time *">Επέλεξε Ημερομηνία & Ώρα *</label>
           <div class="cal-embed-wrap">
-            <!--
-              ════ CALENDLY SETUP (one time, Storm does this) ════
-              1. Storm creates free account at https://calendly.com
-              2. Connect Google Calendar:
-                 Account Settings → Calendar Connections → Add Google Calendar
-                 Calendly will auto-block times when Storm has other events.
-              3. Create event type "Piercing Appointment" (30 or 60 min)
-              4. Copy his Calendly username (shown in his profile URL)
-              5. Replace STORM_CALENDLY_USERNAME below with that username
-              6. Replace piercing-appointment with the event slug if different
-              ════════════════════════════════════════════════════
-            -->
             <iframe
               src="https://calendly.com/STORM_CALENDLY_USERNAME/piercing-appointment?background_color=0f0f0f&text_color=f0ece4&primary_color=c9a84c&hide_event_type_details=1&hide_gdpr_banner=1"
               id="calendlyIframe"
@@ -282,12 +266,12 @@
           <p class="form-hint" data-gr="Επέλεξε διαθέσιμη ημερομηνία και ώρα από το ημερολόγιο του Storm." data-en="Select an available date and time from Storm's calendar.">Επέλεξε διαθέσιμη ημερομηνία και ώρα από το ημερολόγιο του Storm.</p>
         </div>
 
-        <!-- PIERCING: Deposit notice (informational — payment happens after submit) -->
-        <div class="form-group piercing-only" id="depositNoticeGroup">
-          <label class="form-label" data-gr="Προκαταβολή Piercing" data-en="Piercing Deposit">Προκαταβολή Piercing</label>
+        <!-- DEPOSIT NOTICE — shown for ALL bookings -->
+        <div class="form-group" id="depositNoticeGroup">
+          <label class="form-label" data-gr="Προκαταβολή" data-en="Deposit">Προκαταβολή</label>
           <div class="deposit-notice">
             <div class="deposit-notice-icon">◈</div>
-            <p data-gr="Απαιτείται προκαταβολή <strong>€12</strong> με κάρτα. Θα εισαχθεί μετά την υποβολή της φόρμας." data-en="A <strong>€12</strong> card deposit is required. You will be prompted to pay after submitting the form.">Απαιτείται προκαταβολή <strong>€12</strong> με κάρτα. Θα εισαχθεί μετά την υποβολή της φόρμας.</p>
+            <p data-gr="Απαιτείται προκαταβολή <strong>€12</strong> με κάρτα. Θα εισαχθεί μετά την υποβολή της φόρμας." data-en="A <strong>€12</strong> card deposit is required for all bookings. You will be prompted to pay after submitting the form.">Απαιτείται προκαταβολή <strong>€12</strong> με κάρτα. Θα εισαχθεί μετά την υποβολή της φόρμας.</p>
           </div>
         </div>
 
@@ -312,8 +296,9 @@
             placeholder="Περιέγραψε την ιδέα σου, μέγεθος, τοποθεσία στο σώμα κ.λπ."></textarea>
         </div>
 
+        <!-- Submit label always says "Submit & Pay" since payment is universal -->
         <button type="submit" class="submit-btn" id="submitBtn">
-          <span class="btn-text" data-gr="Αποστολή" data-en="Send Request">Αποστολή</span>
+          <span class="btn-text" data-gr="Υποβολή & Πληρωμή" data-en="Submit & Pay">Υποβολή & Πληρωμή</span>
           <span class="btn-spinner"></span>
         </button>
 
@@ -321,12 +306,7 @@
 
       </form>
 
-      <!--
-        ═══════════════════════════════════════════════
-        STRIPE PAYMENT ELEMENT — appears after form submit (piercing only)
-        Inline card payment. No redirect. No external tab.
-        ═══════════════════════════════════════════════
-      -->
+      <!-- STRIPE PAYMENT ELEMENT — appears after form submit for ALL bookings -->
       <div class="stripe-payment-section" id="stripePaymentSection">
         <div class="stripe-section-title" data-gr="Πληρωμή Προκαταβολής" data-en="Pay Deposit">Πληρωμή Προκαταβολής</div>
         <div class="stripe-section-sub" data-gr="Ασφαλής πληρωμή €12 με κάρτα — powered by Stripe" data-en="Secure €12 card payment — powered by Stripe">Ασφαλής πληρωμή €12 με κάρτα — powered by Stripe</div>
@@ -338,7 +318,7 @@
         </button>
       </div>
 
-      <!-- Shown after successful payment + booking submission -->
+      <!-- Shown after successful payment -->
       <div class="booking-success" id="bookingSuccess">
         <h3 data-gr="✓ Κράτηση & Πληρωμή Επιβεβαιώθηκαν!" data-en="✓ Booking & Payment Confirmed!">✓ Κράτηση & Πληρωμή Επιβεβαιώθηκαν!</h3>
         <p data-gr="Η κράτησή σου καταχωρήθηκε και η προκαταβολή πληρώθηκε. Θα επικοινωνήσουμε σύντομα." data-en="Your booking is confirmed and the deposit has been paid. We will be in touch shortly.">Η κράτησή σου καταχωρήθηκε και η προκαταβολή πληρώθηκε. Θα επικοινωνήσουμε σύντομα.</p>
@@ -354,11 +334,12 @@
       </div>
       <div class="info-card">
         <div class="info-card-title" data-gr="Σημαντικές Πληροφορίες" data-en="Important Info">Σημαντικές Πληροφορίες</div>
-        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Απαιτείται προκαταβολή 30%" data-en="30% deposit required">Απαιτείται προκαταβολή 30%</span></div>
-        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Piercing: προκαταβολή €12 online" data-en="Piercing: €12 deposit online">Piercing: προκαταβολή €12 online</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Προκαταβολή €12 για κάθε κράτηση" data-en="€12 deposit for all bookings">Προκαταβολή €12 για κάθε κράτηση</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Piercing: επιλογή ημερομηνίας online" data-en="Piercing: date selection online">Piercing: επιλογή ημερομηνίας online</span></div>
         <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Ελάχιστη ηλικία: 18 ετών" data-en="Minimum age: 18 years">Ελάχιστη ηλικία: 18 ετών</span></div>
         <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Φέρε έγκυρη ταυτότητα" data-en="Bring valid ID">Φέρε έγκυρη ταυτότητα</span></div>
         <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Απάντηση εντός 24 ωρών" data-en="Response within 24 hours">Απάντηση εντός 24 ωρών</span></div>
+        <div class="info-row"><span class="info-icon" style="color:var(--gold);">▸</span><span data-gr="Ελεύθερη δωρεάν εκτίμηση" data-en="Free consultation available">Ελεύθερη δωρεάν εκτίμηση</span></div>
       </div>
     </div>
   </div>
@@ -415,17 +396,10 @@
 
 <script src="js/main.js"></script>
 <script>
-  // ══════════════════════════════════════════════
-  // STRIPE — swap this one key when ready
-  // Get from: https://dashboard.stripe.com/apikeys
-  // Use the PUBLISHABLE key (pk_live_... or pk_test_...)
-  // ══════════════════════════════════════════════
   const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_PUBLISHABLE_KEY';
 
   let stripe = null;
   let stripeElements = null;
-  let savedFormData = null; // holds form data while user pays
-
   let selectedFiles = [];
   let isPiercing = false;
 
@@ -456,6 +430,8 @@
   });
 
   // ─── PIERCING LOGIC ───
+  // Only controls the extra piercing-specific fields (type + Calendly).
+  // Payment gate is now universal — all services pay €12.
   const serviceSelect = document.getElementById('service');
   const artistSelect  = document.getElementById('artist');
   const piercingEls   = document.querySelectorAll('.piercing-only');
@@ -474,18 +450,11 @@
       const storm = new Option('Storm', 'Storm', false, true);
       artistSelect.appendChild(storm);
       document.getElementById('piercingType').required = true;
-
-      // Update submit button label
-      document.querySelector('#submitBtn .btn-text').setAttribute('data-gr', 'Υποβολή & Πληρωμή');
-      document.querySelector('#submitBtn .btn-text').setAttribute('data-en', 'Submit & Pay');
     } else {
       // Restore all artists
       artistSelect.innerHTML = '';
       allArtists.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
       document.getElementById('piercingType').required = false;
-
-      document.querySelector('#submitBtn .btn-text').setAttribute('data-gr', 'Αποστολή');
-      document.querySelector('#submitBtn .btn-text').setAttribute('data-en', 'Send Request');
     }
     applyLang();
   });
@@ -506,7 +475,7 @@
   function removeFile(i) { selectedFiles.splice(i,1); renderFiles(); }
 
   // ─── BUILD FormData ───
-  function buildFormData(paymentIntentId = null) {
+  function buildFormData(paymentIntentId) {
     const fd = new FormData();
     fd.append('fullName', document.getElementById('fullName').value.trim());
     fd.append('phone', phoneInput.value.trim());
@@ -514,16 +483,16 @@
     fd.append('artist', artistSelect.value);
     fd.append('service', serviceSelect.value);
     fd.append('message', document.getElementById('message').value.trim());
+    fd.append('depositAmount', '12');
+    fd.append('paymentIntentId', paymentIntentId);
     if (isPiercing) {
       fd.append('piercingType', document.getElementById('piercingType').value);
-      fd.append('depositAmount', '12');
-      if (paymentIntentId) fd.append('paymentIntentId', paymentIntentId);
     }
     selectedFiles.forEach(f => fd.append('attachments', f));
     return fd;
   }
 
-  // ─── SUBMIT HANDLER ───
+  // ─── SUBMIT — all bookings go to Stripe ───
   document.getElementById('bookingForm').addEventListener('submit', async function(e) {
     e.preventDefault();
 
@@ -538,78 +507,50 @@
       emailInput.classList.add('invalid');
       return showAlert('formAlert','error','✕ Εισάγετε έγκυρη διεύθυνση email.','✕ Please enter a valid email address.');
     }
-    // Validate piercing type
+    // Validate piercing type if piercing selected
     if (isPiercing && !document.getElementById('piercingType').value) {
       return showAlert('formAlert','error','✕ Παρακαλώ επέλεξε τύπο piercing.','✕ Please select a piercing type.');
     }
 
     const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading'); btn.disabled = true;
 
-    if (isPiercing) {
-      // ── Piercing flow: create PaymentIntent → show Stripe Element ──
-      btn.classList.add('loading'); btn.disabled = true;
+    try {
+      // Create PaymentIntent for €12 — same for all bookings
+      const data = await apiPost('/api/payment/create-intent', { amount: 1200, currency: 'eur' });
+      if (!data.clientSecret) throw new Error('No client secret returned');
 
-      try {
-        // Call backend to create a PaymentIntent for €12
-        const data = await apiPost('/api/payment/create-intent', { amount: 1200, currency: 'eur' });
+      // Init Stripe once
+      if (!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
-        if (!data.clientSecret) throw new Error('No client secret returned');
-
-        // Init Stripe once
-        if (!stripe) stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-
-        // Mount Payment Element
-        stripeElements = stripe.elements({
-          clientSecret: data.clientSecret,
-          appearance: {
-            theme: 'night',
-            variables: {
-              colorPrimary: '#c9a84c',
-              colorBackground: '#141414',
-              colorText: '#f0ece4',
-              colorDanger: '#c0392b',
-              fontFamily: 'Space Mono, monospace',
-              spacingUnit: '4px',
-              borderRadius: '0px',
-            }
+      // Mount Payment Element with dark theme matching site
+      stripeElements = stripe.elements({
+        clientSecret: data.clientSecret,
+        appearance: {
+          theme: 'night',
+          variables: {
+            colorPrimary: '#c9a84c',
+            colorBackground: '#141414',
+            colorText: '#f0ece4',
+            colorDanger: '#c0392b',
+            fontFamily: 'Space Mono, monospace',
+            spacingUnit: '4px',
+            borderRadius: '0px',
           }
-        });
+        }
+      });
 
-        const paymentElement = stripeElements.create('payment', {
-          layout: 'tabs'
-        });
-        paymentElement.mount('#payment-element');
+      stripeElements.create('payment', { layout: 'tabs' }).mount('#payment-element');
 
-        // Show payment section
-        document.getElementById('stripePaymentSection').classList.add('visible');
-        document.getElementById('stripePaymentSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        applyLang();
+      // Show payment block, hide submit button
+      document.getElementById('stripePaymentSection').classList.add('visible');
+      document.getElementById('stripePaymentSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.style.display = 'none';
+      applyLang();
 
-        // Hide form submit button (user now uses pay button)
-        btn.style.display = 'none';
-
-      } catch(err) {
-        showAlert('formAlert','error','✕ Σφάλμα σύνδεσης. Δοκίμασε ξανά.','✕ Connection error. Please try again.');
-      } finally {
-        btn.classList.remove('loading'); btn.disabled = false;
-      }
-
-    } else {
-      // ── Normal tattoo booking (no payment) ──
-      btn.classList.add('loading'); btn.disabled = true;
-      try {
-        const fd = buildFormData();
-        await apiPostForm('/api/booking', fd);
-        showAlert('formAlert','success',
-          '✓ Η κράτησή σου ελήφθη! Θα επικοινωνήσουμε εντός 24 ωρών.',
-          '✓ Booking received! We will contact you within 24 hours.'
-        );
-        resetForm();
-      } catch(err) {
-        showAlert('formAlert','error','✕ Σφάλμα αποστολής. Δοκίμασε ξανά.','✕ Submission failed. Please try again.');
-      } finally {
-        btn.classList.remove('loading'); btn.disabled = false;
-      }
+    } catch(err) {
+      showAlert('formAlert','error','✕ Σφάλμα σύνδεσης. Δοκίμασε ξανά.','✕ Connection error. Please try again.');
+      btn.classList.remove('loading'); btn.disabled = false;
     }
   });
 
@@ -620,12 +561,9 @@
     this.classList.add('loading'); this.disabled = true;
 
     try {
-      // Confirm payment (no redirect — stays on page)
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements: stripeElements,
-        confirmParams: {
-          return_url: window.location.href, // fallback only for 3DS
-        },
+        confirmParams: { return_url: window.location.href },
         redirect: 'if_required',
       });
 
@@ -636,11 +574,11 @@
       }
 
       if (paymentIntent && paymentIntent.status === 'succeeded') {
-        // Payment succeeded — now submit booking to backend
+        // Payment confirmed — now submit the booking with paymentIntentId attached
         const fd = buildFormData(paymentIntent.id);
         await apiPostForm('/api/booking', fd);
 
-        // Show success, hide payment section and form
+        // Show success, hide form and payment section
         document.getElementById('stripePaymentSection').classList.remove('visible');
         document.getElementById('bookingSuccess').classList.add('visible');
         document.getElementById('bookingSuccess').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -660,13 +598,14 @@
     selectedFiles = []; renderFiles();
     isPiercing = false;
     piercingEls.forEach(el => el.classList.remove('visible'));
-    artistSelect.innerHTML = ''; allArtists.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
+    artistSelect.innerHTML = '';
+    allArtists.forEach(o => artistSelect.appendChild(o.cloneNode(true)));
     phoneInput.classList.remove('valid','invalid');
     emailInput.classList.remove('valid','invalid');
-    document.getElementById('submitBtn').style.display = '';
-    // Reset submit label
-    document.querySelector('#submitBtn .btn-text').setAttribute('data-gr', 'Αποστολή');
-    document.querySelector('#submitBtn .btn-text').setAttribute('data-en', 'Send Request');
+    const btn = document.getElementById('submitBtn');
+    btn.style.display = '';
+    btn.classList.remove('loading');
+    btn.disabled = false;
     applyLang();
   }
 </script>
